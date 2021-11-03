@@ -209,7 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     Future.delayed(Duration(milliseconds: 0), () {
       Navigator.of(context).pushNamedAndRemoveUntil(
-          Routes.home, (Route<dynamic> route) => false);
+          Routes.mainScreen, (Route<dynamic> route) => false);
     });
 
     return Container();
