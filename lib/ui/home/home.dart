@@ -1,4 +1,5 @@
 import 'package:boilerplate/constants/assets.dart';
+import 'package:boilerplate/ui/post_display/nft_display.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -42,7 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           _storiesFeature(),
           _latestPostText(),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           _showCaseNftHorizontalList(),
         ],
       ),
@@ -89,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _latestPostText() {
     return Padding(
-      padding: const EdgeInsets.only(top  : 40.0 , left: 15, bottom : 10),
+      padding: const EdgeInsets.only(top: 40.0, left: 15, bottom: 10),
       child: Text('Latest NFTs',
           style: GoogleFonts.italiana(
             textStyle: TextStyle(
@@ -100,11 +103,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _showCaseNftHorizontalList() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal : 15.0),
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Container(
         height: 200,
-         child: ListView(
-           scrollDirection: Axis.horizontal,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
           children: [
             _customNFTPosts(Assets.nftPicture1),
             _customNFTPosts(Assets.nftPicture2),
@@ -116,22 +119,29 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _customNFTPosts(String assetName){
-    return Padding(
-      padding: const EdgeInsets.only(right: 10.0),
-      child: Container(
-        width: 150,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child:  Image.asset(
-            assetName,
-             fit: BoxFit.cover,
+  Widget _customNFTPosts(String assetName) {
+    return InkWell(
+      onTap: () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => NFTDisplayScreen()));
+      },
+      child: Ink(
+        child: Padding(
+          padding: const EdgeInsets.only(right: 10.0),
+          child: Container(
+            width: 150,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.asset(
+                assetName,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
         ),
       ),
     );
   }
-
 
   /// TODO : To be changed here!
   Widget _customDrawer() {
