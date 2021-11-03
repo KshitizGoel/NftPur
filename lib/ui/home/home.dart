@@ -1,3 +1,4 @@
+import 'package:boilerplate/constants/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,7 +16,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-
       backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -41,7 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: ListView(
         children: [
           _storiesFeature(),
-          // _showCaseNftHorizontalList(),
+          _latestPostText(),
+          SizedBox(height: 20,),
+          _showCaseNftHorizontalList(),
         ],
       ),
     );
@@ -49,23 +51,87 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _storiesFeature() {
     return Container(
-      height: 100.0,
-       child: ListView(
+      height: 85.0,
+      child: ListView(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         children: [
           /// TODO : Populate the list here with popular NFTs!
-          
+          _customPictures(),
+          _customPictures(),
+          _customPictures(),
+          _customPictures(),
+          _customPictures(),
         ],
       ),
     );
   }
 
-  Widget _showCaseNftHorizontalList() {
-    return ListView(
-      children: [],
+  Widget _customPictures() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0, bottom: 10, left: 10, right: 5),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.yellow[600], borderRadius: BorderRadius.circular(50)),
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: Image.asset(
+              Assets.profilePicture,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ),
     );
   }
+
+  Widget _latestPostText() {
+    return Padding(
+      padding: const EdgeInsets.only(top  : 40.0 , left: 15, bottom : 10),
+      child: Text('Latest NFTs',
+          style: GoogleFonts.italiana(
+            textStyle: TextStyle(
+                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20),
+          )),
+    );
+  }
+
+  Widget _showCaseNftHorizontalList() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal : 15.0),
+      child: Container(
+        height: 200,
+         child: ListView(
+           scrollDirection: Axis.horizontal,
+          children: [
+            _customNFTPosts(Assets.nftPicture1),
+            _customNFTPosts(Assets.nftPicture2),
+            _customNFTPosts(Assets.nftPicture3),
+            _customNFTPosts(Assets.nftPicture4),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _customNFTPosts(String assetName){
+    return Padding(
+      padding: const EdgeInsets.only(right: 10.0),
+      child: Container(
+        width: 150,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child:  Image.asset(
+            assetName,
+             fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
+  }
+
 
   /// TODO : To be changed here!
   Widget _customDrawer() {

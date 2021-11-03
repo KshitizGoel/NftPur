@@ -33,6 +33,10 @@ dependencies:
   # A Dependency which allows us to give independence to choose fonts
   google_fonts: ^2.1.0
 
+  # A Dependency for Instagram like stories feature
+  story_view: ^0.13.1
+
+
   # Flogs, a powerful logging framework
 #  f_logs: ^1.2.2
 
