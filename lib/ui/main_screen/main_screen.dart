@@ -1,4 +1,5 @@
 import 'package:boilerplate/ui/home/home.dart';
+import 'package:boilerplate/ui/nft_news/nft_news.dart';
 import 'package:boilerplate/ui/post/post_your_nft.dart';
 import 'package:boilerplate/ui/your_nfts/collections.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
     HomeScreen(),
     Collections(),
     PostYourNft(),
-
+    NFTTrends()
   ];
 
   void onTappedBar(int index) {
@@ -48,14 +49,12 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
-        selectedIconTheme:
-            IconThemeData(color: Colors.black, size: 25 ),
+        selectedIconTheme: IconThemeData(color: Colors.black, size: 25),
         selectedItemColor: Colors.black,
         selectedFontSize: 17,
         unselectedFontSize: 14,
         unselectedItemColor: Colors.white,
-        unselectedIconTheme:
-            IconThemeData(color: Colors.white, size: 18 ),
+         unselectedIconTheme: IconThemeData(color: Colors.white, size: 18),
         items: [
           BottomNavigationBarItem(
             icon: Icon(
@@ -64,6 +63,8 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
             title: Text(
               "Dashboard",
             ),
+            backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
+
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.collections),
@@ -77,7 +78,12 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
               "Post",
             ),
           ),
-
+          BottomNavigationBarItem(
+            icon: Icon(Icons.trending_up),
+            title: Text(
+              "Trends",
+            ),
+          ),
         ],
         onTap: onTappedBar,
       ),

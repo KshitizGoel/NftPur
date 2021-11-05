@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
 
     return Material(
-      child: Center(child: AppIconWidget(image: Assets.appLogo)),
+      child: Center(child: AppIconWidget(image: Assets.nftpurLogo)),
     );
   }
 

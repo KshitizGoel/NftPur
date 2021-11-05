@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
-class NFTDisplayScreen extends StatefulWidget {
-  const NFTDisplayScreen({Key? key}) : super(key: key);
+class NftDisplay extends StatefulWidget {
+  const NftDisplay({Key? key}) : super(key: key);
 
   @override
-  _NFTDisplayScreenState createState() => _NFTDisplayScreenState();
+  _NftDisplayState createState() => _NftDisplayState();
 }
 
-class _NFTDisplayScreenState extends State<NFTDisplayScreen> {
+class _NftDisplayState extends State<NftDisplay> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Hi here you can view your NFT!'),
+        child: Text(
+          'Here you can see the NFTs!'
+        ),
       ),
     );
   }
