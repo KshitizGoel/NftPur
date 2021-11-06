@@ -1,7 +1,7 @@
 import 'package:boilerplate/ui/home/home.dart';
 import 'package:boilerplate/ui/nft_news/nft_news.dart';
 import 'package:boilerplate/ui/post/post_your_nft.dart';
-import 'package:boilerplate/ui/your_nfts/collections.dart';
+import 'package:boilerplate/ui/your_nfts/user_profile.dart';
 import 'package:flutter/material.dart';
 
 class NavigationMainScreen extends StatefulWidget {
@@ -30,9 +30,10 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
 
   final List<Widget> _children = [
     HomeScreen(),
-    Collections(),
     PostYourNft(),
-    NFTTrends()
+    NFTTrends(),
+    Profile(),
+
   ];
 
   void onTappedBar(int index) {
@@ -67,12 +68,6 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
 
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.collections),
-            title: Text(
-              "Collections",
-            ),
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.post_add),
             title: Text(
               "Post",
@@ -82,6 +77,12 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
             icon: Icon(Icons.trending_up),
             title: Text(
               "Trends",
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_outlined),
+            title: Text(
+              "Profile",
             ),
           ),
         ],
