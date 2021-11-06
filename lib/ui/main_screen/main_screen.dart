@@ -72,18 +72,24 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
             title: Text(
               "Post",
             ),
+            backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
+
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.trending_up),
             title: Text(
               "Trends",
             ),
+            backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
+
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_outlined),
             title: Text(
               "Profile",
             ),
+            backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
+
           ),
         ],
         onTap: onTappedBar,
