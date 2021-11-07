@@ -1,5 +1,5 @@
 import 'package:boilerplate/ui/home/home.dart';
-import 'package:boilerplate/ui/nft_news/nft_news.dart';
+import 'package:boilerplate/ui/nft_news/nft_trends.dart';
 import 'package:boilerplate/ui/post/post_your_nft.dart';
 import 'package:boilerplate/ui/your_nfts/user_profile.dart';
 import 'package:flutter/material.dart';

@@ -3,6 +3,8 @@ import 'package:boilerplate/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'full_size_display.dart';
+
 class NftDisplay extends StatefulWidget {
   final String imageAddress, nftName, description , price;
 
@@ -98,12 +100,17 @@ class _NftDisplayState extends State<NftDisplay> {
   }
 
   Widget _displayNftImage(String imageAddress) {
-    return Container(
-      height: 200,
-      decoration: BoxDecoration(color: Colors.black),
-      child: Image.asset(
-        "$imageAddress",
-        height: double.infinity,
+    return InkWell(
+      onTap: ()=> Navigator.of(context).push(MaterialPageRoute(builder: (context){
+        return FullSizeDisplay(imageAddress);
+      })),
+      child: Container(
+        height: 200,
+        decoration: BoxDecoration(color: Colors.black),
+        child: Image.asset(
+          "$imageAddress",
+          height: double.infinity,
+        ),
       ),
     );
   }

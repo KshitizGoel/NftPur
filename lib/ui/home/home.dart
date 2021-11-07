@@ -1,6 +1,7 @@
 import 'package:boilerplate/constants/assets.dart';
 import 'package:boilerplate/constants/sample_data_file.dart';
 import 'package:boilerplate/ui/post_display/nft_display.dart';
+import 'package:boilerplate/ui/stories_feature/stories_feature.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -199,20 +200,28 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _customPictures(String imageAddress) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10.0, bottom: 10, left: 10, right: 5),
-      child: Container(
-        height: 65,
-        width: 65,
-        decoration: BoxDecoration(
-            color: Colors.yellow[600], borderRadius: BorderRadius.circular(50)),
-        child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: Image.asset(
-              imageAddress,
-              fit: BoxFit.cover,
+    return InkWell(
+      onTap: () =>
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+        return StoriesFeature();
+      })),
+      child: Padding(
+        padding:
+            const EdgeInsets.only(top: 10.0, bottom: 10, left: 10, right: 5),
+        child: Container(
+          height: 65,
+          width: 65,
+          decoration: BoxDecoration(
+              color: Colors.yellow[600],
+              borderRadius: BorderRadius.circular(50)),
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Image.asset(
+                imageAddress,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
