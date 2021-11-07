@@ -12,10 +12,14 @@ class _PostYourNftState extends State<PostYourNft> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      body: ListView(
-        children: [
+      // body: ListView(
+      //   children: [
+      //
+      //   ],
+      // ),
 
-        ],
+      body: Center(
+        child: Text('Sorry this page is under development!'),
       ),
     );
   }

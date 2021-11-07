@@ -16,5 +16,10 @@ class Assets {
   static const String nftTrending2 = "assets/images/nft_trending_2.jpeg";
   static const String nftTrending3 = "assets/images/nft_trending_3.jpeg";
   static const String nftTrending4 = "assets/images/nft_trending_4.png";
+  static const String profilePhoto1 = "assets/images/profile_photo_1.jpg";
+  static const String profilePhoto2 = "assets/images/profile_photo_2.jpeg";
+  static const String profilePhoto3 = "assets/images/profile_photo_3.jpeg";
+  static const String profilePhoto4 = "assets/images/profile_photo_4.jpeg";
+  static const String profilePhoto5 = "assets/images/profile_photo_5.jpg";
 
 }

@@ -1,4 +1,5 @@
 import 'package:boilerplate/constants/assets.dart';
+import 'package:boilerplate/ui/post_display/nft_display.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,7 +18,7 @@ class _NFTTrendsState extends State<NFTTrends> {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 20.0, left: 15),
-          child: _customText('NFT Trends'),
+          child: _customText('Trending at NFTPur'),
         ),
         SizedBox(
           height: 40,
@@ -32,52 +33,56 @@ class _NFTTrendsState extends State<NFTTrends> {
 
   Widget _customNftPost(String imageAddress, String nftName,
       String popularityPercentage, String price) {
-    return Container(
-        height: 150,
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
-            ]),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(nftName,
-                      style: GoogleFonts.italiana(
-                        textStyle: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w900),
-                      )),
-                  Text(popularityPercentage,
-                      style: GoogleFonts.roboto(
-                        textStyle:
-                            const TextStyle(fontSize: 17, color: Colors.green),
-                      )),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "$price %",
-                    style: const TextStyle(
-                        fontSize: 25,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-              Image.asset(
-                "$imageAddress",
-                height: double.infinity,
-              )
-            ],
-          ),
-        ));
+    return InkWell(
+      onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => NftDisplay(imageAddress , nftName , 'Hi this is a random text about the above NFT!', price))),
+      child: Container(
+          height: 150,
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
+              ]),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(nftName,
+                        style: GoogleFonts.italiana(
+                          textStyle: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w900),
+                        )),
+                    Text(popularityPercentage,
+                        style: GoogleFonts.roboto(
+                          textStyle: const TextStyle(
+                              fontSize: 17, color: Colors.green),
+                        )),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "\$$price",
+                      style: const TextStyle(
+                          fontSize: 25,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+                Image.asset(
+                  "$imageAddress",
+                  height: double.infinity,
+                )
+              ],
+            ),
+          )),
+    );
   }
 
   Widget _customText(String text) {

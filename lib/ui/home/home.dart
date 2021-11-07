@@ -1,7 +1,6 @@
 import 'package:boilerplate/constants/assets.dart';
 import 'package:boilerplate/constants/sample_data_file.dart';
 import 'package:boilerplate/ui/post_display/nft_display.dart';
-import 'package:boilerplate/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -25,52 +24,62 @@ class _HomeScreenState extends State<HomeScreen> {
     List<dynamic> responseList = FOOD_DATA;
     List<Widget> listItems = [];
     responseList.forEach((post) {
-      listItems.add(Container(
-          height: 150,
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
-              ]),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(post["name"],
-                        style: GoogleFonts.italiana(
-                          textStyle: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w900),
-                        )),
-                    Text(post["brand"],
-                        style: GoogleFonts.roboto(
-                          textStyle: const TextStyle(
-                              fontSize: 17, color: Colors.black26),
-                        )),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "\$ ${post["price"]}",
-                      style: const TextStyle(
-                          fontSize: 25,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-                Image.asset(
-                  "assets/images/${post["image"]}",
-                  height: double.infinity,
-                )
-              ],
-            ),
-          )));
+      listItems.add(InkWell(
+        onTap: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => NftDisplay(
+                "assets/images/${post["image"]}",
+                post["name"],
+                'Hi this is the random text about the NFT above !',
+                post["price"].toString()))),
+        child: Container(
+            height: 150,
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withAlpha(100), blurRadius: 10.0),
+                ]),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(post["name"],
+                          style: GoogleFonts.italiana(
+                            textStyle: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w900),
+                          )),
+                      Text(post["brand"],
+                          style: GoogleFonts.roboto(
+                            textStyle: const TextStyle(
+                                fontSize: 17, color: Colors.black26),
+                          )),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "\$ ${post["price"]}",
+                        style: const TextStyle(
+                            fontSize: 25,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                  Image.asset(
+                    "assets/images/${post["image"]}",
+                    height: double.infinity,
+                  )
+                ],
+              ),
+            )),
+      ));
     });
     setState(() {
       itemsData = listItems;
@@ -178,20 +187,23 @@ class _HomeScreenState extends State<HomeScreen> {
         scrollDirection: Axis.horizontal,
         children: [
           /// TODO : Populate the list here with popular NFTs!
-          _customPictures(),
-          _customPictures(),
-          _customPictures(),
-          _customPictures(),
-          _customPictures(),
+          _customPictures(Assets.profilePicture),
+          _customPictures(Assets.profilePhoto1),
+          _customPictures(Assets.profilePhoto2),
+          _customPictures(Assets.profilePhoto3),
+          _customPictures(Assets.profilePhoto4),
+          _customPictures(Assets.profilePhoto5),
         ],
       ),
     );
   }
 
-  Widget _customPictures() {
+  Widget _customPictures(String imageAddress) {
     return Padding(
       padding: const EdgeInsets.only(top: 10.0, bottom: 10, left: 10, right: 5),
       child: Container(
+        height: 65,
+        width: 65,
         decoration: BoxDecoration(
             color: Colors.yellow[600], borderRadius: BorderRadius.circular(50)),
         child: Padding(
@@ -199,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(50),
             child: Image.asset(
-              Assets.profilePicture,
+              imageAddress,
               fit: BoxFit.cover,
             ),
           ),
@@ -227,21 +239,22 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: [
-            _customNFTPosts(Assets.nftPicture1),
-            _customNFTPosts(Assets.nftPicture2),
-            _customNFTPosts(Assets.nftPicture3),
-            _customNFTPosts(Assets.nftPicture4),
+            _customNFTPosts(Assets.nftPicture1, 'Gangsta Rodeo', '12.99'),
+            _customNFTPosts(Assets.nftPicture2, 'Bytes Mixture', '14.99'),
+            _customNFTPosts(Assets.nftPicture3, 'Mane', '11.49'),
+            _customNFTPosts(Assets.nftPicture4, 'Detective', '2.99'),
           ],
         ),
       ),
     );
   }
 
-  Widget _customNFTPosts(String assetName) {
+  Widget _customNFTPosts(String assetName, String nftName, String price) {
     return InkWell(
       onTap: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => NftDisplay()));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => NftDisplay(assetName, nftName,
+                'Hi this is the random text about the NFT above !', price)));
       },
       child: Ink(
         child: Padding(
@@ -258,98 +271,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _newNFTToPurchase() {
-    return Column(
-      // physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-      // shrinkWrap: true,
-      children: [
-        _customNFTBiddingItem(),
-        _customNFTBiddingItem(),
-        _customNFTBiddingItem(),
-      ],
-    );
-  }
-
-  Widget _customNFTBiddingItem() {
-    return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        child: InkWell(
-          onTap: () => print('Button Tapped'),
-          child: Container(
-              height: 130,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                gradient: LinearGradient(
-                    colors: [
-                      Colors.orange.shade100.withOpacity(0.20),
-                      Colors.deepOrange.shade700.withOpacity(0.50)
-                    ],
-                    // begin: const FractionalOffset(0.0, 0.0),
-                    // end: const FractionalOffset(0.5, 0.0),
-                    // stops: [0.0, 1.0],
-                    tileMode: TileMode.clamp),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.yellow.shade700,
-                    blurRadius: 2,
-                    offset: Offset(4, 8), // Shadow position
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15.0, top: 25),
-                      child: Container(
-                        height: 60,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(50),
-                          child: Image.asset(
-                            Assets.nftpurLogo,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20.0, left: 15),
-                    child: Column(
-                      children: [
-                        CustomText('Sea Caricature', true),
-                        Padding(
-                            padding: EdgeInsets.only(top: 5),
-                            child: CustomText('NFT Title', true)),
-
-                        // Row(
-                        //   children: [
-                        //
-                        //     _customTallyWidget('tally', 'data'),
-                        //     _customTallyWidget('tally', 'data'),
-                        //     _customTallyWidget('tally', 'data'),
-                        //     _customTallyWidget('tally', 'data'),
-                        //
-                        //   ],
-                        // )
-                      ],
-                    ),
-                  )
-                ],
-              )),
-        ));
-  }
-
-  Widget _customTallyWidget(String tally, String data) {
-    return Column(
-      children: [
-        Text(tally),
-        Text(data),
-      ],
     );
   }
 
