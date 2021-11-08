@@ -1,4 +1,4 @@
-package com.iotecksolutions.todoapp;
+package com.dapp.nftpur;
 
 import io.flutter.embedding.android.FlutterActivity;
 

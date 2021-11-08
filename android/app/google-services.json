@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "296717508844",
+    "project_id": "nftpur",
+    "storage_bucket": "nftpur.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:296717508844:android:1b193b465f15b815b405c9",
+        "android_client_info": {
+          "package_name": "com.dapp.nftpur"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "296717508844-co8r2jd61a0a71jhu8vfjvce1qq7k45o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dapp.nftpur",
+            "certificate_hash": "7202c0908bb23c44662e915a899585efcb3d3803"
+          }
+        },
+        {
+          "client_id": "296717508844-vpfs7bfbu8cup8je9loik8bf1taafgv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBl7UEbFRxwCVN_tifyE8w4pbJ2h7Hpw30"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "296717508844-vpfs7bfbu8cup8je9loik8bf1taafgv4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

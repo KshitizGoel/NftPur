@@ -1,6 +1,7 @@
 import 'package:boilerplate/ui/home/home.dart';
+import 'package:boilerplate/ui/nft_news/nft_trends.dart';
 import 'package:boilerplate/ui/post/post_your_nft.dart';
-import 'package:boilerplate/ui/your_nfts/collections.dart';
+import 'package:boilerplate/ui/your_nfts/user_profile.dart';
 import 'package:flutter/material.dart';
 
 class NavigationMainScreen extends StatefulWidget {
@@ -29,8 +30,9 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
 
   final List<Widget> _children = [
     HomeScreen(),
-    Collections(),
     PostYourNft(),
+    NFTTrends(),
+    Profile(),
 
   ];
 
@@ -48,14 +50,12 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
-        selectedIconTheme:
-            IconThemeData(color: Colors.black, size: 25 ),
+        selectedIconTheme: IconThemeData(color: Colors.black, size: 25),
         selectedItemColor: Colors.black,
         selectedFontSize: 17,
         unselectedFontSize: 14,
         unselectedItemColor: Colors.white,
-        unselectedIconTheme:
-            IconThemeData(color: Colors.white, size: 18 ),
+         unselectedIconTheme: IconThemeData(color: Colors.white, size: 18),
         items: [
           BottomNavigationBarItem(
             icon: Icon(
@@ -64,20 +64,33 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
             title: Text(
               "Dashboard",
             ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.collections),
-            title: Text(
-              "Collections",
-            ),
+            backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
+
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.post_add),
             title: Text(
               "Post",
             ),
-          ),
+            backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
 
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.trending_up),
+            title: Text(
+              "Trends",
+            ),
+            backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
+
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_outlined),
+            title: Text(
+              "Profile",
+            ),
+            backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
+
+          ),
         ],
         onTap: onTappedBar,
       ),

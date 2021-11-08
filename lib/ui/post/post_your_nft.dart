@@ -11,10 +11,15 @@ class _PostYourNftState extends State<PostYourNft> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      // body: ListView(
+      //   children: [
+      //
+      //   ],
+      // ),
+
       body: Center(
-        child: Text(
-          'Hi this is where you can Post your NFTs!'
-        ),
+        child: Text('Sorry this page is under development!'),
       ),
     );
   }
