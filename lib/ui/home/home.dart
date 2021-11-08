@@ -285,30 +285,65 @@ class _HomeScreenState extends State<HomeScreen> {
 
   /// TODO : To be changed here!
   Widget _customDrawer() {
-    return ListView(
-      children: [
-        const DrawerHeader(
-          decoration: BoxDecoration(
-            color: Colors.blue,
+    return Padding(
+      padding: const EdgeInsets.only(right: 20.0),
+      child: ListView(
+        children: [
+          Container(
+            height: 120,
+            decoration: BoxDecoration(
+                color: Colors.yellow.shade700,
+                borderRadius: BorderRadius.circular(10)),
+            child: Center(child: _customRandomTextTwo('Welcome to NFTPur')),
           ),
-          child: Text('Drawer Header'),
+          _customDrawerTiles('Live Auctions'),
+          _customDrawerTiles('Latest Deals'),
+          _customDrawerTiles('New Creations'),
+        ],
+      ),
+    );
+  }
+
+  Widget _customDrawerTiles(String text) {
+    return InkWell(
+      onTap: () => print('Drawer menu item is tapped!'),
+      child: Container(
+        height: 80,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
         ),
-        ListTile(
-          title: const Text('Item 1'),
-          onTap: () {
-            // Update the state of the app
-            // ...
-            // Then close the drawer
-            Navigator.pop(context);
-          },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Align(
+              alignment: Alignment.center,
+              child: _customRandomTextTwo(text),
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 15.0),
+                child: Icon(
+                  Icons.keyboard_arrow_right_outlined,
+                  color: Colors.black,
+                ),
+              ),
+            )
+          ],
         ),
-        ListTile(
-          title: const Text('Item 2'),
-          onTap: () {
-            Navigator.pop(context);
-          },
-        ),
-      ],
+      ),
+    );
+  }
+
+  Widget _customRandomTextTwo(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 15, bottom: 10),
+      child: Text('$text',
+          style: GoogleFonts.italiana(
+            textStyle: TextStyle(
+                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20),
+          )),
     );
   }
 }
