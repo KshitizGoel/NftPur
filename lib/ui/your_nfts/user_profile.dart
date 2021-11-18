@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:boilerplate/constants/assets.dart';
 import 'package:boilerplate/data/sharedpref/constants/preferences.dart';
+import 'package:boilerplate/models/nft/nft_details.dart';
+import 'package:boilerplate/ui/post_display/nft_display.dart';
 import 'package:boilerplate/utils/routes/routes.dart';
+import 'package:boilerplate/widgets/custom_columns.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,16 +21,33 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: Text('Public Wallet',
+            style: GoogleFonts.italiana(
+              textStyle: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  fontSize: 22),
+            )),
+        centerTitle: false,
+        actions: [
+          IconButton(
+              onPressed: () =>
+                  SharedPreferences.getInstance().then((preference) {
+                    preference.setBool(Preferences.is_logged_in, false);
+                    Navigator.of(context).pushReplacementNamed(Routes.login);
+                  }),
+              icon: Icon(
+                Icons.logout,
+                color: Colors.black,
+              ))
+        ],
+      ),
       body: ListView(
         children: [
-
-          Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              height: 20,
-              child: _buildLogoutButton(),
-            ),
-          ),
           SizedBox(
             height: 100,
           ),
@@ -57,17 +79,21 @@ class _ProfileState extends State<Profile> {
                       fontSize: 20, fontWeight: FontWeight.w900),
                 )),
           ),
-          SizedBox(height: 20,),
-
+          SizedBox(
+            height: 20,
+          ),
           Center(
             child: Text('kshitizgoel11@gmail.com',
                 style: GoogleFonts.italiana(
                   textStyle: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.w900 , color: Colors.blueAccent),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.blueAccent),
                 )),
           ),
-          SizedBox(height: 20,),
-
+          SizedBox(
+            height: 20,
+          ),
           Container(
               height: 100,
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -80,58 +106,68 @@ class _ProfileState extends State<Profile> {
                   ]),
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20.0  , vertical: 10),
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    _customColumn('Your NFTs', '6'),
-                    _customColumn('Wallet', '250'),
-                    _customColumn('Followers', '9'),
+                    customColumn('Your NFTs', '6', 25),
+                    customColumn('Wallet', '250', 25),
+                    customColumn('Followers', '9', 25),
                   ],
                 ),
-              ))
+              )),
+          Container(
+            height: 20,
+          ),
+          _yourOwnNFTs(),
         ],
       ),
     );
   }
 
-  Widget _customColumn(String heading, String data) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            heading,
-            style: GoogleFonts.italiana(
-                textStyle: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    fontSize: 20)),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left : 8.0 , right: 8 , bottom: 5),
-          child: Text(
-            data,
-            style: TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 25),
-          ),
-        )
-      ],
+
+  Widget _yourOwnNFTs() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20),
+      child: GridView.count(
+        physics: ScrollPhysics(),
+        crossAxisCount: 3,
+        shrinkWrap: true,
+        children: List.generate(9, (index) {
+          NftDetails _nftDetails = NftDetails(
+              nftName: 'Gangsta Rodeo',
+              imageAddress: Assets.nftPicture3,
+              nftDescription:
+              'Hi this is the random text about the NFT above !',
+              nftPrice: '256');
+
+          return _showNFTContent(_nftDetails);
+        }),
+      ),
     );
   }
 
-
-  Widget _buildLogoutButton() {
-    return IconButton(
-      onPressed: () {
-        SharedPreferences.getInstance().then((preference) {
-          preference.setBool(Preferences.is_logged_in, false);
-          Navigator.of(context).pushReplacementNamed(Routes.login);
-        });
-      },
-      icon: Icon(
-        Icons.logout,
+  Widget _showNFTContent(NftDetails _nftDetails) {
+    return InkWell(
+      onTap: ()=>Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => NftDisplay(_nftDetails))),
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+         decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
+          ],
+          border: Border.all(
+            width: 2.0,
+          ),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(5),
+          child: Image.asset(
+            _nftDetails.imageAddress,
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
     );
   }

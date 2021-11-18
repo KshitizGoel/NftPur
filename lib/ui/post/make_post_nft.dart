@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:boilerplate/constants/strings.dart';
 import 'package:boilerplate/ui/success_screen/success_screen.dart';
 import 'package:boilerplate/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -67,10 +68,6 @@ class _MakePostNftState extends State<MakePostNft> {
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
             child: CustomTextField(_descriptionController, 'NFT Description'),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 20.0 , vertical: 10),
-          //   child: CustomTextField(_descriptionController,'NFT Description' ),
-          // ),
           Center(
             child: Text(
               'More custom inputs will be coming!!!',
@@ -91,8 +88,8 @@ class _MakePostNftState extends State<MakePostNft> {
 
   Widget _customButtonForVerification(String text, IconData icon) {
     return InkWell(
-      onTap: () => Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => SuccessScreen())),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => SuccessScreen(Strings.congratulationsText))),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 100),
         decoration: BoxDecoration(

@@ -56,14 +56,14 @@ class _PostYourNftState extends State<PostYourNft> {
             padding: const EdgeInsets.only(top: 20.0, left: 15),
             child: _customText('Your Collections', 25),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 40.0, left: 15),
-            child: _customText('Saved Posts', 20),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 40.0, left: 15),
-            child: _customText('Favourites', 20),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(top: 40.0, left: 15),
+          //   child: _customText('Saved Posts', 20),
+          // ),
+          // Padding(
+          //   padding: const EdgeInsets.only(top: 40.0, left: 15),
+          //   child: _customText('Favourites', 20),
+          // ),
         ],
       ),
     );

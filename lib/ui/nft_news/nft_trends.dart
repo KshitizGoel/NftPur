@@ -1,4 +1,5 @@
 import 'package:boilerplate/constants/assets.dart';
+import 'package:boilerplate/models/nft/nft_details.dart';
 import 'package:boilerplate/ui/post_display/nft_display.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,9 +35,16 @@ class _NFTTrendsState extends State<NFTTrends> {
   Widget _customNftPost(String imageAddress, String nftName,
       String popularityPercentage, String price) {
     return InkWell(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => NftDisplay(imageAddress, nftName,
-              'Hi this is a random text about the above NFT!', price))),
+      onTap: () {
+        NftDetails _nftDetails = NftDetails(
+            nftName: nftName,
+            imageAddress: imageAddress,
+            nftDescription: 'Hi this is a random text about the above NFT!',
+            nftPrice: price);
+
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => NftDisplay(_nftDetails)));
+      },
       child: Container(
           height: 150,
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

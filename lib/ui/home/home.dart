@@ -1,5 +1,6 @@
 import 'package:boilerplate/constants/assets.dart';
 import 'package:boilerplate/constants/sample_data_file.dart';
+import 'package:boilerplate/models/nft/nft_details.dart';
 import 'package:boilerplate/ui/post_display/nft_display.dart';
 import 'package:boilerplate/ui/stories_feature/stories_feature.dart';
 import 'package:flutter/material.dart';
@@ -26,12 +27,17 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Widget> listItems = [];
     responseList.forEach((post) {
       listItems.add(InkWell(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => NftDisplay(
-                "assets/images/${post["image"]}",
-                post["name"],
-                'Hi this is the random text about the NFT above !',
-                post["price"].toString()))),
+        onTap: () {
+          NftDetails _nftDetails = NftDetails(
+              nftName: post["name"],
+              imageAddress: "assets/images/${post["image"]}",
+              nftDescription:
+                  'Hi this is the random text about the NFT above !',
+              nftPrice: post["price"].toString());
+
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => NftDisplay(_nftDetails)));
+        },
         child: Container(
             height: 150,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -261,9 +267,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _customNFTPosts(String assetName, String nftName, String price) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => NftDisplay(assetName, nftName,
-                'Hi this is the random text about the NFT above !', price)));
+        NftDetails _nftDetails = NftDetails(
+            nftName: nftName,
+            imageAddress: assetName,
+            nftDescription: 'Hi this is the random text about the NFT above !',
+            nftPrice: price);
+
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => NftDisplay(_nftDetails)));
       },
       child: Ink(
         child: Padding(

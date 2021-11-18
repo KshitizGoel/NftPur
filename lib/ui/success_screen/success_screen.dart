@@ -2,13 +2,17 @@ import 'package:boilerplate/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class SuccessScreen extends StatefulWidget {
-  const SuccessScreen({Key? key}) : super(key: key);
+  final String progressString;
+
+  SuccessScreen(this.progressString);
 
   @override
   _SuccessScreenState createState() => _SuccessScreenState();
 }
 
 class _SuccessScreenState extends State<SuccessScreen> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +38,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                 Padding(
                   padding: EdgeInsets.only(top: 20),
                   child: CustomText(
-                      'Congratulations your NFT has been successfully created',
+                      '${widget.progressString}',
                       true),
                 ),
                 Padding(
