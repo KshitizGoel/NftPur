@@ -1,24 +1,25 @@
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:boilerplate/constants/strings.dart';
+import 'package:boilerplate/models/nft/nft_details.dart';
+import 'package:boilerplate/widgets/custom_columns.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'full_size_display.dart';
 
 class NftDisplay extends StatefulWidget {
-  final String imageAddress, nftName, description , price;
+  final NftDetails _nftDetails;
 
-  NftDisplay(this.imageAddress, this.nftName, this.description , this.price);
+  NftDisplay(this._nftDetails);
 
   @override
-  _NftDisplayState createState() =>
-      _NftDisplayState(imageAddress, nftName, description , price);
+  _NftDisplayState createState() => _NftDisplayState(_nftDetails);
 }
 
 class _NftDisplayState extends State<NftDisplay> {
-  final String imageAddress, nftName, description , price;
+  final NftDetails _nftDetails;
 
-  _NftDisplayState(this.imageAddress, this.nftName, this.description, this.price);
+  _NftDisplayState(this._nftDetails);
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +41,7 @@ class _NftDisplayState extends State<NftDisplay> {
               message: 'Hi, We will proceed to complete your request!',
               title: 'Success',
               duration: Duration(seconds: 3),
-            )
-              ..show(context);
+            )..show(context);
           },
           child: Padding(
             padding: const EdgeInsets.only(bottom: 10.0, left: 40),
@@ -49,8 +49,7 @@ class _NftDisplayState extends State<NftDisplay> {
               width: 170,
               decoration: BoxDecoration(
                   color: Colors.yellow.shade700,
-                  borderRadius: BorderRadius.circular(40)
-              ),
+                  borderRadius: BorderRadius.circular(40)),
               child: Padding(
                 padding: EdgeInsets.all(15),
                 child: Row(
@@ -59,8 +58,9 @@ class _NftDisplayState extends State<NftDisplay> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       child: Text(
-                        'BUY THIS NFT', style: TextStyle(fontWeight: FontWeight
-                          .bold),),
+                        'BUY THIS NFT',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ],
                 ),
@@ -71,7 +71,7 @@ class _NftDisplayState extends State<NftDisplay> {
       ),
       body: ListView(
         children: [
-          _displayNftImage(widget.imageAddress),
+          _displayNftImage(widget._nftDetails.imageAddress),
           SizedBox(
             height: 20,
           ),
@@ -80,20 +80,29 @@ class _NftDisplayState extends State<NftDisplay> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 10.0, left: 20),
-                child: _customText('${widget.nftName}', 25),
+                child: _customText('${widget._nftDetails.nftName}', 25),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10.0, right: 20),
-                child: _customTextForPrice('\$$price', 25),
+                child: _customTextForPrice('\$${_nftDetails.nftPrice}', 25),
               ),
             ],
           ),
-          Padding(padding: EdgeInsets.only(left: 15, top: 20),
-              child: Text('${widget.description}' + Strings.constantNFTDescription,
-                  style: GoogleFonts.roboto(
-                    textStyle: const TextStyle(
-                        fontSize: 17, color: Colors.black54),
-                  )), )
+          Padding(
+            padding: EdgeInsets.only(left: 15, top: 20),
+            child: Text(
+                '${widget._nftDetails.nftDescription}' +
+                    Strings.constantNFTDescription,
+                style: GoogleFonts.roboto(
+                  textStyle:
+                      const TextStyle(fontSize: 17, color: Colors.black54),
+                )),
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          _auctionWidget('${widget._nftDetails.nftPrice}', Strings.constantTime,
+              '${widget._nftDetails.nftName}')
         ],
       ),
     );
@@ -101,7 +110,8 @@ class _NftDisplayState extends State<NftDisplay> {
 
   Widget _displayNftImage(String imageAddress) {
     return InkWell(
-      onTap: ()=> Navigator.of(context).push(MaterialPageRoute(builder: (context){
+      onTap: () =>
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
         return FullSizeDisplay(imageAddress);
       })),
       child: Container(
@@ -132,6 +142,37 @@ class _NftDisplayState extends State<NftDisplay> {
               fontWeight: FontWeight.bold,
               color: Colors.black,
               fontSize: fontSize),
+        ));
+  }
+
+  Widget _auctionWidget(String price, String time, String date) {
+    return Container(
+        height: 140,
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
+            ]),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+          child: Column(
+            children: [
+              _customText('${Strings.auctionText}', 20),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  customColumn('Token ID', '0xag23mvd...', 15),
+                  customColumn('Price', '\$250', 22),
+                  customColumn('Starts From', '20', 22),
+                ],
+              )
+            ],
+          ),
         ));
   }
 }

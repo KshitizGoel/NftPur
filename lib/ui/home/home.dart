@@ -1,5 +1,6 @@
 import 'package:boilerplate/constants/assets.dart';
 import 'package:boilerplate/constants/sample_data_file.dart';
+import 'package:boilerplate/models/nft/nft_details.dart';
 import 'package:boilerplate/ui/post_display/nft_display.dart';
 import 'package:boilerplate/ui/stories_feature/stories_feature.dart';
 import 'package:flutter/material.dart';
@@ -26,12 +27,17 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Widget> listItems = [];
     responseList.forEach((post) {
       listItems.add(InkWell(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => NftDisplay(
-                "assets/images/${post["image"]}",
-                post["name"],
-                'Hi this is the random text about the NFT above !',
-                post["price"].toString()))),
+        onTap: () {
+          NftDetails _nftDetails = NftDetails(
+              nftName: post["name"],
+              imageAddress: "assets/images/${post["image"]}",
+              nftDescription:
+                  'Hi this is the random text about the NFT above !',
+              nftPrice: post["price"].toString());
+
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => NftDisplay(_nftDetails)));
+        },
         child: Container(
             height: 150,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -261,9 +267,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _customNFTPosts(String assetName, String nftName, String price) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => NftDisplay(assetName, nftName,
-                'Hi this is the random text about the NFT above !', price)));
+        NftDetails _nftDetails = NftDetails(
+            nftName: nftName,
+            imageAddress: assetName,
+            nftDescription: 'Hi this is the random text about the NFT above !',
+            nftPrice: price);
+
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => NftDisplay(_nftDetails)));
       },
       child: Ink(
         child: Padding(
@@ -285,30 +296,65 @@ class _HomeScreenState extends State<HomeScreen> {
 
   /// TODO : To be changed here!
   Widget _customDrawer() {
-    return ListView(
-      children: [
-        const DrawerHeader(
-          decoration: BoxDecoration(
-            color: Colors.blue,
+    return Padding(
+      padding: const EdgeInsets.only(right: 20.0),
+      child: ListView(
+        children: [
+          Container(
+            height: 120,
+            decoration: BoxDecoration(
+                color: Colors.yellow.shade700,
+                borderRadius: BorderRadius.circular(10)),
+            child: Center(child: _customRandomTextTwo('Welcome to NFTPur')),
           ),
-          child: Text('Drawer Header'),
+          _customDrawerTiles('Live Auctions'),
+          _customDrawerTiles('Latest Deals'),
+          _customDrawerTiles('New Creations'),
+        ],
+      ),
+    );
+  }
+
+  Widget _customDrawerTiles(String text) {
+    return InkWell(
+      onTap: () => print('Drawer menu item is tapped!'),
+      child: Container(
+        height: 80,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
         ),
-        ListTile(
-          title: const Text('Item 1'),
-          onTap: () {
-            // Update the state of the app
-            // ...
-            // Then close the drawer
-            Navigator.pop(context);
-          },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Align(
+              alignment: Alignment.center,
+              child: _customRandomTextTwo(text),
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 15.0),
+                child: Icon(
+                  Icons.keyboard_arrow_right_outlined,
+                  color: Colors.black,
+                ),
+              ),
+            )
+          ],
         ),
-        ListTile(
-          title: const Text('Item 2'),
-          onTap: () {
-            Navigator.pop(context);
-          },
-        ),
-      ],
+      ),
+    );
+  }
+
+  Widget _customRandomTextTwo(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 15, bottom: 10),
+      child: Text('$text',
+          style: GoogleFonts.italiana(
+            textStyle: TextStyle(
+                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20),
+          )),
     );
   }
 }
