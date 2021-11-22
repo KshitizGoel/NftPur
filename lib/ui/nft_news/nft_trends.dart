@@ -43,7 +43,7 @@ class _NFTTrendsState extends State<NFTTrends> {
             nftPrice: price);
 
         Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => NftDisplay(_nftDetails)));
+            MaterialPageRoute(builder: (context) => NftDisplay(_nftDetails  ,true)));
       },
       child: Container(
           height: 150,

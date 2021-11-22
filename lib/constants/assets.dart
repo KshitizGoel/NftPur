@@ -3,6 +3,7 @@ class Assets {
 
   // splash screen assets
   static const String appLogo = "assets/icons/ic_appicon.png";
+  static const String metamaskLogo = "assets/images/metamask_logo.png";
 
   // login screen assets
   static const String carBackground = "assets/images/img_login.jpg";
@@ -21,5 +22,4 @@ class Assets {
   static const String profilePhoto3 = "assets/images/profile_photo_3.jpeg";
   static const String profilePhoto4 = "assets/images/profile_photo_4.jpeg";
   static const String profilePhoto5 = "assets/images/profile_photo_5.jpg";
-
 }

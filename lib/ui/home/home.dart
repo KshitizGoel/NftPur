@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
               nftPrice: post["price"].toString());
 
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => NftDisplay(_nftDetails)));
+              MaterialPageRoute(builder: (context) => NftDisplay(_nftDetails , true)));
         },
         child: Container(
             height: 150,
@@ -274,7 +274,7 @@ class _HomeScreenState extends State<HomeScreen> {
             nftPrice: price);
 
         Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => NftDisplay(_nftDetails)));
+            MaterialPageRoute(builder: (context) => NftDisplay(_nftDetails , true)));
       },
       child: Ink(
         child: Padding(

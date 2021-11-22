@@ -9,8 +9,9 @@ import 'full_size_display.dart';
 
 class NftDisplay extends StatefulWidget {
   final NftDetails _nftDetails;
+  final bool isOwned;
 
-  NftDisplay(this._nftDetails);
+  NftDisplay(this._nftDetails, this.isOwned);
 
   @override
   _NftDisplayState createState() => _NftDisplayState(_nftDetails);
@@ -33,42 +34,9 @@ class _NftDisplayState extends State<NftDisplay> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: Align(
-        alignment: Alignment.bottomRight,
-        child: InkWell(
-          onTap: () {
-            FlushbarHelper.createInformation(
-              message: 'Hi, We will proceed to complete your request!',
-              title: 'Success',
-              duration: Duration(seconds: 3),
-            )..show(context);
-          },
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 10.0, left: 40),
-            child: Container(
-              width: 170,
-              decoration: BoxDecoration(
-                  color: Colors.yellow.shade700,
-                  borderRadius: BorderRadius.circular(40)),
-              child: Padding(
-                padding: EdgeInsets.all(15),
-                child: Row(
-                  children: [
-                    Icon(Icons.local_offer_outlined),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: Text(
-                        'BUY THIS NFT',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      floatingActionButton: widget.isOwned
+          ? _customFloatingActionButton('BUY THIS NFT')
+          : _customFloatingActionButton('VIEW'),
       body: ListView(
         children: [
           _displayNftImage(widget._nftDetails.imageAddress),
@@ -174,5 +142,45 @@ class _NftDisplayState extends State<NftDisplay> {
             ],
           ),
         ));
+  }
+
+  Widget _customFloatingActionButton(String title) {
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: InkWell(
+        onTap: () {
+          FlushbarHelper.createInformation(
+            message: 'Hi, We will proceed to complete your request!',
+            title: 'Success',
+            duration: Duration(seconds: 3),
+          )..show(context);
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 10.0, left: 40),
+          child: Container(
+            width: 170,
+            decoration: BoxDecoration(
+                color: Colors.yellow.shade700,
+                borderRadius: BorderRadius.circular(40)),
+            child: Padding(
+              padding: EdgeInsets.all(15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(Icons.local_offer_outlined),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      title,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
