@@ -1,5 +1,6 @@
-
+import 'package:boilerplate/data/auth_repository.dart';
 import 'package:boilerplate/data/local/datasources/post/post_datasource.dart';
+import 'package:boilerplate/data/network/apis/firebase_api/firebase_api.dart';
 import 'package:boilerplate/data/network/apis/posts/post_api.dart';
 import 'package:boilerplate/data/network/dio_client.dart';
 import 'package:boilerplate/data/network/rest_client.dart';
@@ -7,6 +8,7 @@ import 'package:boilerplate/data/repository.dart';
 import 'package:boilerplate/data/sharedpref/shared_preference_helper.dart';
 import 'package:boilerplate/di/module/local_module.dart';
 import 'package:boilerplate/di/module/network_module.dart';
+import 'package:boilerplate/stores/auth/auth_store.dart';
 import 'package:boilerplate/stores/error/error_store.dart';
 import 'package:boilerplate/stores/form/form_store.dart';
 import 'package:boilerplate/stores/language/language_store.dart';
@@ -27,16 +29,20 @@ Future<void> setupLocator() async {
 
   // async singletons:----------------------------------------------------------
   getIt.registerSingletonAsync<Database>(() => LocalModule.provideDatabase());
-  getIt.registerSingletonAsync<SharedPreferences>(() => LocalModule.provideSharedPreferences());
+  getIt.registerSingletonAsync<SharedPreferences>(
+      () => LocalModule.provideSharedPreferences());
 
   // singletons:----------------------------------------------------------------
-  getIt.registerSingleton(SharedPreferenceHelper(await getIt.getAsync<SharedPreferences>()));
-  getIt.registerSingleton<Dio>(NetworkModule.provideDio(getIt<SharedPreferenceHelper>()));
+  getIt.registerSingleton(
+      SharedPreferenceHelper(await getIt.getAsync<SharedPreferences>()));
+  getIt.registerSingleton<Dio>(
+      NetworkModule.provideDio(getIt<SharedPreferenceHelper>()));
   getIt.registerSingleton(DioClient(getIt<Dio>()));
   getIt.registerSingleton(RestClient());
 
   // api's:---------------------------------------------------------------------
   getIt.registerSingleton(PostApi(getIt<DioClient>(), getIt<RestClient>()));
+  getIt.registerSingleton(FirebaseApi(getIt<DioClient>(), getIt<RestClient>()));
 
   // data sources
   getIt.registerSingleton(PostDataSource(await getIt.getAsync<Database>()));
@@ -48,9 +54,16 @@ Future<void> setupLocator() async {
     getIt<PostDataSource>(),
   ));
 
+  getIt.registerSingleton(AuthRepository(
+    getIt<FirebaseApi>(),
+    getIt<SharedPreferenceHelper>(),
+    getIt<PostDataSource>(),
+  ));
+
   // stores:--------------------------------------------------------------------
   getIt.registerSingleton(LanguageStore(getIt<Repository>()));
   getIt.registerSingleton(PostStore(getIt<Repository>()));
   getIt.registerSingleton(ThemeStore(getIt<Repository>()));
   getIt.registerSingleton(UserStore(getIt<Repository>()));
+  getIt.registerSingleton(AuthStore(getIt<AuthRepository>()));
 }
