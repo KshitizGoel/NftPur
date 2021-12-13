@@ -33,7 +33,6 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
     PostYourNft(),
     NFTTrends(),
     Profile(),
-
   ];
 
   void onTappedBar(int index) {
@@ -55,7 +54,7 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
         selectedFontSize: 17,
         unselectedFontSize: 14,
         unselectedItemColor: Colors.white,
-         unselectedIconTheme: IconThemeData(color: Colors.white, size: 18),
+        unselectedIconTheme: IconThemeData(color: Colors.white, size: 18),
         items: [
           BottomNavigationBarItem(
             icon: Icon(
@@ -65,7 +64,6 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
               "Dashboard",
             ),
             backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
-
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.post_add),
@@ -73,7 +71,6 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
               "Post",
             ),
             backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
-
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.trending_up),
@@ -81,7 +78,6 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
               "Trends",
             ),
             backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
-
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_outlined),
@@ -89,7 +85,6 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
               "Profile",
             ),
             backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
-
           ),
         ],
         onTap: onTappedBar,

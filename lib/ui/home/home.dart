@@ -1,6 +1,7 @@
 import 'package:boilerplate/constants/assets.dart';
 import 'package:boilerplate/constants/sample_data_file.dart';
 import 'package:boilerplate/models/nft/nft_details.dart';
+import 'package:boilerplate/ui/nft_list/nft_list.dart';
 import 'package:boilerplate/ui/post_display/nft_display.dart';
 import 'package:boilerplate/ui/stories_feature/stories_feature.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   'Hi this is the random text about the NFT above !',
               nftPrice: post["price"].toString());
 
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => NftDisplay(_nftDetails , true)));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => NftDisplay(_nftDetails, true)));
         },
         child: Container(
             height: 150,
@@ -71,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 10,
                       ),
                       Text(
-                        "\$ ${post["price"]}",
+                        "Ξ ${post["price"]}",
                         style: const TextStyle(
                             fontSize: 25,
                             color: Colors.black,
@@ -140,16 +141,39 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           _storiesFeature(),
           _customRandomText('Latest NFTs'),
-          // SizedBox(
-          //   height: 20,
-          // ),
           _showCaseNftHorizontalList(),
           SizedBox(
             height: 20,
           ),
-
-          _customRandomText('NFTs for Sale'),
-
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _customRandomText('NFTs for Sale'),
+              Padding(
+                padding: const EdgeInsets.only(top: 30.0, right: 15, bottom: 10),
+                child: InkWell(
+                  onTap: () => Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => NftList())),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0 , horizontal: 10),
+                      child: Text(
+                        'See More',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orangeAccent,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
           ListView.builder(
               shrinkWrap: true,
               controller: controller,
@@ -178,9 +202,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               }),
           SizedBox(
-            height: 100,
+            height: 80,
+          ),
+          Container(
+              margin: EdgeInsets.symmetric(horizontal: 30),
+              child: _showMoreNFTs()),
+          SizedBox(
+            height: 20,
           )
-          // _newNFTToPurchase()
         ],
       ),
     );
@@ -273,8 +302,8 @@ class _HomeScreenState extends State<HomeScreen> {
             nftDescription: 'Hi this is the random text about the NFT above !',
             nftPrice: price);
 
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => NftDisplay(_nftDetails , true)));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => NftDisplay(_nftDetails, true)));
       },
       child: Ink(
         child: Padding(
@@ -310,6 +339,9 @@ class _HomeScreenState extends State<HomeScreen> {
           _customDrawerTiles('Live Auctions'),
           _customDrawerTiles('Latest Deals'),
           _customDrawerTiles('New Creations'),
+          SizedBox(
+            height: 25,
+          ),
         ],
       ),
     );
@@ -355,6 +387,30 @@ class _HomeScreenState extends State<HomeScreen> {
             textStyle: TextStyle(
                 fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20),
           )),
+    );
+  }
+
+  Widget _showMoreNFTs() {
+    return InkWell(
+      onTap: () => Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => NftList())),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.yellow.shade700.withOpacity(0.70),
+            borderRadius: BorderRadius.circular(50)),
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            child: Text(
+              'SHOW MORE',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

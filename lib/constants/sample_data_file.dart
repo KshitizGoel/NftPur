@@ -24,3 +24,5 @@ const FOOD_DATA = [
     "image": "nft_picture_4.jpeg"
   }
 ];
+
+

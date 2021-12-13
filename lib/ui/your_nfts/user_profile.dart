@@ -58,14 +58,14 @@ class _ProfileState extends State<Profile> {
               height: 150,
               decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [
-                    Colors.yellow.shade500,
-                    Colors.deepOrangeAccent
+                    Colors.lightBlueAccent.shade100,
+                    Colors.blueAccent
                   ]),
-                  borderRadius: BorderRadius.circular(50)),
+                  borderRadius: BorderRadius.circular(10)),
               child: Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: const EdgeInsets.all(2.0),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
+                  borderRadius: BorderRadius.circular(10),
                   child: Image.asset(
                     Assets.profilePicture,
                     fit: BoxFit.fill,
@@ -107,7 +107,7 @@ class _ProfileState extends State<Profile> {
                 margin:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(

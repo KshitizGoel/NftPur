@@ -42,7 +42,7 @@ Future<void> setupLocator() async {
 
   // api's:---------------------------------------------------------------------
   getIt.registerSingleton(PostApi(getIt<DioClient>(), getIt<RestClient>()));
-  getIt.registerSingleton(FirebaseApi(getIt<DioClient>(), getIt<RestClient>()));
+  getIt.registerSingleton(FirebaseApi());
 
   // data sources
   getIt.registerSingleton(PostDataSource(await getIt.getAsync<Database>()));

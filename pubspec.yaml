@@ -54,6 +54,7 @@ dependencies:
   # A powerful Http client for Dart
   dio: ^4.0.0
 
+
   # A flexible widget for user notification. Customize your text, button, duration, animations
   # and much more. For Android devs, it is made to replace Snackbars and Toasts.
   another_flushbar: ^1.10.25

@@ -56,6 +56,8 @@ class MyApp extends StatelessWidget {
               // Built-in localization of basic text for Cupertino widgets
               GlobalCupertinoLocalizations.delegate,
             ],
+
+            ///TODO :  We may have to remove the Login feature and instead ask the user to integrate your wallet
             home:
                 _userStore.isLoggedIn ? NavigationMainScreen(0) : LoginScreen(),
           );

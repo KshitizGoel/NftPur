@@ -1,18 +1,11 @@
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:boilerplate/data/sharedpref/constants/preferences.dart';
 import 'package:boilerplate/stores/auth/auth_store.dart';
-import 'package:boilerplate/stores/form/form_store.dart';
-import 'package:boilerplate/stores/theme/theme_store.dart';
-import 'package:boilerplate/utils/device/device_utils.dart';
 import 'package:boilerplate/utils/locale/app_localization.dart';
 import 'package:boilerplate/utils/routes/routes.dart';
 import 'package:boilerplate/widgets/custom_logo.dart';
 import 'package:boilerplate/widgets/empty_app_bar_widget.dart';
-import 'package:boilerplate/widgets/progress_indicator_widget.dart';
-import 'package:boilerplate/widgets/rounded_button_widget.dart';
-import 'package:boilerplate/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,11 +18,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late AuthStore _authStore;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _passwordFocusNode = FocusNode();
-  // }
 
   @override
   void didChangeDependencies() {
@@ -88,7 +76,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-
   Widget navigate(BuildContext context) {
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(Preferences.is_logged_in, true);
@@ -111,8 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
             message: message,
             title: AppLocalizations.of(context).translate('home_tv_error'),
             duration: Duration(seconds: 3),
-          )
-            ..show(context);
+          )..show(context);
         }
       });
     }
@@ -124,7 +110,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return InkWell(
       onTap: () {
         _authStore.googleSignIn();
-
 
         Future.delayed(Duration(milliseconds: 0), () {
           Navigator.of(context).pushNamedAndRemoveUntil(
@@ -146,5 +131,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
 }

@@ -68,10 +68,10 @@ class _NFTTrendsState extends State<NFTTrends> {
           height: 120,
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              borderRadius: BorderRadius.all(Radius.circular(5.0)),
               color: Colors.white,
               boxShadow: [
-                BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
+                BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 5.0),
               ]),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
@@ -95,7 +95,7 @@ class _NFTTrendsState extends State<NFTTrends> {
                       height: 10,
                     ),
                     Text(
-                      "\$$price",
+                      "Ξ$price",
                       style: const TextStyle(
                           fontSize: 25,
                           color: Colors.black,
@@ -128,7 +128,7 @@ class _NFTTrendsState extends State<NFTTrends> {
         constraints: BoxConstraints(maxHeight: 120),
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
             color: Colors.white,
             boxShadow: [
               BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),

@@ -1,10 +1,12 @@
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:boilerplate/constants/strings.dart';
 import 'package:boilerplate/models/nft/nft_details.dart';
+import 'package:boilerplate/ui/payments_page/payments_page.dart';
 import 'package:boilerplate/widgets/custom_columns.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'details_page.dart';
 import 'full_size_display.dart';
 
 class NftDisplay extends StatefulWidget {
@@ -52,7 +54,7 @@ class _NftDisplayState extends State<NftDisplay> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10.0, right: 20),
-                child: _customTextForPrice('\$${_nftDetails.nftPrice}', 25),
+                child: _customTextForPrice('Ξ${_nftDetails.nftPrice}', 25),
               ),
             ],
           ),
@@ -70,7 +72,7 @@ class _NftDisplayState extends State<NftDisplay> {
             height: 50,
           ),
           _auctionWidget('${widget._nftDetails.nftPrice}', Strings.constantTime,
-              '${widget._nftDetails.nftName}')
+              '${widget._nftDetails.nftName}', "0xag23mvd...")
         ],
       ),
     );
@@ -113,35 +115,40 @@ class _NftDisplayState extends State<NftDisplay> {
         ));
   }
 
-  Widget _auctionWidget(String price, String time, String date) {
-    return Container(
-        height: 140,
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
-            ]),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-          child: Column(
-            children: [
-              _customText('${Strings.auctionText}', 20),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  customColumn('Token ID', '0xag23mvd...', 15),
-                  customColumn('Price', '\$250', 22),
-                  customColumn('Starts From', '20', 22),
-                ],
-              )
-            ],
-          ),
-        ));
+  Widget _auctionWidget(
+      String price, String time, String date, String tokenID) {
+    return InkWell(
+      onTap: () => Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => DetailsPage(tokenID))),
+      child: Container(
+          height: 140,
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
+              ]),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+            child: Column(
+              children: [
+                _customText('${Strings.auctionText}', 20),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    customColumn('Token ID', '$tokenID', 15),
+                    customColumn('Price', 'Ξ250', 22),
+                    customColumn('Starts From', '20', 22),
+                  ],
+                )
+              ],
+            ),
+          )),
+    );
   }
 
   Widget _customFloatingActionButton(String title) {
@@ -154,6 +161,9 @@ class _NftDisplayState extends State<NftDisplay> {
             title: 'Success',
             duration: Duration(seconds: 3),
           )..show(context);
+
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentsPage(_nftDetails)));
+
         },
         child: Padding(
           padding: const EdgeInsets.only(bottom: 10.0, left: 40),
