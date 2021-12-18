@@ -4,7 +4,7 @@ import 'package:boilerplate/data/local/datasources/post/post_datasource.dart';
 import 'package:boilerplate/data/sharedpref/shared_preference_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'network/apis/firebase_api/firebase_api.dart';
+import '../network/apis/firebase_api/firebase_api.dart';
 
 class AuthRepository {
   // data source object

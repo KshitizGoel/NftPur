@@ -1,6 +1,7 @@
-import 'package:another_flushbar/flushbar_helper.dart';
+import 'package:boilerplate/stores/blockchain/blockchain_store.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class AddYourWallet extends StatefulWidget {
   @override
@@ -8,6 +9,15 @@ class AddYourWallet extends StatefulWidget {
 }
 
 class _AddYourWalletState extends State<AddYourWallet> {
+  late BlockchainStore _blockchainStore;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _blockchainStore = Provider.of<BlockchainStore>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +30,7 @@ class _AddYourWalletState extends State<AddYourWallet> {
               textStyle:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
         ),
-         backgroundColor: Colors.yellow.shade800.withOpacity(0.70),
+        backgroundColor: Colors.yellow.shade800.withOpacity(0.70),
         leading: IconButton(
           onPressed: () => Navigator.of(context).pop(),
           icon: Icon(
@@ -35,8 +45,14 @@ class _AddYourWalletState extends State<AddYourWallet> {
             height: 30,
           ),
           _addYourWalletContainer(),
-          SizedBox(height: 20,),
-          Center(child: Text('Please proceed to make your own wallet!' ,style: TextStyle(fontSize: 15),))
+          SizedBox(
+            height: 20,
+          ),
+          Center(
+              child: Text(
+            'Please proceed to make your own wallet!',
+            style: TextStyle(fontSize: 15),
+          ))
         ],
       ),
     );
@@ -44,8 +60,7 @@ class _AddYourWalletState extends State<AddYourWallet> {
 
   Widget _addYourWalletContainer() {
     return InkWell(
-      onTap: () => FlushbarHelper.createSuccess(
-          message: 'Your Wallet making is in progress!'),
+      onTap: () => _blockchainStore.generateANewWalletAddress(),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 50),
         decoration: BoxDecoration(

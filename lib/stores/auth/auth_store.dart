@@ -1,4 +1,4 @@
-import 'package:boilerplate/data/auth_repository.dart';
+import 'package:boilerplate/data/repository/auth_repository.dart';
 import 'package:boilerplate/data/sharedpref/constants/preferences.dart';
 import 'package:boilerplate/stores/error/error_store.dart';
 import 'package:firebase_auth/firebase_auth.dart';

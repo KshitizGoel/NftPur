@@ -1,14 +1,17 @@
-import 'package:boilerplate/data/auth_repository.dart';
 import 'package:boilerplate/data/local/datasources/post/post_datasource.dart';
+import 'package:boilerplate/data/network/apis/blockchain/blockchain_services.dart';
 import 'package:boilerplate/data/network/apis/firebase_api/firebase_api.dart';
 import 'package:boilerplate/data/network/apis/posts/post_api.dart';
 import 'package:boilerplate/data/network/dio_client.dart';
 import 'package:boilerplate/data/network/rest_client.dart';
-import 'package:boilerplate/data/repository.dart';
+import 'package:boilerplate/data/repository/auth_repository.dart';
+import 'package:boilerplate/data/repository/blockchain_repository.dart';
+import 'package:boilerplate/data/repository/repository.dart';
 import 'package:boilerplate/data/sharedpref/shared_preference_helper.dart';
 import 'package:boilerplate/di/module/local_module.dart';
 import 'package:boilerplate/di/module/network_module.dart';
 import 'package:boilerplate/stores/auth/auth_store.dart';
+import 'package:boilerplate/stores/blockchain/blockchain_store.dart';
 import 'package:boilerplate/stores/error/error_store.dart';
 import 'package:boilerplate/stores/form/form_store.dart';
 import 'package:boilerplate/stores/language/language_store.dart';
@@ -43,6 +46,7 @@ Future<void> setupLocator() async {
   // api's:---------------------------------------------------------------------
   getIt.registerSingleton(PostApi(getIt<DioClient>(), getIt<RestClient>()));
   getIt.registerSingleton(FirebaseApi());
+  getIt.registerSingleton(BlockchainServices());
 
   // data sources
   getIt.registerSingleton(PostDataSource(await getIt.getAsync<Database>()));
@@ -60,10 +64,15 @@ Future<void> setupLocator() async {
     getIt<PostDataSource>(),
   ));
 
+  getIt.registerSingleton(BlockchainRepository(
+    getIt<BlockchainServices>(),
+  ));
+
   // stores:--------------------------------------------------------------------
   getIt.registerSingleton(LanguageStore(getIt<Repository>()));
   getIt.registerSingleton(PostStore(getIt<Repository>()));
   getIt.registerSingleton(ThemeStore(getIt<Repository>()));
   getIt.registerSingleton(UserStore(getIt<Repository>()));
   getIt.registerSingleton(AuthStore(getIt<AuthRepository>()));
+  getIt.registerSingleton(BlockchainStore(getIt<BlockchainRepository>()));
 }

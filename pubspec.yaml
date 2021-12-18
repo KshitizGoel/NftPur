@@ -92,6 +92,7 @@ dependencies:
   web3dart: ^2.3.2
 #  flutter_web3: ^2.1.6
 #  wallet_connect: ^1.0.2
+  hex: ^0.2.0
   bip39: ^1.0.6
   ed25519_hd_key: ^2.2.0
 
