@@ -33,3 +33,23 @@ class CustomProgressIndicatorWidget extends StatelessWidget {
     );
   }
 }
+
+Widget customProgressIndicator() {
+  return Center(
+    child: Container(
+      height: 40,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [
+            BoxShadow(color: Colors.grey, blurRadius: 5)
+          ]),
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: CircularProgressIndicator(
+          color: Colors.yellow.shade700,
+        ),
+      ),
+    ),
+  );
+}

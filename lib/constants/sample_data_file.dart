@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 const FOOD_DATA = [
   {
     "name": "Gangsta Rodeo",
@@ -24,5 +26,3 @@ const FOOD_DATA = [
     "image": "nft_picture_4.jpeg"
   }
 ];
-
-

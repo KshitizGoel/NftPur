@@ -1,13 +1,15 @@
 import 'package:boilerplate/constants/assets.dart';
-import 'package:boilerplate/data/sharedpref/constants/preferences.dart';
 import 'package:boilerplate/models/nft/nft_details.dart';
+import 'package:boilerplate/stores/auth/auth_store.dart';
 import 'package:boilerplate/ui/post_display/nft_display.dart';
 import 'package:boilerplate/ui/your_nfts/wallet.dart';
 import 'package:boilerplate/utils/routes/routes.dart';
 import 'package:boilerplate/widgets/custom_columns.dart';
+import 'package:boilerplate/widgets/custom_logo.dart';
+import 'package:boilerplate/widgets/progress_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -17,6 +19,15 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  late AuthStore _authStore;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _authStore = Provider.of<AuthStore>(context);
+    _authStore.getUserDetails();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,11 +45,11 @@ class _ProfileState extends State<Profile> {
         centerTitle: false,
         actions: [
           IconButton(
-              onPressed: () =>
-                  SharedPreferences.getInstance().then((preference) {
-                    preference.setBool(Preferences.is_logged_in, false);
-                    Navigator.of(context).pushReplacementNamed(Routes.login);
-                  }),
+              onPressed: () {
+                _authStore.logoutTheUser();
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(Routes.login, (route) => false);
+              },
               icon: Icon(
                 Icons.logout,
                 color: Colors.black,
@@ -50,52 +61,60 @@ class _ProfileState extends State<Profile> {
           SizedBox(
             height: 100,
           ),
-          InkWell(
-            onTap: () => Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => PublicWallet())),
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 120),
-              height: 150,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [
-                    Colors.lightBlueAccent.shade100,
-                    Colors.blueAccent
-                  ]),
-                  borderRadius: BorderRadius.circular(10)),
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    Assets.profilePicture,
-                    fit: BoxFit.fill,
+          _authStore.firebaseUser!.providerData.first.photoURL != null
+              ? InkWell(
+                  onTap: () =>
+                      Navigator.of(context).pushNamed(Routes.addYourWallet),
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 120),
+                    height: 150,
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: [
+                          Colors.lightBlueAccent.shade100,
+                          Colors.blueAccent
+                        ]),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          _authStore.firebaseUser!.providerData.first.photoURL!,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
                   ),
+                )
+              : CustomLogo(150),
+          SizedBox(
+            height: 20,
+          ),
+          _authStore.firebaseUser?.displayName != null
+              ? Center(
+                  child: Text(_authStore.firebaseUser!.displayName!,
+                      style: GoogleFonts.italiana(
+                        textStyle: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w900),
+                      )),
+                )
+              : customProgressIndicator(),
+          SizedBox(
+            height: 20,
+          ),
+          _authStore.firebaseUser?.email != null
+              ? Center(
+                  child: Text(_authStore.firebaseUser!.email!,
+                      style: GoogleFonts.italiana(
+                        textStyle: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.blueAccent),
+                      )),
+                )
+              : CircularProgressIndicator(
+                  strokeWidth: 5,
                 ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Center(
-            child: Text('Kshitiz Goel',
-                style: GoogleFonts.italiana(
-                  textStyle: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w900),
-                )),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Center(
-            child: Text('kshitizgoel11@gmail.com',
-                style: GoogleFonts.italiana(
-                  textStyle: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.blueAccent),
-                )),
-          ),
           SizedBox(
             height: 20,
           ),
@@ -158,8 +177,8 @@ class _ProfileState extends State<Profile> {
 
   Widget _showNFTContent(NftDetails _nftDetails) {
     return InkWell(
-      onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => NftDisplay(_nftDetails , false))),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => NftDisplay(_nftDetails, false))),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
         decoration: BoxDecoration(

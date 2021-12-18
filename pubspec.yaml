@@ -36,6 +36,8 @@ dependencies:
   # A Dependency for Instagram like stories feature
   story_view: ^0.13.1
 
+  uuid: ^3.0.5
+
 
   # Flogs, a powerful logging framework
 #  f_logs: ^1.2.2
@@ -84,11 +86,14 @@ dependencies:
   firebase_core: ^1.10.0
   firebase_auth: ^3.2.0
   google_sign_in: ^5.2.1
+  firebase_database: ^9.0.3
 
   #Blockchain dependencies
   web3dart: ^2.3.2
-  flutter_web3: ^2.1.6
-  wallet_connect: ^1.0.2
+#  flutter_web3: ^2.1.6
+#  wallet_connect: ^1.0.2
+  bip39: ^1.0.6
+  ed25519_hd_key: ^2.2.0
 
   #Some basic Filters that can be used
   photofilters: ^3.0.1
