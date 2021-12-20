@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: const TextStyle(
                             fontSize: 25,
                             color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                            ),
                       )
                     ],
                   ),
@@ -127,15 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontSize: 25),
             )),
         backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () => _scaffoldKey.currentState!.openDrawer(),
-            color: Colors.black,
-          ),
-        ],
       ),
-      drawer: _customDrawer(),
       body: ListView(
         physics: AlwaysScrollableScrollPhysics(),
         children: [
@@ -151,7 +143,8 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               _customRandomText('NFTs for Sale'),
               Padding(
-                padding: const EdgeInsets.only(top: 30.0, right: 15, bottom: 10),
+                padding:
+                    const EdgeInsets.only(top: 30.0, right: 15, bottom: 10),
                 child: InkWell(
                   onTap: () => Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) => NftList())),
@@ -160,7 +153,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.black,
                         borderRadius: BorderRadius.circular(20)),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0 , horizontal: 10),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 10),
                       child: Text(
                         'See More',
                         style: TextStyle(
@@ -324,71 +318,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   /// TODO : To be changed here!
-  Widget _customDrawer() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 20.0),
-      child: ListView(
-        children: [
-          Container(
-            height: 120,
-            decoration: BoxDecoration(
-                color: Colors.yellow.shade700,
-                borderRadius: BorderRadius.circular(10)),
-            child: Center(child: _customRandomTextTwo('Welcome to NFTPur')),
-          ),
-          _customDrawerTiles('Live Auctions'),
-          _customDrawerTiles('Latest Deals'),
-          _customDrawerTiles('New Creations'),
-          SizedBox(
-            height: 25,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _customDrawerTiles(String text) {
-    return InkWell(
-      onTap: () => print('Drawer menu item is tapped!'),
-      child: Container(
-        height: 80,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: _customRandomTextTwo(text),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 15.0),
-                child: Icon(
-                  Icons.keyboard_arrow_right_outlined,
-                  color: Colors.black,
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _customRandomTextTwo(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15, bottom: 10),
-      child: Text('$text',
-          style: GoogleFonts.italiana(
-            textStyle: TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20),
-          )),
-    );
-  }
 
   Widget _showMoreNFTs() {
     return InkWell(
@@ -397,7 +326,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Container(
         decoration: BoxDecoration(
             color: Colors.yellow.shade700.withOpacity(0.70),
-            borderRadius: BorderRadius.circular(50)),
+            borderRadius: BorderRadius.circular(10)),
         child: Center(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),

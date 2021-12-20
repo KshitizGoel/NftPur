@@ -47,6 +47,7 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
       resizeToAvoidBottomInset: false,
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 10,
         currentIndex: _currentIndex,
         backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
         selectedIconTheme: IconThemeData(color: Colors.black, size: 25),

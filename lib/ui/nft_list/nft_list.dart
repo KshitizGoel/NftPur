@@ -69,9 +69,9 @@ class _NftListState extends State<NftList> {
                       Text(
                         "Ξ ${post["price"]}",
                         style: const TextStyle(
-                            fontSize: 25,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                          fontSize: 25,
+                          color: Colors.black,
+                        ),
                       )
                     ],
                   ),

@@ -97,9 +97,9 @@ class _NFTTrendsState extends State<NFTTrends> {
                     Text(
                       "Ξ$price",
                       style: const TextStyle(
-                          fontSize: 25,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
+                        fontSize: 25,
+                        color: Colors.black,
+                      ),
                     )
                   ],
                 ),
