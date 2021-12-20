@@ -1,4 +1,5 @@
 import 'package:boilerplate/data/network/apis/blockchain/blockchain_services.dart';
+import 'package:boilerplate/models/user/user.dart';
 import 'package:web3dart/credentials.dart';
 
 class BlockchainRepository {
@@ -14,4 +15,27 @@ class BlockchainRepository {
       throw onError;
     });
   }
+
+  Future<void> storeTheUserDetails(UserData userData, String publicKey) async {
+    return await _blockchainServices
+        .addUserDetails(userData, publicKey)
+        .then((value) {
+      print(
+          'Successfully executed storing the User Details in repo level!!!!!');
+    }).catchError((onError) {
+      print('Getting the error in storeTheUserDetails in repo level!');
+      throw onError;
+    });
+  }
+
+  Future <bool?> checkForTheAvailableWallet(UserData userData) async{
+    return await _blockchainServices.checkForTheWallet(userData).then((value) {
+      print('Getting the value here for checkTheAvailableWallet!!!! $value');
+      return value;
+    }).catchError((onError){
+      print('Getting the error in checkTheAvailableWallet in repo level');
+      throw onError;
+    });
+  }
+
 }

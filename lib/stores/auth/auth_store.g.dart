@@ -39,6 +39,21 @@ mixin _$AuthStore on _AuthStore, Store {
     });
   }
 
+  final _$userDetailsAtom = Atom(name: '_AuthStore.userDetails');
+
+  @override
+  UserData? get userDetails {
+    _$userDetailsAtom.reportRead();
+    return super.userDetails;
+  }
+
+  @override
+  set userDetails(UserData? value) {
+    _$userDetailsAtom.reportWrite(value, super.userDetails, () {
+      super.userDetails = value;
+    });
+  }
+
   final _$googleSignInAsyncAction = AsyncAction('_AuthStore.googleSignIn');
 
   @override
@@ -70,7 +85,8 @@ mixin _$AuthStore on _AuthStore, Store {
   String toString() {
     return '''
 signedInUser: ${signedInUser},
-firebaseUser: ${firebaseUser}
+firebaseUser: ${firebaseUser},
+userDetails: ${userDetails}
     ''';
   }
 }

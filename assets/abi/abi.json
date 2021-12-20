@@ -2,14 +2,9 @@
   {
     "inputs": [
       {
-        "internalType": "string",
-        "name": "name_",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "symbol_",
-        "type": "string"
+        "internalType": "uint256",
+        "name": "total",
+        "type": "uint256"
       }
     ],
     "stateMutability": "nonpayable",
@@ -21,7 +16,7 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "owner",
+        "name": "tokenOwner",
         "type": "address"
       },
       {
@@ -33,7 +28,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "value",
+        "name": "tokens",
         "type": "uint256"
       }
     ],
@@ -58,7 +53,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "value",
+        "name": "tokens",
         "type": "uint256"
       }
     ],
@@ -74,7 +69,7 @@
       },
       {
         "internalType": "address",
-        "name": "spender",
+        "name": "delegate",
         "type": "address"
       }
     ],
@@ -93,12 +88,12 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "spender",
+        "name": "delegate",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "numTokens",
         "type": "uint256"
       }
     ],
@@ -117,7 +112,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "account",
+        "name": "tokenOwner",
         "type": "address"
       }
     ],
@@ -137,60 +132,12 @@
     "name": "decimals",
     "outputs": [
       {
-        "internalType": "uint8",
+        "internalType": "uint256",
         "name": "",
-        "type": "uint8"
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "subtractedValue",
-        "type": "uint256"
-      }
-    ],
-    "name": "decreaseAllowance",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "addedValue",
-        "type": "uint256"
-      }
-    ],
-    "name": "increaseAllowance",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -236,12 +183,12 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "recipient",
+        "name": "receiver",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "numTokens",
         "type": "uint256"
       }
     ],
@@ -260,17 +207,17 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "sender",
+        "name": "owner",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "recipient",
+        "name": "buyer",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "numTokens",
         "type": "uint256"
       }
     ],

@@ -1,9 +1,12 @@
+import 'package:boilerplate/models/user/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseApi {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  FirebaseFirestore reference = FirebaseFirestore.instance;
 
   Future<dynamic> handleGoogleSignIn() async {
     try {
@@ -16,7 +19,6 @@ class FirebaseApi {
         idToken: googleSignInAuthentication.idToken,
       );
       await _auth.signInWithCredential(credential);
-      print('Executing the Google Sign in successfully!');
       return credential;
     } on FirebaseAuthException catch (e) {
       print('Terminating the Google Sign In with the error XXXXX' +
@@ -31,8 +33,6 @@ class FirebaseApi {
   User? getUserDetails() {
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      print(
-          'Getting the user details here 456789\nname:$user');
       return user;
     } catch (onError) {
       print('Getting the error in getUserDetails API!!\nerror:$onError');
@@ -44,4 +44,6 @@ class FirebaseApi {
     await _googleSignIn.signOut();
     await _auth.signOut();
   }
+
+
 }

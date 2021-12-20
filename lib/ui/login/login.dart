@@ -1,4 +1,5 @@
 import 'package:another_flushbar/flushbar_helper.dart';
+import 'package:boilerplate/constants/assets.dart';
 import 'package:boilerplate/data/sharedpref/constants/preferences.dart';
 import 'package:boilerplate/stores/auth/auth_store.dart';
 import 'package:boilerplate/utils/locale/app_localization.dart';
@@ -6,7 +7,6 @@ import 'package:boilerplate/utils/routes/routes.dart';
 import 'package:boilerplate/widgets/custom_logo.dart';
 import 'package:boilerplate/widgets/empty_app_bar_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,7 +17,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   late AuthStore _authStore;
-
 
   @override
   void didChangeDependencies() {
@@ -70,6 +69,8 @@ class _LoginScreenState extends State<LoginScreen> {
             CustomLogo(100),
             SizedBox(height: 24.0),
             _buildGoogleSignInButton(),
+
+            // Observer(builder: (context))
           ],
         ),
       ),
@@ -117,16 +118,35 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       },
       child: Container(
-        color: Colors.orangeAccent,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          child: Text(
-            'Google Sign In',
-            style: GoogleFonts.italiana(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
+        height: 60,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10)]),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 40.0 , top: 10 , bottom: 10),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
+                  Assets.signIn,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
-          ),
+            Padding(
+              padding: const EdgeInsets.only(right: 40.0),
+              child: Center(
+                child: Text(
+                  'Sign in with Google',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black, fontSize: 18),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );

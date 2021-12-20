@@ -25,19 +25,43 @@ mixin _$BlockchainStore on _BlockchainStore, Store {
     });
   }
 
+  final _$hasWalletAtom = Atom(name: '_BlockchainStore.hasWallet');
+
+  @override
+  bool get hasWallet {
+    _$hasWalletAtom.reportRead();
+    return super.hasWallet;
+  }
+
+  @override
+  set hasWallet(bool value) {
+    _$hasWalletAtom.reportWrite(value, super.hasWallet, () {
+      super.hasWallet = value;
+    });
+  }
+
   final _$generateANewWalletAddressAsyncAction =
       AsyncAction('_BlockchainStore.generateANewWalletAddress');
 
   @override
-  Future<void> generateANewWalletAddress() {
+  Future<void> generateANewWalletAddress(UserData userData) {
     return _$generateANewWalletAddressAsyncAction
-        .run(() => super.generateANewWalletAddress());
+        .run(() => super.generateANewWalletAddress(userData));
+  }
+
+  final _$storingTheUserDetailsAsyncAction =
+      AsyncAction('_BlockchainStore.storingTheUserDetails');
+
+  @override
+  Future<void> storingTheUserDetails(UserData userData, String publicKey) {
+    return _$storingTheUserDetailsAsyncAction
+        .run(() => super.storingTheUserDetails(userData, publicKey));
   }
 
   @override
   String toString() {
     return '''
-
+hasWallet: ${hasWallet}
     ''';
   }
 }
