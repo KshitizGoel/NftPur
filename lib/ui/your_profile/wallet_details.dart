@@ -1,3 +1,5 @@
+import 'package:boilerplate/constants/assets.dart';
+import 'package:boilerplate/stores/auth/auth_store.dart';
 import 'package:boilerplate/stores/blockchain/blockchain_store.dart';
 import 'package:boilerplate/ui/nft_list/nft_list.dart';
 import 'package:boilerplate/widgets/progress_indicator_widget.dart';
@@ -13,12 +15,14 @@ class WalletDetails extends StatefulWidget {
 
 class _WalletDetailsState extends State<WalletDetails> {
   late BlockchainStore _blockchainStore;
+  late AuthStore _authStore;
 
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     _blockchainStore = Provider.of<BlockchainStore>(context);
+    _authStore = Provider.of<AuthStore>(context);
   }
 
   @override
@@ -43,7 +47,7 @@ class _WalletDetailsState extends State<WalletDetails> {
         ),
         body: Observer(
           builder: (context) {
-            return _blockchainStore.hasWallet
+            return _authStore.hasWallet
                 ? _buildMainBody()
                 : customProgressIndicator();
           },
@@ -66,7 +70,27 @@ class _WalletDetailsState extends State<WalletDetails> {
             // SizedBox(
             //   height: 20,
             // ),
-            _buyNft()
+            _buyNft(),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0, top: 20),
+              child: Text(
+                'Recent Transactions',
+                style: GoogleFonts.italiana(
+                    textStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: 18)),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            _recentTransactionWidget(Assets.nftTrending4, "Bored Ape", "Ξ 250"),
+            _recentTransactionWidget(Assets.nftPicture3, "Mokens", "Ξ 120"),
+            _recentTransactionWidget(Assets.nftTrending1, "Enjine", "Ξ 460"),
           ],
         ),
         Padding(
@@ -82,7 +106,7 @@ class _WalletDetailsState extends State<WalletDetails> {
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }
@@ -158,14 +182,59 @@ class _WalletDetailsState extends State<WalletDetails> {
     );
   }
 
-  Widget _walletDetails() {
+  Widget _recentTransactionWidget(
+      String imageAddress, String title, String price) {
     return Container(
+        margin: EdgeInsets.symmetric(horizontal: 30),
         decoration: BoxDecoration(
             color: Colors.white,
             boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10)],
-            borderRadius: BorderRadius.circular(10)),
-        child: Center(
-          child: Text('Not sure to be displayed!!!!'),
+            borderRadius: BorderRadius.circular(5)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.asset(
+                      imageAddress,
+                      height: 50,
+                      width: 50,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '$title',
+                        style: GoogleFonts.italiana(
+                            textStyle: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Center(
+                child: Text(
+                  price,
+                  style: TextStyle(
+                      color: Colors.green,
+                      // fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                ),
+              )
+            ],
+          ),
         ));
   }
 
@@ -209,7 +278,7 @@ class _WalletDetailsState extends State<WalletDetails> {
           child: Text(
             '$text',
             style: TextStyle(
-             // fontWeight: FontWeight.bold,
+              // fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
           ),

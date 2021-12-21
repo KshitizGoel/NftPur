@@ -1,3 +1,4 @@
+import 'package:boilerplate/stores/auth/auth_store.dart';
 import 'package:boilerplate/stores/blockchain/blockchain_store.dart';
 import 'package:boilerplate/ui/your_profile/add_your_wallet.dart';
 import 'package:boilerplate/ui/your_profile/wallet_details.dart';
@@ -15,6 +16,7 @@ class Wallet extends StatefulWidget {
 
 class _WalletState extends State<Wallet> {
   late BlockchainStore _blockchainStore;
+  late AuthStore _authStore;
 
   final List<Widget> _children = [
     AddYourWallet(),
@@ -26,6 +28,7 @@ class _WalletState extends State<Wallet> {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     _blockchainStore = Provider.of<BlockchainStore>(context);
+    _authStore = Provider.of<AuthStore>(context);
   }
 
   @override
@@ -34,10 +37,9 @@ class _WalletState extends State<Wallet> {
       appBar: EmptyAppBar(),
       body: Observer(
         builder: (context) {
-          return _blockchainStore.hasWallet ? _children[1] : _children[0];
+          return _authStore.hasWallet ? _children[1] : _children[0];
         },
       ),
     );
   }
-
 }

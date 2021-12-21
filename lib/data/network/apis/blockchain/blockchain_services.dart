@@ -47,12 +47,10 @@ class BlockchainServices {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         print('Document data: ${documentSnapshot.data()}');
-        if (documentSnapshot.get('hasWallet') == true)
-          return true;
-        else
-          return false;
+        if (documentSnapshot.get('hasWallet') == true) return true;
       } else {
         print('Document does not exist on the database');
+        return false;
       }
     }).catchError((onError) {
       print('Getting the error in checkForWallet in API level!!!');

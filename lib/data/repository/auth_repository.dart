@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:boilerplate/data/local/datasources/post/post_datasource.dart';
+import 'package:boilerplate/data/network/apis/blockchain/blockchain_services.dart';
 import 'package:boilerplate/data/sharedpref/shared_preference_helper.dart';
+import 'package:boilerplate/models/user/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../network/apis/firebase_api/firebase_api.dart';
@@ -12,13 +14,14 @@ class AuthRepository {
 
   // api objects
   final FirebaseApi _firebaseApi;
+  final BlockchainServices _blockchainServices;
 
   // shared pref object
   final SharedPreferenceHelper _sharedPrefsHelper;
 
   // constructor
-  AuthRepository(
-      this._firebaseApi, this._sharedPrefsHelper, this._postDataSource);
+  AuthRepository(this._blockchainServices, this._firebaseApi,
+      this._sharedPrefsHelper, this._postDataSource);
 
   Future<dynamic> googleSignIn() async {
     return await _firebaseApi.handleGoogleSignIn().then((value) {
@@ -30,7 +33,7 @@ class AuthRepository {
     });
   }
 
-  User? getUserDetails()  {
+  User? getUserDetails() {
     try {
       print('Getting the user Details in Repo level!');
       return _firebaseApi.getUserDetails();
@@ -40,12 +43,22 @@ class AuthRepository {
     }
   }
 
-  Future <dynamic> logoutTheUser() async{
+  Future<dynamic> logoutTheUser() async {
     return await _firebaseApi.signOutFromGoogle().then((value) {
       print('Successfully executed the sign out !');
       return value;
-    }).catchError((onError){
+    }).catchError((onError) {
       print('Getting the error in Logging Out from the Repo level !!');
+      throw onError;
+    });
+  }
+
+  Future<bool?> checkForTheAvailableWallet(UserData userData) async {
+    return await _blockchainServices.checkForTheWallet(userData).then((value) {
+      print('Getting the value here for checkTheAvailableWallet!!!! $value');
+      return value;
+    }).catchError((onError) {
+      print('Getting the error in checkTheAvailableWallet in repo level');
       throw onError;
     });
   }

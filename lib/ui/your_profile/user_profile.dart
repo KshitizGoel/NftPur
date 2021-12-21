@@ -24,24 +24,22 @@ class _ProfileState extends State<Profile> {
   late BlockchainStore _blockchainStore;
 
   @override
-  void didChangeDependencies() {
+  Future<void> didChangeDependencies() async {
     super.didChangeDependencies();
     _authStore = Provider.of<AuthStore>(context);
     _blockchainStore = Provider.of<BlockchainStore>(context);
     _authStore.getUserDetails();
 
-    _checkWalletAvailability();
-
-
+    await _checkWalletAvailability();
   }
 
-  Future <void> _checkWalletAvailability()async {
+  Future<void> _checkWalletAvailability() async {
     UserData _userData = UserData(
         displayName: _authStore.firebaseUser!.displayName,
         email: _authStore.firebaseUser!.email,
         photoURL: _authStore.firebaseUser!.photoURL,
         uid: _authStore.firebaseUser!.uid);
-    await _blockchainStore.checkForTheAvailableWallet(_userData);
+    await _authStore.checkForTheAvailableWallet(_userData);
   }
 
   @override
@@ -96,13 +94,14 @@ class _ProfileState extends State<Profile> {
             margin: EdgeInsets.symmetric(horizontal: 120),
             height: 150,
             decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-                  Colors.lightBlueAccent.shade100,
-                  Colors.blueAccent
-                ]),
-                borderRadius: BorderRadius.circular(10)),
+              color: Colors.indigo,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(color: Colors.blue, blurRadius: 20.0),
+              ],
+            ),
             child: Padding(
-              padding: const EdgeInsets.all(2.0),
+              padding: const EdgeInsets.all(3.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
@@ -178,7 +177,7 @@ class _ProfileState extends State<Profile> {
         physics: ScrollPhysics(),
         crossAxisCount: 3,
         shrinkWrap: true,
-        children: List.generate(9, (index) {
+        children: List.generate(6, (index) {
           NftDetails _nftDetails = NftDetails(
               nftName: 'Gangsta Rodeo',
               imageAddress: Assets.nftPicture3,

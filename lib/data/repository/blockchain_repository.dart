@@ -28,14 +28,6 @@ class BlockchainRepository {
     });
   }
 
-  Future <bool?> checkForTheAvailableWallet(UserData userData) async{
-    return await _blockchainServices.checkForTheWallet(userData).then((value) {
-      print('Getting the value here for checkTheAvailableWallet!!!! $value');
-      return value;
-    }).catchError((onError){
-      print('Getting the error in checkTheAvailableWallet in repo level');
-      throw onError;
-    });
-  }
+
 
 }

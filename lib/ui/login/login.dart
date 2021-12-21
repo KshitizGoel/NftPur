@@ -109,8 +109,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildGoogleSignInButton() {
     return InkWell(
-      onTap: () {
-        _authStore.googleSignIn();
+      onTap: () async {
+        await _authStore.googleSignIn();
 
         Future.delayed(Duration(milliseconds: 0), () {
           Navigator.of(context).pushNamedAndRemoveUntil(
@@ -121,13 +121,13 @@ class _LoginScreenState extends State<LoginScreen> {
         height: 60,
         decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(5),
             boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10)]),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 40.0 , top: 10 , bottom: 10),
+              padding: const EdgeInsets.only(left: 40.0, top: 10, bottom: 10),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.asset(
@@ -142,7 +142,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Text(
                   'Sign in with Google',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.black, fontSize: 18),
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 18),
                 ),
               ),
             )

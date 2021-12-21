@@ -47,16 +47,4 @@ abstract class _BlockchainStore with Store {
       throw onError;
     });
   }
-
-  @action
-  Future<void> checkForTheAvailableWallet(UserData userData) async {
-    return _blockchainRepository
-        .checkForTheAvailableWallet(userData)
-        .then((value) {
-      hasWallet = value!;
-    }).catchError((onError) {
-      print('Getting the error in checkForTheAvailableWallet in store level!');
-      throw onError;
-    });
-  }
 }

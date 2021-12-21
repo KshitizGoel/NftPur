@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   final ThemeStore _themeStore = ThemeStore(getIt<Repository>());
   final PostStore _postStore = PostStore(getIt<Repository>());
   final LanguageStore _languageStore = LanguageStore(getIt<Repository>());
-  final UserStore _userStore = UserStore(getIt<Repository>());
+  // final UserStore _userStore = UserStore(getIt<Repository>());
   final AuthStore _authStore = AuthStore(getIt<AuthRepository>());
   final BlockchainStore _blockchainStore =
       BlockchainStore(getIt<BlockchainRepository>());
@@ -63,8 +63,9 @@ class MyApp extends StatelessWidget {
             ],
 
             ///TODO :  We may have to remove the Login feature and instead ask the user to integrate your wallet
-            home:
-                _userStore.isLoggedIn ? NavigationMainScreen(0) : LoginScreen(),
+            home: _authStore.signedInUser
+                ? NavigationMainScreen(0)
+                : LoginScreen(),
           );
         },
       ),

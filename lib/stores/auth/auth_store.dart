@@ -38,6 +38,9 @@ abstract class _AuthStore with Store {
   @observable
   UserData? userDetails;
 
+  @observable
+  bool hasWallet = false;
+
   @action
   Future<void> googleSignIn() async {
     return await _authRepository.googleSignIn().then((value) {
@@ -75,10 +78,20 @@ abstract class _AuthStore with Store {
       });
       print('Successfully logged out the user! ');
       signedInUser = false;
-
+      hasWallet = false;
       return value;
     }).catchError((onError) {
       print('Getting the error in logging out the error from Store level!');
+      throw onError;
+    });
+  }
+
+  @action
+  Future<void> checkForTheAvailableWallet(UserData userData) async {
+    return _authRepository.checkForTheAvailableWallet(userData).then((value) {
+      hasWallet = value!;
+    }).catchError((onError) {
+      print('Getting the error in checkForTheAvailableWallet in store level!');
       throw onError;
     });
   }

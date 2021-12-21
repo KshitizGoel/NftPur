@@ -59,6 +59,7 @@ Future<void> setupLocator() async {
   ));
 
   getIt.registerSingleton(AuthRepository(
+    getIt<BlockchainServices>(),
     getIt<FirebaseApi>(),
     getIt<SharedPreferenceHelper>(),
     getIt<PostDataSource>(),
