@@ -9,19 +9,18 @@ part of 'blockchain_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$BlockchainStore on _BlockchainStore, Store {
-  final _$_ethereumAddressAtom =
-      Atom(name: '_BlockchainStore._ethereumAddress');
+  final _$ethereumAddressAtom = Atom(name: '_BlockchainStore.ethereumAddress');
 
   @override
-  EthereumAddress? get _ethereumAddress {
-    _$_ethereumAddressAtom.reportRead();
-    return super._ethereumAddress;
+  EthereumAddress? get ethereumAddress {
+    _$ethereumAddressAtom.reportRead();
+    return super.ethereumAddress;
   }
 
   @override
-  set _ethereumAddress(EthereumAddress? value) {
-    _$_ethereumAddressAtom.reportWrite(value, super._ethereumAddress, () {
-      super._ethereumAddress = value;
+  set ethereumAddress(EthereumAddress? value) {
+    _$ethereumAddressAtom.reportWrite(value, super.ethereumAddress, () {
+      super.ethereumAddress = value;
     });
   }
 
@@ -37,6 +36,21 @@ mixin _$BlockchainStore on _BlockchainStore, Store {
   set hasWallet(bool value) {
     _$hasWalletAtom.reportWrite(value, super.hasWallet, () {
       super.hasWallet = value;
+    });
+  }
+
+  final _$balanceAtom = Atom(name: '_BlockchainStore.balance');
+
+  @override
+  String? get balance {
+    _$balanceAtom.reportRead();
+    return super.balance;
+  }
+
+  @override
+  set balance(String? value) {
+    _$balanceAtom.reportWrite(value, super.balance, () {
+      super.balance = value;
     });
   }
 
@@ -58,10 +72,20 @@ mixin _$BlockchainStore on _BlockchainStore, Store {
         .run(() => super.storingTheUserDetails(userData, publicKey));
   }
 
+  final _$getBalanceAsyncAction = AsyncAction('_BlockchainStore.getBalance');
+
+  @override
+  Future<void> getBalance(EthereumAddress walletAddress, Web3Client ethClient) {
+    return _$getBalanceAsyncAction
+        .run(() => super.getBalance(walletAddress, ethClient));
+  }
+
   @override
   String toString() {
     return '''
-hasWallet: ${hasWallet}
+ethereumAddress: ${ethereumAddress},
+hasWallet: ${hasWallet},
+balance: ${balance}
     ''';
   }
 }

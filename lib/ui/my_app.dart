@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
   final ThemeStore _themeStore = ThemeStore(getIt<Repository>());
   final PostStore _postStore = PostStore(getIt<Repository>());
   final LanguageStore _languageStore = LanguageStore(getIt<Repository>());
-  // final UserStore _userStore = UserStore(getIt<Repository>());
   final AuthStore _authStore = AuthStore(getIt<AuthRepository>());
   final BlockchainStore _blockchainStore =
       BlockchainStore(getIt<BlockchainRepository>());

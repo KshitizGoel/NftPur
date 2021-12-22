@@ -22,4 +22,7 @@ class Assets {
   static const String profilePhoto3 = "assets/images/profile_photo_3.jpeg";
   static const String profilePhoto4 = "assets/images/profile_photo_4.jpeg";
   static const String profilePhoto5 = "assets/images/profile_photo_5.jpg";
+
+  ///Smart contracts
+  static const String walletContractAddress = "assets/abi/abi.json";
 }

@@ -1,13 +1,18 @@
 import 'package:bip39/bip39.dart' as bip39;
+import 'package:boilerplate/constants/assets.dart';
 import 'package:boilerplate/models/user/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ed25519_hd_key/ed25519_hd_key.dart';
+import 'package:flutter/services.dart';
 import 'package:hex/hex.dart';
 import 'package:web3dart/credentials.dart';
+import 'package:web3dart/web3dart.dart';
 
 class BlockchainServices {
   FirebaseFirestore reference = FirebaseFirestore.instance;
   var privateKey;
+
+  //Smart Contract necessary initiations
 
   Future<dynamic> createTheWalletAddress() async {
     String mnemonic = bip39.generateMnemonic();
@@ -56,5 +61,36 @@ class BlockchainServices {
       print('Getting the error in checkForWallet in API level!!!');
       throw onError;
     });
+  }
+
+  /// Dealing with the Smart Contracts!!!!
+  /// TODO : WE MAY HAVE TO MAKE SOME CHANGES IN THE CURRENT SMART CONTRACTS!!!!
+
+  Future<DeployedContract> loadWalletContract() async {
+    String abi = await rootBundle.loadString(Assets.walletContractAddress);
+
+    ///TODO : This contract address will be obtained only upon the new deployment of the smart contract!!! So it may change!!
+    String contractAddress = "0xd9145CCE52D386f254917e481eB44e9943F39138";
+
+    final contract = DeployedContract(ContractAbi.fromJson(abi, 'NFTPur'),
+        EthereumAddress.fromHex(contractAddress));
+    return contract;
+  }
+
+  Future<List<dynamic>> query(
+      String functionName, List<dynamic> args, Web3Client ethClient) async {
+    final contract = await loadWalletContract();
+    final ethFunction = contract.function(functionName);
+
+    final result = await ethClient.call(
+        contract: contract, function: ethFunction, params: args);
+    return result;
+  }
+
+  Future<dynamic> getWalletBalance(
+      EthereumAddress walletAddress, Web3Client ethClient) async {
+    List<dynamic> result = await query('balanceOf', [walletAddress], ethClient);
+
+    return result[0];
   }
 }

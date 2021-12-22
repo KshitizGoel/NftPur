@@ -6,7 +6,9 @@ import 'package:boilerplate/widgets/progress_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
+import 'package:web3dart/web3dart.dart';
 
 class WalletDetails extends StatefulWidget {
   @override
@@ -17,12 +19,22 @@ class _WalletDetailsState extends State<WalletDetails> {
   late BlockchainStore _blockchainStore;
   late AuthStore _authStore;
 
+  late Client httpClient;
+
+  late Web3Client ethClient;
+
   @override
-  void didChangeDependencies() {
+  Future<void> didChangeDependencies() async {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
+    httpClient = Client();
+    ethClient = Web3Client(
+        'https://rinkeby.infura.io/v3/835ac87e30544599be38eed5a0a2a2c0',
+        httpClient);
     _blockchainStore = Provider.of<BlockchainStore>(context);
     _authStore = Provider.of<AuthStore>(context);
+    await _blockchainStore.getBalance(
+        _blockchainStore.ethereumAddress!, ethClient);
   }
 
   @override
@@ -266,20 +278,25 @@ class _WalletDetailsState extends State<WalletDetails> {
   }
 
   Widget _customButtonForTransactions(String text) {
-    return Container(
-      height: 50,
-      width: 150,
-      decoration: BoxDecoration(
-          color: Colors.yellow.shade700.withOpacity(0.70),
-          borderRadius: BorderRadius.circular(10)),
-      child: Center(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          child: Text(
-            '$text',
-            style: TextStyle(
-              // fontWeight: FontWeight.bold,
-              color: Colors.black,
+    return InkWell(
+      onTap: (){
+        _blockchainStore.getBalance(_blockchainStore.ethereumAddress!, ethClient);
+      },
+      child: Container(
+        height: 50,
+        width: 150,
+        decoration: BoxDecoration(
+            color: Colors.yellow.shade700.withOpacity(0.70),
+            borderRadius: BorderRadius.circular(10)),
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            child: Text(
+              '$text',
+              style: TextStyle(
+                // fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
           ),
         ),

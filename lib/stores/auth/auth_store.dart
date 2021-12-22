@@ -5,6 +5,7 @@ import 'package:boilerplate/stores/error/error_store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:web3dart/credentials.dart';
 
 import '../form/form_store.dart';
 
@@ -40,6 +41,9 @@ abstract class _AuthStore with Store {
 
   @observable
   bool hasWallet = false;
+
+  @observable
+  EthereumAddress? privateKey;
 
   @action
   Future<void> googleSignIn() async {
