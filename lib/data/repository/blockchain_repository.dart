@@ -1,13 +1,14 @@
+import 'package:boilerplate/data/local/datasources/UserDataSource/user_datasource.dart';
 import 'package:boilerplate/data/network/apis/blockchain/blockchain_services.dart';
 import 'package:boilerplate/models/user/user.dart';
-import 'package:http/http.dart';
 import 'package:web3dart/credentials.dart';
 import 'package:web3dart/web3dart.dart';
 
 class BlockchainRepository {
   final BlockchainServices _blockchainServices;
+  final UserDataSource _userDataSource;
 
-  BlockchainRepository(this._blockchainServices);
+  BlockchainRepository(this._blockchainServices, this._userDataSource);
 
   Future<EthereumAddress?> getANewWalletAddress() async {
     return await _blockchainServices.createTheWalletAddress().then((value) {
@@ -30,10 +31,12 @@ class BlockchainRepository {
     });
   }
 
-  Future<String> getWalletBalance(
-      EthereumAddress walletAddress , Web3Client ethClient) async {
+  /// TODO : Take the private key from the datasource and use it here!!!
+
+  Future<dynamic> getWalletBalance(
+      EthereumAddress walletAddress) async {
     return await _blockchainServices
-        .getWalletBalance(walletAddress , ethClient)
+        .getWalletBalance(walletAddress)
         .then((value) {
       print('Getting the balance here !!! : \n$value');
       return value;

@@ -42,13 +42,13 @@ mixin _$BlockchainStore on _BlockchainStore, Store {
   final _$balanceAtom = Atom(name: '_BlockchainStore.balance');
 
   @override
-  String? get balance {
+  dynamic get balance {
     _$balanceAtom.reportRead();
     return super.balance;
   }
 
   @override
-  set balance(String? value) {
+  set balance(dynamic value) {
     _$balanceAtom.reportWrite(value, super.balance, () {
       super.balance = value;
     });
@@ -75,9 +75,8 @@ mixin _$BlockchainStore on _BlockchainStore, Store {
   final _$getBalanceAsyncAction = AsyncAction('_BlockchainStore.getBalance');
 
   @override
-  Future<void> getBalance(EthereumAddress walletAddress, Web3Client ethClient) {
-    return _$getBalanceAsyncAction
-        .run(() => super.getBalance(walletAddress, ethClient));
+  Future<void> getBalance(EthereumAddress walletAddress) {
+    return _$getBalanceAsyncAction.run(() => super.getBalance(walletAddress));
   }
 
   @override

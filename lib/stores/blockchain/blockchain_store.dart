@@ -24,7 +24,7 @@ abstract class _BlockchainStore with Store {
   bool hasWallet = false;
 
   @observable
-  String? balance;
+  dynamic balance;
 
   @action
   Future<void> generateANewWalletAddress(UserData userData) async {
@@ -40,8 +40,8 @@ abstract class _BlockchainStore with Store {
   }
 
   @action
-  Future<void> storingTheUserDetails(UserData userData,
-      String publicKey) async {
+  Future<void> storingTheUserDetails(
+      UserData userData, String publicKey) async {
     return _blockchainRepository
         .storeTheUserDetails(userData, publicKey)
         .then((value) {
@@ -53,9 +53,11 @@ abstract class _BlockchainStore with Store {
   }
 
   @action
-  Future<void> getBalance(EthereumAddress walletAddress , Web3Client ethClient) async {
-    return await _blockchainRepository.getWalletBalance(walletAddress , ethClient).then((
-        value) {
+  Future<void> getBalance(
+      EthereumAddress walletAddress ) async {
+    return await _blockchainRepository
+        .getWalletBalance(walletAddress)
+        .then((value) {
       print('Getting the balance here !! \n $value');
       this.balance = value;
     }).catchError((onError) {
@@ -63,7 +65,4 @@ abstract class _BlockchainStore with Store {
       throw onError;
     });
   }
-
-
-
 }

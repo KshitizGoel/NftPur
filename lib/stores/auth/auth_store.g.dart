@@ -69,6 +69,21 @@ mixin _$AuthStore on _AuthStore, Store {
     });
   }
 
+  final _$privateKeyAtom = Atom(name: '_AuthStore.privateKey');
+
+  @override
+  EthereumAddress? get privateKey {
+    _$privateKeyAtom.reportRead();
+    return super.privateKey;
+  }
+
+  @override
+  set privateKey(EthereumAddress? value) {
+    _$privateKeyAtom.reportWrite(value, super.privateKey, () {
+      super.privateKey = value;
+    });
+  }
+
   final _$googleSignInAsyncAction = AsyncAction('_AuthStore.googleSignIn');
 
   @override
@@ -111,7 +126,8 @@ mixin _$AuthStore on _AuthStore, Store {
 signedInUser: ${signedInUser},
 firebaseUser: ${firebaseUser},
 userDetails: ${userDetails},
-hasWallet: ${hasWallet}
+hasWallet: ${hasWallet},
+privateKey: ${privateKey}
     ''';
   }
 }

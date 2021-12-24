@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:boilerplate/data/local/datasources/post/post_datasource.dart';
+import 'package:boilerplate/data/local/datasources/UserDataSource/user_datasource.dart';
 import 'package:boilerplate/data/network/apis/blockchain/blockchain_services.dart';
 import 'package:boilerplate/data/sharedpref/shared_preference_helper.dart';
 import 'package:boilerplate/models/user/user.dart';
@@ -10,7 +10,7 @@ import '../network/apis/firebase_api/firebase_api.dart';
 
 class AuthRepository {
   // data source object
-  final PostDataSource _postDataSource;
+  final UserDataSource _userDataSource;
 
   // api objects
   final FirebaseApi _firebaseApi;
@@ -21,7 +21,7 @@ class AuthRepository {
 
   // constructor
   AuthRepository(this._blockchainServices, this._firebaseApi,
-      this._sharedPrefsHelper, this._postDataSource);
+      this._sharedPrefsHelper, this._userDataSource);
 
   Future<dynamic> googleSignIn() async {
     return await _firebaseApi.handleGoogleSignIn().then((value) {

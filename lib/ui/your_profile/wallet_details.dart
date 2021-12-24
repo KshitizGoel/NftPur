@@ -33,8 +33,7 @@ class _WalletDetailsState extends State<WalletDetails> {
         httpClient);
     _blockchainStore = Provider.of<BlockchainStore>(context);
     _authStore = Provider.of<AuthStore>(context);
-    await _blockchainStore.getBalance(
-        _blockchainStore.ethereumAddress!, ethClient);
+    await _blockchainStore.getBalance(_blockchainStore.ethereumAddress!);
   }
 
   @override
@@ -279,8 +278,9 @@ class _WalletDetailsState extends State<WalletDetails> {
 
   Widget _customButtonForTransactions(String text) {
     return InkWell(
-      onTap: (){
-        _blockchainStore.getBalance(_blockchainStore.ethereumAddress!, ethClient);
+      onTap: () {
+        _blockchainStore.getBalance(EthereumAddress.fromHex(
+            '0x61a02185c526cb869ab57c4e4cfdc5941f8c3f3a'));
       },
       child: Container(
         height: 50,

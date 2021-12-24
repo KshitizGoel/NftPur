@@ -5,12 +5,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ed25519_hd_key/ed25519_hd_key.dart';
 import 'package:flutter/services.dart';
 import 'package:hex/hex.dart';
+import 'package:http/http.dart';
 import 'package:web3dart/credentials.dart';
 import 'package:web3dart/web3dart.dart';
 
 class BlockchainServices {
   FirebaseFirestore reference = FirebaseFirestore.instance;
   var privateKey;
+  Client httpClient = Client();
 
   //Smart Contract necessary initiations
 
@@ -88,7 +90,11 @@ class BlockchainServices {
   }
 
   Future<dynamic> getWalletBalance(
-      EthereumAddress walletAddress, Web3Client ethClient) async {
+      EthereumAddress walletAddress ) async {
+    Web3Client ethClient = Web3Client(
+        'https://rinkeby.infura.io/v3/835ac87e30544599be38eed5a0a2a2c0',
+        httpClient);
+
     List<dynamic> result = await query('balanceOf', [walletAddress], ethClient);
 
     return result[0];
