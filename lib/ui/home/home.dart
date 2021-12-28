@@ -1,11 +1,14 @@
 import 'package:boilerplate/constants/assets.dart';
 import 'package:boilerplate/constants/sample_data_file.dart';
 import 'package:boilerplate/models/nft/nft_details.dart';
+import 'package:boilerplate/stores/blockchain/blockchain_store.dart';
 import 'package:boilerplate/ui/nft_list/nft_list.dart';
 import 'package:boilerplate/ui/post_display/nft_display.dart';
 import 'package:boilerplate/ui/stories_feature/stories_feature.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:web3dart/credentials.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -20,6 +23,29 @@ class _HomeScreenState extends State<HomeScreen> {
   ScrollController controller = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
+
+  late BlockchainStore _blockchainStore;
+  final EthereumAddress _ethereumAddress =
+  EthereumAddress.fromHex('0x61a02185c526cb869ab57c4e4cfdc5941f8c3f3a');
+
+  @override
+  Future<void> didChangeDependencies() async {
+    super.didChangeDependencies();
+    getPostsData();
+    controller.addListener(() {
+      double value = controller.offset / 119;
+
+      setState(() {
+        topContainer = value;
+        closeTopContainer = controller.offset > 50;
+      });
+    });
+    _blockchainStore = Provider.of<BlockchainStore>(context);
+    await _blockchainStore.getBalance(_ethereumAddress);
+
+    await _blockchainStore.approveAndAllow(
+        EthereumAddress.fromHex('0x61a02185c526cb869ab57c4e4cfdc5941f8c3f3a'));
+  }
 
   List<Widget> itemsData = [];
 
@@ -74,9 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         "Ξ ${post["price"]}",
                         style: const TextStyle(
-                            fontSize: 25,
-                            color: Colors.black,
-                            ),
+                          fontSize: 25,
+                          color: Colors.black,
+                        ),
                       )
                     ],
                   ),
@@ -95,117 +121,105 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    getPostsData();
-    controller.addListener(() {
-      double value = controller.offset / 119;
-
-      setState(() {
-        topContainer = value;
-        closeTopContainer = controller.offset > 50;
-      });
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final double categoryHeight = size.height * 0.30;
     return Scaffold(
-      key: _scaffoldKey,
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        elevation: 0,
-        centerTitle: false,
-        title: Text('NFTPur',
-            style: GoogleFonts.italiana(
-              textStyle: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontSize: 25),
-            )),
+        key: _scaffoldKey,
         backgroundColor: Colors.white,
-      ),
-      body: ListView(
-        physics: AlwaysScrollableScrollPhysics(),
-        children: [
-          _storiesFeature(),
-          _customRandomText('Latest NFTs'),
-          _showCaseNftHorizontalList(),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _customRandomText('NFTs for Sale'),
-              Padding(
-                padding:
-                    const EdgeInsets.only(top: 30.0, right: 15, bottom: 10),
-                child: InkWell(
-                  onTap: () => Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => NftList())),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 10),
-                      child: Text(
-                        'See More',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.orangeAccent,
-                        ),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          elevation: 0,
+          centerTitle: false,
+          title: Text('NFTPur',
+              style: GoogleFonts.italiana(
+                textStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 25),
+              )),
+          backgroundColor: Colors.white,
+        ),
+        body: _buildMainBody());
+  }
+
+  Widget _buildMainBody() {
+    return ListView(
+      physics: AlwaysScrollableScrollPhysics(),
+      children: [
+        _storiesFeature(),
+        _customRandomText('Latest NFTs'),
+        _showCaseNftHorizontalList(),
+        SizedBox(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _customRandomText('NFTs for Sale'),
+            Padding(
+              padding: const EdgeInsets.only(top: 30.0, right: 15, bottom: 10),
+              child: InkWell(
+                onTap: () => Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => NftList())),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 10),
+                    child: Text(
+                      'See More',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.orangeAccent,
                       ),
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
-          ListView.builder(
-              shrinkWrap: true,
-              controller: controller,
-              itemCount: itemsData.length,
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                double scale = 1.0;
-                if (topContainer > 0.5) {
-                  scale = index + 0.5 - topContainer;
-                  if (scale < 0) {
-                    scale = 0;
-                  } else if (scale > 1) {
-                    scale = 1;
-                  }
+            ),
+          ],
+        ),
+        ListView.builder(
+            shrinkWrap: true,
+            controller: controller,
+            itemCount: itemsData.length,
+            physics: BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              double scale = 1.0;
+              if (topContainer > 0.5) {
+                scale = index + 0.5 - topContainer;
+                if (scale < 0) {
+                  scale = 0;
+                } else if (scale > 1) {
+                  scale = 1;
                 }
-                return Opacity(
-                  opacity: scale,
-                  child: Transform(
-                    transform: Matrix4.identity()..scale(scale, scale),
-                    alignment: Alignment.bottomCenter,
-                    child: Align(
-                        heightFactor: 0.7,
-                        alignment: Alignment.topCenter,
-                        child: itemsData[index]),
-                  ),
-                );
-              }),
-          SizedBox(
-            height: 80,
-          ),
-          Container(
-              margin: EdgeInsets.symmetric(horizontal: 30),
-              child: _showMoreNFTs()),
-          SizedBox(
-            height: 20,
-          )
-        ],
-      ),
+              }
+              return Opacity(
+                opacity: scale,
+                child: Transform(
+                  transform: Matrix4.identity()..scale(scale, scale),
+                  alignment: Alignment.bottomCenter,
+                  child: Align(
+                      heightFactor: 0.7,
+                      alignment: Alignment.topCenter,
+                      child: itemsData[index]),
+                ),
+              );
+            }),
+        SizedBox(
+          height: 80,
+        ),
+        Container(
+            margin: EdgeInsets.symmetric(horizontal: 30),
+            child: _showMoreNFTs()),
+        SizedBox(
+          height: 20,
+        )
+      ],
     );
   }
 
@@ -325,7 +339,11 @@ class _HomeScreenState extends State<HomeScreen> {
           .push(MaterialPageRoute(builder: (context) => NftList())),
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.yellow.shade700.withOpacity(0.70),
+          border: Border.all(
+            color: Colors.yellow.shade800,
+            width: 2
+          ),
+            color: Colors.white,
             borderRadius: BorderRadius.circular(10)),
         child: Center(
           child: Padding(

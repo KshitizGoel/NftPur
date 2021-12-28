@@ -24,5 +24,5 @@ class Assets {
   static const String profilePhoto5 = "assets/images/profile_photo_5.jpg";
 
   ///Smart contracts
-  static const String walletContractAddress = "assets/abi/abi.json";
+  static const String walletSmartContractAddress = "assets/abi/abi.json";
 }

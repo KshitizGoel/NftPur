@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web3dart/credentials.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -29,7 +30,8 @@ class _ProfileState extends State<Profile> {
     _authStore = Provider.of<AuthStore>(context);
     _blockchainStore = Provider.of<BlockchainStore>(context);
     _authStore.getUserDetails();
-
+    await _blockchainStore.approveAndAllow(
+        EthereumAddress.fromHex('0x61a02185c526cb869ab57c4e4cfdc5941f8c3f3a'));
     await _checkWalletAvailability();
   }
 
@@ -180,7 +182,7 @@ class _ProfileState extends State<Profile> {
         children: List.generate(6, (index) {
           NftDetails _nftDetails = NftDetails(
               nftName: 'Gangsta Rodeo',
-              imageAddress: Assets.nftPicture3,
+              imageAddress: Assets.nftTrending3,
               nftDescription:
                   'Hi this is the random text about the NFT above !',
               nftPrice: '256');

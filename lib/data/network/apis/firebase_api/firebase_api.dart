@@ -8,6 +8,8 @@ class FirebaseApi {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   FirebaseFirestore reference = FirebaseFirestore.instance;
 
+  /// TODO  : Integrate the Firebase push notifications as well!!!
+
   Future<dynamic> handleGoogleSignIn() async {
     try {
       final GoogleSignInAccount? googleSignInAccount =

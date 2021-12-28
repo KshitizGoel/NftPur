@@ -170,8 +170,9 @@ class _NftDisplayState extends State<NftDisplay> {
           child: Container(
             width: 170,
             decoration: BoxDecoration(
-                color: Colors.yellow.shade700,
-                borderRadius: BorderRadius.circular(40)),
+                color: Colors.white,
+                border: Border.all(color: Colors.yellow.shade800 , width: 2),
+                borderRadius: BorderRadius.circular(10)),
             child: Padding(
               padding: EdgeInsets.all(15),
               child: Row(

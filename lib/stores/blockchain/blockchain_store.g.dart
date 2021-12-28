@@ -39,16 +39,47 @@ mixin _$BlockchainStore on _BlockchainStore, Store {
     });
   }
 
+  final _$successfulTransferAtom =
+      Atom(name: '_BlockchainStore.successfulTransfer');
+
+  @override
+  bool get successfulTransfer {
+    _$successfulTransferAtom.reportRead();
+    return super.successfulTransfer;
+  }
+
+  @override
+  set successfulTransfer(bool value) {
+    _$successfulTransferAtom.reportWrite(value, super.successfulTransfer, () {
+      super.successfulTransfer = value;
+    });
+  }
+
+  final _$walletApprovedAtom = Atom(name: '_BlockchainStore.walletApproved');
+
+  @override
+  bool get walletApproved {
+    _$walletApprovedAtom.reportRead();
+    return super.walletApproved;
+  }
+
+  @override
+  set walletApproved(bool value) {
+    _$walletApprovedAtom.reportWrite(value, super.walletApproved, () {
+      super.walletApproved = value;
+    });
+  }
+
   final _$balanceAtom = Atom(name: '_BlockchainStore.balance');
 
   @override
-  dynamic get balance {
+  String get balance {
     _$balanceAtom.reportRead();
     return super.balance;
   }
 
   @override
-  set balance(dynamic value) {
+  set balance(String value) {
     _$balanceAtom.reportWrite(value, super.balance, () {
       super.balance = value;
     });
@@ -79,11 +110,29 @@ mixin _$BlockchainStore on _BlockchainStore, Store {
     return _$getBalanceAsyncAction.run(() => super.getBalance(walletAddress));
   }
 
+  final _$transferAsyncAction = AsyncAction('_BlockchainStore.transfer');
+
+  @override
+  Future<void> transfer(EthereumAddress address) {
+    return _$transferAsyncAction.run(() => super.transfer(address));
+  }
+
+  final _$approveAndAllowAsyncAction =
+      AsyncAction('_BlockchainStore.approveAndAllow');
+
+  @override
+  Future<void> approveAndAllow(EthereumAddress address) {
+    return _$approveAndAllowAsyncAction
+        .run(() => super.approveAndAllow(address));
+  }
+
   @override
   String toString() {
     return '''
 ethereumAddress: ${ethereumAddress},
 hasWallet: ${hasWallet},
+successfulTransfer: ${successfulTransfer},
+walletApproved: ${walletApproved},
 balance: ${balance}
     ''';
   }

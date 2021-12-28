@@ -57,12 +57,12 @@
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "owner",
         "type": "address"
       },
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "delegate",
         "type": "address"
       }
@@ -81,7 +81,7 @@
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "delegate",
         "type": "address"
       },
@@ -176,7 +176,7 @@
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "receiver",
         "type": "address"
       },
@@ -194,18 +194,18 @@
         "type": "bool"
       }
     ],
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "type": "function"
   },
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "owner",
         "type": "address"
       },
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "buyer",
         "type": "address"
       },
@@ -223,7 +223,31 @@
         "type": "bool"
       }
     ],
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "firstTimeUser",
+        "type": "bool"
+      },
+      {
+        "internalType": "address payable",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "transferInitialBalance",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "payable",
     "type": "function"
   }
 ]

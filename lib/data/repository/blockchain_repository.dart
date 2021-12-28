@@ -33,8 +33,7 @@ class BlockchainRepository {
 
   /// TODO : Take the private key from the datasource and use it here!!!
 
-  Future<dynamic> getWalletBalance(
-      EthereumAddress walletAddress) async {
+  Future<String> getWalletBalance(EthereumAddress walletAddress) async {
     return await _blockchainServices
         .getWalletBalance(walletAddress)
         .then((value) {
@@ -42,6 +41,25 @@ class BlockchainRepository {
       return value;
     }).catchError((onError) {
       print('Getting the error here !!!');
+      throw onError;
+    });
+  }
+
+  Future<dynamic> transfer(EthereumAddress address, double tokens) async {
+    return await _blockchainServices.transfer(address, tokens).then((value) {
+      return value;
+    }).catchError((onError) {
+      print('Getting the error here in repo level for Transfer ');
+      throw onError;
+    });
+  }
+
+  Future<dynamic> approveAndAllow(EthereumAddress address) async {
+    return await _blockchainServices.approve(address, 1000).then((value) {
+      print(value);
+      return value;
+    }).catchError((onError) {
+      print('Getting the error here in approval repo!!!');
       throw onError;
     });
   }

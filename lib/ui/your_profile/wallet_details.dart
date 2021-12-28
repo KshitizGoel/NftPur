@@ -6,7 +6,6 @@ import 'package:boilerplate/widgets/progress_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:web3dart/web3dart.dart';
 
@@ -19,21 +18,16 @@ class _WalletDetailsState extends State<WalletDetails> {
   late BlockchainStore _blockchainStore;
   late AuthStore _authStore;
 
-  late Client httpClient;
-
-  late Web3Client ethClient;
+  final EthereumAddress _ethereumAddress =
+      EthereumAddress.fromHex('0x61a02185c526cb869ab57c4e4cfdc5941f8c3f3a');
 
   @override
   Future<void> didChangeDependencies() async {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    httpClient = Client();
-    ethClient = Web3Client(
-        'https://rinkeby.infura.io/v3/835ac87e30544599be38eed5a0a2a2c0',
-        httpClient);
+
     _blockchainStore = Provider.of<BlockchainStore>(context);
     _authStore = Provider.of<AuthStore>(context);
-    await _blockchainStore.getBalance(_blockchainStore.ethereumAddress!);
+    await _blockchainStore.getBalance(_ethereumAddress);
   }
 
   @override
@@ -77,10 +71,6 @@ class _WalletDetailsState extends State<WalletDetails> {
             SizedBox(
               height: 30,
             ),
-            //_walletDetails(),
-            // SizedBox(
-            //   height: 20,
-            // ),
             _buyNft(),
             SizedBox(
               height: 20,
@@ -99,9 +89,9 @@ class _WalletDetailsState extends State<WalletDetails> {
             SizedBox(
               height: 20,
             ),
-            _recentTransactionWidget(Assets.nftTrending4, "Bored Ape", "Ξ 250"),
-            _recentTransactionWidget(Assets.nftPicture3, "Mokens", "Ξ 120"),
-            _recentTransactionWidget(Assets.nftTrending1, "Enjine", "Ξ 460"),
+            _recentTransactionWidget(Assets.nftTrending4, "Bored Ape", "Ξ250"),
+            _recentTransactionWidget(Assets.nftPicture3, "Mokens", "Ξ120"),
+            _recentTransactionWidget(Assets.nftTrending1, "Enjine", "Ξ460"),
           ],
         ),
         Padding(
@@ -112,8 +102,17 @@ class _WalletDetailsState extends State<WalletDetails> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                _customButtonForTransactions('deposit'.toUpperCase()),
-                _customButtonForTransactions('withdraw'.toUpperCase()),
+                InkWell(
+                    onTap: () => _blockchainStore.transfer(_ethereumAddress),
+                    child:
+                        _customButtonForTransactions('deposit'.toUpperCase())),
+                InkWell(
+
+                    /// TODO  : Create a custom Dialog wherein you give the details about the wallet balance in INR and ask for the choice once again
+
+                    onTap: () => null,
+                    child:
+                        _customButtonForTransactions('withdraw'.toUpperCase())),
               ],
             ),
           ),
@@ -258,7 +257,9 @@ class _WalletDetailsState extends State<WalletDetails> {
           height: 50,
           margin: EdgeInsets.symmetric(horizontal: 40),
           decoration: BoxDecoration(
-              color: Colors.black, borderRadius: BorderRadius.circular(10)),
+              border: Border.all(color: Colors.black, width: 2),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5)),
           child: Center(
             child: Padding(
               padding:
@@ -266,7 +267,7 @@ class _WalletDetailsState extends State<WalletDetails> {
               child: Text(
                 'Buy NFTs',
                 style: TextStyle(
-                  color: Colors.yellow.shade700,
+                  color: Colors.orange.shade600,
                 ),
               ),
             ),
@@ -277,26 +278,21 @@ class _WalletDetailsState extends State<WalletDetails> {
   }
 
   Widget _customButtonForTransactions(String text) {
-    return InkWell(
-      onTap: () {
-        _blockchainStore.getBalance(EthereumAddress.fromHex(
-            '0x61a02185c526cb869ab57c4e4cfdc5941f8c3f3a'));
-      },
-      child: Container(
-        height: 50,
-        width: 150,
-        decoration: BoxDecoration(
-            color: Colors.yellow.shade700.withOpacity(0.70),
-            borderRadius: BorderRadius.circular(10)),
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-            child: Text(
-              '$text',
-              style: TextStyle(
-                // fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+    return Container(
+      height: 50,
+      width: 150,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: Colors.yellow.shade700, width: 2),
+          borderRadius: BorderRadius.circular(5)),
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          child: Text(
+            '$text',
+            style: TextStyle(
+              // fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
           ),
         ),

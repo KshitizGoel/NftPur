@@ -27,13 +27,17 @@ class _PostYourNftState extends State<PostYourNft> {
           child: Padding(
             padding: const EdgeInsets.only(bottom: 10.0, left: 40),
             child: Container(
-              width: 180,
+              width: 195,
               decoration: BoxDecoration(
-                  color: Colors.yellow.shade700,
-                  borderRadius: BorderRadius.circular(40)),
+                  border: Border.all(
+                    color: Colors.yellow.shade800,
+                    width: 2
+                  ),
+                  borderRadius: BorderRadius.circular(10)),
               child: Padding(
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.all(10),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Icon(Icons.add_a_photo_outlined),
                     Padding(
@@ -56,14 +60,6 @@ class _PostYourNftState extends State<PostYourNft> {
             padding: const EdgeInsets.only(top: 20.0, left: 15),
             child: _customText('Your Collections', 25),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.only(top: 40.0, left: 15),
-          //   child: _customText('Saved Posts', 20),
-          // ),
-          // Padding(
-          //   padding: const EdgeInsets.only(top: 40.0, left: 15),
-          //   child: _customText('Favourites', 20),
-          // ),
         ],
       ),
     );

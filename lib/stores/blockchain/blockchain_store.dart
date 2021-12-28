@@ -24,7 +24,13 @@ abstract class _BlockchainStore with Store {
   bool hasWallet = false;
 
   @observable
-  dynamic balance;
+  bool successfulTransfer = false;
+
+  @observable
+  bool walletApproved = false;
+
+  @observable
+  String balance = " ";
 
   @action
   Future<void> generateANewWalletAddress(UserData userData) async {
@@ -53,15 +59,36 @@ abstract class _BlockchainStore with Store {
   }
 
   @action
-  Future<void> getBalance(
-      EthereumAddress walletAddress ) async {
+  Future<void> getBalance(EthereumAddress walletAddress) async {
     return await _blockchainRepository
         .getWalletBalance(walletAddress)
         .then((value) {
       print('Getting the balance here !! \n $value');
-      this.balance = value;
+      this.balance = value.toString();
     }).catchError((onError) {
       print('Getting the error here  in getBalance store level!!!');
+      throw onError;
+    });
+  }
+
+  @action
+  Future<void> transfer(EthereumAddress address) async {
+    return await _blockchainRepository.transfer(address, 500).then((value) {
+      successfulTransfer = value;
+
+      print('Successfully transferred the money!! : $value');
+    }).catchError((onError) {
+      print('Getting the error here !!! \n$onError');
+      throw onError;
+    });
+  }
+
+  @action
+  Future<void> approveAndAllow(EthereumAddress address) async {
+    return await _blockchainRepository.approveAndAllow(address).then((value) {
+      print('Getting the value of approval here !! $value');
+     }).catchError((onError) {
+      print('Error : approval , store');
       throw onError;
     });
   }

@@ -32,12 +32,12 @@ class CustomTextField extends StatelessWidget {
         controller: controller,
         decoration: new InputDecoration(
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: BorderSide(color: Colors.yellow.shade800, width: 5),
+              borderRadius: BorderRadius.circular(5.0),
+              borderSide: BorderSide(color: Colors.black, width: 2),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: BorderSide(color: Colors.black, width: 5),
+              borderRadius: BorderRadius.circular(5.0),
+              borderSide: BorderSide(color: Colors.black, width: 1),
             ),
             prefixIcon: Icon(Icons.description),
             hintText: '$hintText',
