@@ -1,23 +1,24 @@
 import 'dart:io';
 
 import 'package:boilerplate/constants/strings.dart';
+import 'package:boilerplate/stores/post/nft_store.dart';
 import 'package:boilerplate/ui/success_screen/success_screen.dart';
-import 'package:boilerplate/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:provider/provider.dart';
 
-class MakePostNft extends StatefulWidget {
+class MintNFT extends StatefulWidget {
   final XFile _mediaFile;
 
-  MakePostNft(this._mediaFile);
+  MintNFT(this._mediaFile);
 
   @override
-  _MakePostNftState createState() => _MakePostNftState(_mediaFile);
+  _MintNFTState createState() => _MintNFTState(_mediaFile);
 }
 
-class _MakePostNftState extends State<MakePostNft> {
+class _MintNFTState extends State<MintNFT> {
   final XFile _mediaFile;
   var _currentHorizontalIntValue = 10;
 
@@ -26,7 +27,16 @@ class _MakePostNftState extends State<MakePostNft> {
 
   get borderRadius => BorderRadius.circular(8.0);
 
-  _MakePostNftState(this._mediaFile);
+  _MintNFTState(this._mediaFile);
+
+  late NFTStore _nftStore;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _nftStore = Provider.of<NFTStore>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,14 +82,14 @@ class _MakePostNftState extends State<MakePostNft> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-            child: CustomTextField(_nameController, 'Name'),
+            child: _customTextField(_nameController, 'Name'),
           ),
           SizedBox(
             height: 20,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-            child: CustomTextField(_descriptionController, 'Description'),
+            child: _customTextField(_descriptionController, 'Description'),
           ),
           SizedBox(
             height: 40,
@@ -114,13 +124,9 @@ class _MakePostNftState extends State<MakePostNft> {
                   ),
                 )),
           ),
-          SizedBox(
-            height: 50,
-          ),
+          SizedBox(height: 50),
           _customButtonForVerification('Mint NFT', Icons.verified_sharp),
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
         ],
       ),
     );
@@ -128,8 +134,14 @@ class _MakePostNftState extends State<MakePostNft> {
 
   Widget _customButtonForVerification(String text, IconData icon) {
     return InkWell(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => SuccessScreen(Strings.congratulationsText))),
+      onTap: () {
+        _nftStore.uploadNFTToDatabase(_nameController.text, widget._mediaFile);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (context) =>
+                    SuccessScreen(Strings.congratulationsText.toUpperCase())),
+            (route) => false);
+      },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 30),
         decoration: BoxDecoration(
@@ -147,5 +159,23 @@ class _MakePostNftState extends State<MakePostNft> {
             )),
       ),
     );
+  }
+
+  Widget _customTextField(TextEditingController controller, String hintText) {
+    return TextField(
+        onChanged: (text) => controller.text = text,
+        controller: controller,
+        decoration: new InputDecoration(
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+            borderSide: BorderSide(color: Colors.black, width: 2),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+            borderSide: BorderSide(color: Colors.black, width: 1),
+          ),
+          prefixIcon: Icon(Icons.description),
+          hintText: '$hintText',
+        ));
   }
 }

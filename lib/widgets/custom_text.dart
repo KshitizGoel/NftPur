@@ -14,6 +14,7 @@ class CustomText extends StatelessWidget {
       nftName,
       style: GoogleFonts.roboto(
           fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+          fontSize: 15,
           color: Colors.black),
     );
   }

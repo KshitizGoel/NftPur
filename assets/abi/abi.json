@@ -177,6 +177,11 @@
     "inputs": [
       {
         "internalType": "address payable",
+        "name": "admin",
+        "type": "address"
+      },
+      {
+        "internalType": "address payable",
         "name": "receiver",
         "type": "address"
       },
@@ -194,7 +199,7 @@
         "type": "bool"
       }
     ],
-    "stateMutability": "payable",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

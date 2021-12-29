@@ -91,7 +91,7 @@ dependencies:
   google_sign_in: ^5.2.1
   firebase_database: ^9.0.3
   firebase_messaging: ^11.2.4
-#  firebase_storage: ^10.2.4
+  firebase_storage: ^10.2.4
 
   #Blockchain dependencies
   web3dart: ^2.3.3

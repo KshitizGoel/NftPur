@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:hex/hex.dart';
 import 'package:http/http.dart';
 import 'package:web3dart/web3dart.dart';
+import 'package:web3dart/web3dart.dart' as Transaction;
 
 class BlockchainServices {
   FirebaseFirestore reference = FirebaseFirestore.instance;
@@ -14,6 +15,9 @@ class BlockchainServices {
   Client httpClient = Client();
 
   //Smart Contract necessary initiations
+
+  /// TODO : we have to use sendTransactions in order to write / update the data!!!
+  /// Intuition : We can achieve this via deploying this in Truffle. Will see in the CodePur video for the same!!
 
   Future<dynamic> createTheWalletAddress() async {
     String mnemonic = bip39.generateMnemonic();
@@ -99,12 +103,16 @@ class BlockchainServices {
       return result;
     } catch (onError) {
       print('query : 1');
+      print(onError);
+
       throw onError;
     }
   }
 
   Future<dynamic> getWalletBalance(EthereumAddress walletAddress) async {
-    List<dynamic> result = await query('balanceOf', [EthereumAddress.fromHex('0x61a02185c526cb869ab57c4e4cfdc5941f8c3f3a')]);
+    List<dynamic> result = await query('balanceOf', [
+      EthereumAddress.fromHex('0x61a02185c526cb869ab57c4e4cfdc5941f8c3f3a')
+    ]);
     print('Getting the result of getWalletBalance function here !!!\n$result');
     return result.toString();
   }
@@ -125,6 +133,26 @@ class BlockchainServices {
     return response;
   }
 
+  Future<dynamic> submitQuery(String functionName, List<dynamic> args) async {
+    try {
+      EthPrivateKey credentials = EthPrivateKey.fromHex(
+          '261fcd4fca4a8d62a73f93125310a0690fc4946951a48b04bba9bb59e07ba3aa');
+      DeployedContract contract = await loadWalletContract();
+      final ethFunction = contract.function(functionName);
+      Web3Client ethClient = Web3Client(
+          'https://rinkeby.infura.io/v3/835ac87e30544599be38eed5a0a2a2c0',
+          httpClient);
+      final result = ethClient.sendTransaction(
+          credentials,
+          Transaction.Transaction.callContract(
+              contract: contract, function: ethFunction, parameters: args));
+      return result;
+    } catch (onError) {
+      print('Error : submitQuery 1');
+      throw onError;
+    }
+  }
+
   Future<dynamic> makeTransactionForNft(EthereumAddress ownerAddress,
       EthereumAddress buyerAddress, int amt) async {
     var bigAmount = BigInt.from(amt);
@@ -135,11 +163,29 @@ class BlockchainServices {
   }
 
   /// TODO : This function will only be executed when we the wallet is created for the first time!
-  Future<dynamic> transfer(EthereumAddress address, double tokens) async {
+  Future<dynamic> transfer(
+      EthereumAddress delegateAddress, double tokens) async {
+    EthereumAddress adminAddress =
+        EthereumAddress.fromHex('0x5B38Da6a701c568545dCfcB03FcB875f56beddC4');
     var bigAmount = BigInt.from(tokens);
-    var response = query('transfer', [address, bigAmount]);
-    print('Getting the reponse here !!!! \n$response');
+    var response =
+        query('transfer', [adminAddress, delegateAddress, bigAmount]);
+    print('Getting the response here !!!! \n$response');
     return response;
+  }
+
+  Future<dynamic> transferInitialBalance(
+      EthereumAddress address, double tokens) async {
+    // var bigAmount = BigInt.from(tokens);
+    try {
+      var response = query('transferInitialBalance', [true, address]);
+      print(
+          'Getting the response here for transferInitialBalance!!!! \n$response');
+      return response;
+    } catch (e) {
+      print('Getting the error here in transferInitialBalance!!!:');
+      throw e;
+    }
   }
 
   /// TODO : Complete the above function as well as make the datasource!!

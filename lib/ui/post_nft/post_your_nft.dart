@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'make_post_nft.dart';
+import 'mint_nft.dart';
 
 class PostYourNft extends StatefulWidget {
   const PostYourNft({Key? key}) : super(key: key);
@@ -76,8 +78,8 @@ class _PostYourNftState extends State<PostYourNft> {
   }
 
   Future<void> _pickImageAndNavigate() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    var image = await _picker.pickImage(source: ImageSource.gallery) ;
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => MakePostNft(image!)));
+        .push(MaterialPageRoute(builder: (context) => MintNFT(image!)));
   }
 }

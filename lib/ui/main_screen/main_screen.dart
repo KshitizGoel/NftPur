@@ -1,7 +1,7 @@
 import 'package:boilerplate/stores/auth/auth_store.dart';
 import 'package:boilerplate/ui/home/home.dart';
 import 'package:boilerplate/ui/nft_news/nft_trends.dart';
-import 'package:boilerplate/ui/post/post_your_nft.dart';
+import 'package:boilerplate/ui/post_nft/post_your_nft.dart';
 import 'package:boilerplate/ui/your_profile/user_profile.dart';
 import 'package:boilerplate/widgets/progress_indicator_widget.dart';
 import 'package:flutter/material.dart';
