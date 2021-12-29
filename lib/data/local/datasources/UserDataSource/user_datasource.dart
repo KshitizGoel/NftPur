@@ -1,7 +1,6 @@
 import 'package:boilerplate/data/local/constants/db_constants.dart';
 import 'package:boilerplate/models/post/post.dart';
 import 'package:boilerplate/models/user/firebase_user_data.dart';
-import 'package:boilerplate/models/user/firebase_user_data_list.dart';
 import 'package:sembast/sembast.dart';
 
 class UserDataSource {
@@ -23,46 +22,21 @@ class UserDataSource {
     return await _firebaseStore.count(_db);
   }
 
-  // Future<FirebaseUserData> getAllSortedByFilter({List<Filter>? filters}) async {
-  //   //creating finder
-  //   final finder = Finder(
-  //       filter: filters != null ? Filter.and(filters) : null,
-  //       sortOrders: [SortOrder(DBConstants.FIELD_ID)]);
-  //
-  //   final recordSnapshots = await _firebaseStore.find(
-  //     _db,
-  //     finder: finder,
-  //   );
-  //
-  //   // Making a List<Post> out of List<RecordSnapshot>
-  //   return recordSnapshots.map((snapshot) {
-  //     final post = FirebaseUserData.fromMap(snapshot.value);
-  //     // An ID is a key of a record from the database.
-  //     post.id = snapshot.key;
-  //     return post;
-  //   }) ;
-  // }
-
-  Future<FirebaseUserData> getUserData() async {
+  Future<FirebaseUserData?> getUserData() async {
     print('Loading the users from database');
 
     // post list
-    var userList;
+    FirebaseUserData userList;
 
     // fetching data
     final recordSnapshots = await _firebaseStore.find(
       _db,
     );
     if (recordSnapshots.length > 0) {
-      userList = UserList(
-          users: recordSnapshots.map((snapshot) {
-        final user = FirebaseUserData.fromMap(snapshot.value);
-        return user;
-      }).toList());
-    }
-
-    print('Getting the userList from the datasource :\n$userList');
-    return userList;
+      userList = FirebaseUserData.fromMap(recordSnapshots.first.value);
+      return userList;
+    } else
+      return null;
   }
 
   Future<int> update(Post post) async {
