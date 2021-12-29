@@ -16,6 +16,7 @@ class Routes {
   static const String login = '/login';
   static const String home = '/home';
   static const String mainScreen = '/mainScreen';
+  static const String makeYourNFT = '/makeYourNFT';
   static const String addYourWallet = '/addYourWallet';
   static const String walletDetails = '/walletDetails';
   static const String wallet = '/wallet';
@@ -30,5 +31,6 @@ class Routes {
     walletDetails: (BuildContext context) => WalletDetails(),
     wallet: (BuildContext context) => Wallet(),
     nftList: (BuildContext context) => NftList(),
+    makeYourNFT: (BuildContext context) => NavigationMainScreen(1),
   };
 }

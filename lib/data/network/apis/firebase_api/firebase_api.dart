@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -51,18 +53,24 @@ class FirebaseApi {
     await _auth.signOut();
   }
 
-  Future<dynamic> saveNftInDatabase(String fileName, XFile imageFile) async {
-    firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
-        .ref()
-        .child('images')
-        .child('$fileName');
-    // File file = File(imageFile.path);
+  Future<void> saveNftInDatabase(String fileName, XFile imageFile) async {
+    File file = File(imageFile.path);
 
-    // firebase_storage.UploadTask uploadTask = ref.putFile(file);
-    // firebase_storage.TaskSnapshot taskSnapshot = await uploadTask.snapshot;
-    // taskSnapshot.ref.getDownloadURL().then(
-    //       (value) => print("Done: $value"),
-    //     );
+    await firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('NFTs')
+        .child('$fileName')
+        .putFile(file);
+  }
+
+  Future<String> downloadURL(String fileName) async {
+    String downloadURL = await firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('NFTs')
+        .child(fileName)
+        .getDownloadURL();
+
+    return downloadURL;
   }
 
   Future<void> getMetadataOfNft() async {

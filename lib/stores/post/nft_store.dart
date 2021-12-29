@@ -29,13 +29,16 @@ abstract class _NFTStore with Store {
   @observable
   bool uploadSuccess = false;
 
+  @observable
+  String? downloadURL;
+
   @computed
   bool get loading => fetchPostsFuture.status == FutureStatus.pending;
 
   @action
   Future<void> uploadNFTToDatabase(String fileName, XFile imageFile) async {
     return _repository.uploadNFTToDatabase(fileName, imageFile).then((value) {
-      print('Successfully executed the uploadNFTToDatabase in store level');
+      downloadURL = value;
       uploadSuccess = true;
     }).catchError((onError) {
       print('Getting the error in uploadNFTToDatabase in store level');

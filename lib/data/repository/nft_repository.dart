@@ -11,8 +11,16 @@ class NFTRepository {
   Future<dynamic> uploadNFTToDatabase(String fileName, XFile imageFile) async {
     return await _firebaseApi
         .saveNftInDatabase(fileName, imageFile)
-        .then((value) {
-      return value;
+        .then((value) async {
+      var downloadURL;
+      await _firebaseApi.downloadURL(fileName).then((value) {
+        downloadURL = value;
+      }).catchError((onError) {
+        print('Getting the error in getting the download URL');
+        throw onError;
+      });
+
+      return downloadURL;
     }).catchError((onError) {
       print('Getting the error in uploadNFTToDatabase in repo level');
       throw onError;

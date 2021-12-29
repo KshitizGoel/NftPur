@@ -3,6 +3,7 @@ import 'package:boilerplate/utils/routes/routes.dart';
 import 'package:boilerplate/widgets/custom_text.dart';
 import 'package:boilerplate/widgets/progress_indicator_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class SuccessScreen extends StatefulWidget {
@@ -27,9 +28,25 @@ class _SuccessScreenState extends State<SuccessScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: _nftStore.uploadSuccess
-            ? _buildMainBody()
-            : customProgressIndicator());
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+            ),
+            onPressed: () => Navigator.of(context)
+                .pushNamedAndRemoveUntil(Routes.makeYourNFT, (route) => false),
+          ),
+        ),
+        body: Observer(
+          builder: (context) {
+            return _nftStore.uploadSuccess
+                ? _buildMainBody()
+                : customProgressIndicator();
+          },
+        ));
   }
 
   Widget _buildMainBody() {
