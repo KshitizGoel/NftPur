@@ -29,7 +29,6 @@ class _ProfileState extends State<Profile> {
     super.didChangeDependencies();
     _authStore = Provider.of<AuthStore>(context);
     _blockchainStore = Provider.of<BlockchainStore>(context);
-    _authStore.getUserDetails();
     await _blockchainStore.approveAndAllow(
         EthereumAddress.fromHex('0x61a02185c526cb869ab57c4e4cfdc5941f8c3f3a'));
     await _checkWalletAvailability();

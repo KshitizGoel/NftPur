@@ -45,6 +45,9 @@ abstract class _AuthStore with Store {
   @observable
   EthereumAddress? privateKey;
 
+  @observable
+  bool dataSaved = false;
+
   @action
   Future<void> googleSignIn() async {
     return await _authRepository.googleSignIn().then((value) {
@@ -96,6 +99,17 @@ abstract class _AuthStore with Store {
       hasWallet = value!;
     }).catchError((onError) {
       print('Getting the error in checkForTheAvailableWallet in store level!');
+      throw onError;
+    });
+  }
+
+  @action
+  Future<void> storeUserData(UserData userData) async {
+    return _authRepository.storingTheUserData(userData).then((value) {
+      print('Successfully stored the data !!!');
+      dataSaved = true;
+    }).catchError((onError) {
+      print('Getting the error in storeUserData');
       throw onError;
     });
   }

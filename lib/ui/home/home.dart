@@ -1,6 +1,8 @@
 import 'package:boilerplate/constants/assets.dart';
 import 'package:boilerplate/constants/sample_data_file.dart';
 import 'package:boilerplate/models/nft/nft_details.dart';
+import 'package:boilerplate/models/user/user.dart';
+import 'package:boilerplate/stores/auth/auth_store.dart';
 import 'package:boilerplate/stores/blockchain/blockchain_store.dart';
 import 'package:boilerplate/ui/nft_list/nft_list.dart';
 import 'package:boilerplate/ui/post_display/nft_display.dart';
@@ -25,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   double topContainer = 0;
 
   late BlockchainStore _blockchainStore;
+  late AuthStore _authStore;
   final EthereumAddress _ethereumAddress =
   EthereumAddress.fromHex('0x61a02185c526cb869ab57c4e4cfdc5941f8c3f3a');
 
@@ -41,10 +44,22 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     });
     _blockchainStore = Provider.of<BlockchainStore>(context);
+    _authStore = Provider.of<AuthStore>(context);
+    _authStore.getUserDetails();
+    await storeUserDetails();
     await _blockchainStore.getBalance(_ethereumAddress);
-
     await _blockchainStore.approveAndAllow(
         EthereumAddress.fromHex('0x61a02185c526cb869ab57c4e4cfdc5941f8c3f3a'));
+
+  }
+
+  Future <void> storeUserDetails() async{
+     UserData _userData = UserData(
+        displayName: _authStore.firebaseUser!.displayName,
+        email: _authStore.firebaseUser!.email,
+        photoURL: _authStore.firebaseUser!.photoURL,
+        uid: _authStore.firebaseUser!.uid);
+    _authStore.storeUserData(_userData);
   }
 
   List<Widget> itemsData = [];

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:boilerplate/models/user/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -41,11 +42,33 @@ class FirebaseApi {
   User? getUserDetails() {
     try {
       User? user = FirebaseAuth.instance.currentUser;
+      print("user : \n$user");
       return user;
     } catch (onError) {
       print('Getting the error in getUserDetails API!!\nerror:$onError');
       throw onError;
     }
+  }
+
+  Future<dynamic> gettingUserDetails(UserData userData) async {
+    return await reference
+        .collection('users')
+        .doc(userData.uid)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        print('Document data: ${documentSnapshot.data()}');
+        //   if (documentSnapshot.get('hasWallet') == true) return true;
+        // } else {
+        //   print('Document does not exist on the database');
+        //   return false;
+        // }
+        return documentSnapshot;
+      }
+    }).catchError((onError) {
+      print('Getting the error in checkForWallet in API level!!!');
+      throw onError;
+    });
   }
 
   Future<void> signOutFromGoogle() async {

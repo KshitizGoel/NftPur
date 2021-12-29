@@ -162,7 +162,8 @@ class _MintNFTState extends State<MintNFT> {
   }
 
   Widget _customTextField(TextEditingController controller, String hintText) {
-    return TextField(
+    return TextFormField(
+
         onChanged: (text) => controller.text = text,
         controller: controller,
         decoration: new InputDecoration(
