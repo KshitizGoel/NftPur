@@ -1,8 +1,12 @@
+import 'package:boilerplate/stores/auth/auth_store.dart';
 import 'package:boilerplate/ui/home/home.dart';
 import 'package:boilerplate/ui/nft_news/nft_trends.dart';
-import 'package:boilerplate/ui/post/post_your_nft.dart';
-import 'package:boilerplate/ui/your_nfts/user_profile.dart';
+import 'package:boilerplate/ui/post_nft/post_your_nft.dart';
+import 'package:boilerplate/ui/your_profile/user_profile.dart';
+import 'package:boilerplate/widgets/progress_indicator_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
 class NavigationMainScreen extends StatefulWidget {
   int _indexPassed;
@@ -20,6 +24,14 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
   _NavigationMainScreenState(this._indexPassed);
 
   var _currentIndex;
+  late AuthStore _authStore;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _authStore = Provider.of<AuthStore>(context);
+  }
 
   @override
   void initState() {
@@ -33,7 +45,6 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
     PostYourNft(),
     NFTTrends(),
     Profile(),
-
   ];
 
   void onTappedBar(int index) {
@@ -46,8 +57,25 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: _children[_currentIndex],
+      body: Observer(
+        builder: (context) {
+          return _authStore.signedInUser
+              ? _children[_currentIndex]
+              : Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    customProgressIndicator(),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20),
+                      child: Text('Please try to Login !'),
+                    )
+                  ],
+                ));
+        },
+      ),
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 10,
         currentIndex: _currentIndex,
         backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
         selectedIconTheme: IconThemeData(color: Colors.black, size: 25),
@@ -55,7 +83,7 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
         selectedFontSize: 17,
         unselectedFontSize: 14,
         unselectedItemColor: Colors.white,
-         unselectedIconTheme: IconThemeData(color: Colors.white, size: 18),
+        unselectedIconTheme: IconThemeData(color: Colors.white, size: 18),
         items: [
           BottomNavigationBarItem(
             icon: Icon(
@@ -65,7 +93,6 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
               "Dashboard",
             ),
             backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
-
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.post_add),
@@ -73,7 +100,6 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
               "Post",
             ),
             backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
-
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.trending_up),
@@ -81,7 +107,6 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
               "Trends",
             ),
             backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
-
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_outlined),
@@ -89,7 +114,6 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
               "Profile",
             ),
             backgroundColor: Colors.yellow[700]!.withOpacity(0.80),
-
           ),
         ],
         onTap: onTappedBar,

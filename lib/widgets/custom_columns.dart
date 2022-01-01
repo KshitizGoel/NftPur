@@ -20,7 +20,7 @@ Widget customColumn(String heading, String data , double fontSize) {
         child: Text(
           data,
           style: TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.black, fontSize: fontSize),
+               color: Colors.black, fontSize: fontSize),
         ),
       )
     ],

@@ -6,6 +6,7 @@ class Assets {
 
   // login screen assets
   static const String carBackground = "assets/images/img_login.jpg";
+  static const String signIn = "assets/images/sign_in.png";
   static const String profilePicture = "assets/images/profile_picture.jpg";
   static const String nftPicture1 = "assets/images/nft_picture_1.jpeg";
   static const String nftPicture2 = "assets/images/nft_picture_2.jpg";
@@ -22,4 +23,6 @@ class Assets {
   static const String profilePhoto4 = "assets/images/profile_photo_4.jpeg";
   static const String profilePhoto5 = "assets/images/profile_photo_5.jpg";
 
+  ///Smart contracts
+  static const String walletSmartContractAddress = "assets/abi/abi.json";
 }
