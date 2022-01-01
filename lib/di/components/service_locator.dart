@@ -7,7 +7,6 @@ import 'package:boilerplate/data/network/dio_client.dart';
 import 'package:boilerplate/data/network/rest_client.dart';
 import 'package:boilerplate/data/repository/auth_repository.dart';
 import 'package:boilerplate/data/repository/blockchain_repository.dart';
-import 'package:boilerplate/data/repository/nft_repository.dart';
 import 'package:boilerplate/data/repository/repository.dart';
 import 'package:boilerplate/data/sharedpref/shared_preference_helper.dart';
 import 'package:boilerplate/di/module/local_module.dart';
@@ -17,7 +16,6 @@ import 'package:boilerplate/stores/blockchain/blockchain_store.dart';
 import 'package:boilerplate/stores/error/error_store.dart';
 import 'package:boilerplate/stores/form/form_store.dart';
 import 'package:boilerplate/stores/language/language_store.dart';
-import 'package:boilerplate/stores/post/nft_store.dart';
 import 'package:boilerplate/stores/theme/theme_store.dart';
 import 'package:boilerplate/stores/user/user_store.dart';
 import 'package:dio/dio.dart';
@@ -70,16 +68,12 @@ Future<void> setupLocator() async {
 
   getIt.registerSingleton(BlockchainRepository(
     getIt<BlockchainServices>(),
-    getIt<UserDataSource>(),
-  ));
-
-  getIt.registerSingleton(NFTRepository(
     getIt<FirebaseApi>(),
+    getIt<UserDataSource>(),
   ));
 
   // stores:--------------------------------------------------------------------
   getIt.registerSingleton(LanguageStore(getIt<Repository>()));
-  getIt.registerSingleton(NFTStore(getIt<NFTRepository>()));
   getIt.registerSingleton(ThemeStore(getIt<Repository>()));
   getIt.registerSingleton(UserStore(getIt<Repository>()));
   getIt.registerSingleton(AuthStore(getIt<AuthRepository>()));

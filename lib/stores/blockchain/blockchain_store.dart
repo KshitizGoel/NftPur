@@ -1,5 +1,7 @@
 import 'package:boilerplate/data/repository/blockchain_repository.dart';
+import 'package:boilerplate/models/nft/nft_details.dart';
 import 'package:boilerplate/models/user/user.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:web3dart/credentials.dart';
 import 'package:web3dart/web3dart.dart';
@@ -27,7 +29,10 @@ abstract class _BlockchainStore with Store {
   bool successfulTransfer = false;
 
   @observable
-  bool walletApproved = false;
+  bool success = false;
+
+  @observable
+  String downloadURL = " ";
 
   @observable
   String balance = " ";
@@ -87,8 +92,24 @@ abstract class _BlockchainStore with Store {
   Future<void> approveAndAllow(EthereumAddress address) async {
     return await _blockchainRepository.approveAndAllow(address).then((value) {
       print('Getting the value of approval here !! $value');
-     }).catchError((onError) {
+    }).catchError((onError) {
       print('Error : approval , store');
+      throw onError;
+    });
+  }
+
+  @action
+  Future<void> uploadNFTToDatabase(
+      NFTMetaData nftMetaData, XFile imageFile) async {
+    return await _blockchainRepository
+        .uploadFileToDatabase(nftMetaData, imageFile)
+        .then((value) {
+      success = true;
+      this.downloadURL = value;
+      print(
+          'Getting the downloadURL here !!! \nvalue : $value\nuploadSuccess : $success');
+    }).catchError((onError) {
+      print('Getting the error in uploadNFTToDatabase in store level');
       throw onError;
     });
   }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:boilerplate/models/nft/nft_details.dart';
 import 'package:boilerplate/models/user/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -72,21 +73,27 @@ class FirebaseApi {
     await _auth.signOut();
   }
 
-  Future<void> uploadNftInDatabase(String fileName, XFile imageFile) async {
+  Future<dynamic> uploadNftInDatabase(
+      NFTMetaData _meta, XFile imageFile) async {
     File file = File(imageFile.path);
 
     firebase_storage.SettableMetadata metadata =
         firebase_storage.SettableMetadata(
-      cacheControl: 'max-age=60',
+      // cacheControl: 'max-age=60',
       customMetadata: <String, String>{
-        'userId': 'ABC123',
+        'nftName': '${_meta.nftName}',
+        'nftDescription': '${_meta.nftDescription}',
+        'nftPrice': 'Ξ ${_meta.nftPrice}',
       },
     );
+
     await firebase_storage.FirebaseStorage.instance
         .ref()
         .child('NFTs')
-        .child('$fileName')
+        .child('${_meta.nftName}')
         .putFile(file, metadata);
+
+    return downloadURL(_meta.nftName);
   }
 
   Future<String> downloadURL(String fileName) async {

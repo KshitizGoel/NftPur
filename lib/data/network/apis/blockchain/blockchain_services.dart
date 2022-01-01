@@ -14,14 +14,13 @@ class BlockchainServices {
   var privateKey;
   Client httpClient = Client();
 
-
   /// Sample MetaData structure
   final metadata = {
     "trait_type": "Art",
     "value": "Ξ 100",
     "description": "",
-    "image" : "photoURL",
-    "name" : "NFTName"
+    "image": "photoURL",
+    "name": "NFTName"
   };
 
   //Smart Contract necessary initiations
@@ -173,6 +172,8 @@ class BlockchainServices {
   }
 
   /// TODO : This function will only be executed when we the wallet is created for the first time!
+  ///
+  /// The Transaction  function will be called when we are writing into the Blockchain. We have to use sendTransaction function here !!!
   Future<dynamic> transfer(
       EthereumAddress delegateAddress, double tokens) async {
     EthereumAddress adminAddress =
@@ -197,6 +198,4 @@ class BlockchainServices {
       throw e;
     }
   }
-
-  /// TODO : Complete the above function as well as make the datasource!!
 }

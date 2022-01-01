@@ -55,18 +55,33 @@ mixin _$BlockchainStore on _BlockchainStore, Store {
     });
   }
 
-  final _$walletApprovedAtom = Atom(name: '_BlockchainStore.walletApproved');
+  final _$successAtom = Atom(name: '_BlockchainStore.success');
 
   @override
-  bool get walletApproved {
-    _$walletApprovedAtom.reportRead();
-    return super.walletApproved;
+  bool get success {
+    _$successAtom.reportRead();
+    return super.success;
   }
 
   @override
-  set walletApproved(bool value) {
-    _$walletApprovedAtom.reportWrite(value, super.walletApproved, () {
-      super.walletApproved = value;
+  set success(bool value) {
+    _$successAtom.reportWrite(value, super.success, () {
+      super.success = value;
+    });
+  }
+
+  final _$downloadURLAtom = Atom(name: '_BlockchainStore.downloadURL');
+
+  @override
+  String get downloadURL {
+    _$downloadURLAtom.reportRead();
+    return super.downloadURL;
+  }
+
+  @override
+  set downloadURL(String value) {
+    _$downloadURLAtom.reportWrite(value, super.downloadURL, () {
+      super.downloadURL = value;
     });
   }
 
@@ -126,13 +141,23 @@ mixin _$BlockchainStore on _BlockchainStore, Store {
         .run(() => super.approveAndAllow(address));
   }
 
+  final _$uploadNFTToDatabaseAsyncAction =
+      AsyncAction('_BlockchainStore.uploadNFTToDatabase');
+
+  @override
+  Future<void> uploadNFTToDatabase(NFTMetaData nftMetaData, XFile imageFile) {
+    return _$uploadNFTToDatabaseAsyncAction
+        .run(() => super.uploadNFTToDatabase(nftMetaData, imageFile));
+  }
+
   @override
   String toString() {
     return '''
 ethereumAddress: ${ethereumAddress},
 hasWallet: ${hasWallet},
 successfulTransfer: ${successfulTransfer},
-walletApproved: ${walletApproved},
+success: ${success},
+downloadURL: ${downloadURL},
 balance: ${balance}
     ''';
   }

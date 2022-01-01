@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late BlockchainStore _blockchainStore;
   late AuthStore _authStore;
   final EthereumAddress _ethereumAddress =
-  EthereumAddress.fromHex('0x61a02185c526cb869ab57c4e4cfdc5941f8c3f3a');
+      EthereumAddress.fromHex('0x61a02185c526cb869ab57c4e4cfdc5941f8c3f3a');
 
   @override
   Future<void> didChangeDependencies() async {
@@ -50,11 +50,10 @@ class _HomeScreenState extends State<HomeScreen> {
     await _blockchainStore.getBalance(_ethereumAddress);
     await _blockchainStore.approveAndAllow(
         EthereumAddress.fromHex('0x61a02185c526cb869ab57c4e4cfdc5941f8c3f3a'));
-
   }
 
-  Future <void> storeUserDetails() async{
-     UserData _userData = UserData(
+  Future<void> storeUserDetails() async {
+    UserData _userData = UserData(
         displayName: _authStore.firebaseUser!.displayName,
         email: _authStore.firebaseUser!.email,
         photoURL: _authStore.firebaseUser!.photoURL,
@@ -306,6 +305,10 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: [
+            _customNFTPosts(Assets.newNft1, 'Astronomia', '24.99'),
+            _customNFTPosts(Assets.newNft2, 'Khlow', '14'),
+            _customNFTPosts(Assets.newNft3, 'Tupple', '93.10'),
+            _customNFTPosts(Assets.newNft4, 'Rought', '10'),
             _customNFTPosts(Assets.nftPicture1, 'Gangsta Rodeo', '12.99'),
             _customNFTPosts(Assets.nftPicture2, 'Bytes Mixture', '14.99'),
             _customNFTPosts(Assets.nftPicture3, 'Mane', '11.49'),
@@ -354,10 +357,7 @@ class _HomeScreenState extends State<HomeScreen> {
           .push(MaterialPageRoute(builder: (context) => NftList())),
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.yellow.shade800,
-            width: 2
-          ),
+            border: Border.all(color: Colors.yellow.shade800, width: 2),
             color: Colors.white,
             borderRadius: BorderRadius.circular(10)),
         child: Center(

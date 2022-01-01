@@ -1,4 +1,4 @@
-import 'package:boilerplate/stores/post/nft_store.dart';
+import 'package:boilerplate/stores/blockchain/blockchain_store.dart';
 import 'package:boilerplate/utils/routes/routes.dart';
 import 'package:boilerplate/widgets/custom_text.dart';
 import 'package:boilerplate/widgets/progress_indicator_widget.dart';
@@ -16,13 +16,13 @@ class SuccessScreen extends StatefulWidget {
 }
 
 class _SuccessScreenState extends State<SuccessScreen> {
-  late NFTStore _nftStore;
+  late BlockchainStore _blockchainStore;
 
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    _nftStore = Provider.of<NFTStore>(context);
+    _blockchainStore = Provider.of<BlockchainStore>(context);
   }
 
   @override
@@ -42,7 +42,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
         ),
         body: Observer(
           builder: (context) {
-            return _nftStore.uploadSuccess
+            return _blockchainStore.success
                 ? _buildMainBody()
                 : customProgressIndicator();
           },
