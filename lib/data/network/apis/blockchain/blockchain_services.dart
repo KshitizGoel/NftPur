@@ -14,6 +14,16 @@ class BlockchainServices {
   var privateKey;
   Client httpClient = Client();
 
+
+  /// Sample MetaData structure
+  final metadata = {
+    "trait_type": "Art",
+    "value": "Ξ 100",
+    "description": "",
+    "image" : "photoURL",
+    "name" : "NFTName"
+  };
+
   //Smart Contract necessary initiations
 
   /// TODO : we have to use sendTransactions in order to write / update the data!!!

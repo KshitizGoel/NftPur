@@ -48,6 +48,7 @@ class AuthRepository {
   Future<dynamic> logoutTheUser() async {
     return await _firebaseApi.signOutFromGoogle().then((value) {
       print('Successfully executed the sign out !');
+      _userDataSource.deleteAll();
       return value;
     }).catchError((onError) {
       print('Getting the error in Logging Out from the Repo level !!');

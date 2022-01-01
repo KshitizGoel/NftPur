@@ -84,8 +84,9 @@ abstract class _AuthStore with Store {
         preference.setBool(Preferences.is_logged_in, false);
       });
       print('Successfully logged out the user! ');
-      signedInUser = false;
-      hasWallet = false;
+      this.signedInUser = false;
+      this.hasWallet = false;
+      this.dataSaved = false;
       return value;
     }).catchError((onError) {
       print('Getting the error in logging out the error from Store level!');
@@ -96,7 +97,7 @@ abstract class _AuthStore with Store {
   @action
   Future<void> checkForTheAvailableWallet(UserData userData) async {
     return _authRepository.checkForTheAvailableWallet(userData).then((value) {
-      hasWallet = value!;
+      this.hasWallet = value!;
     }).catchError((onError) {
       print('Getting the error in checkForTheAvailableWallet in store level!');
       throw onError;

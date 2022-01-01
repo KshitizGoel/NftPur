@@ -58,11 +58,7 @@ class FirebaseApi {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         print('Document data: ${documentSnapshot.data()}');
-        //   if (documentSnapshot.get('hasWallet') == true) return true;
-        // } else {
-        //   print('Document does not exist on the database');
-        //   return false;
-        // }
+
         return documentSnapshot;
       }
     }).catchError((onError) {
@@ -76,14 +72,21 @@ class FirebaseApi {
     await _auth.signOut();
   }
 
-  Future<void> saveNftInDatabase(String fileName, XFile imageFile) async {
+  Future<void> uploadNftInDatabase(String fileName, XFile imageFile) async {
     File file = File(imageFile.path);
 
+    firebase_storage.SettableMetadata metadata =
+        firebase_storage.SettableMetadata(
+      cacheControl: 'max-age=60',
+      customMetadata: <String, String>{
+        'userId': 'ABC123',
+      },
+    );
     await firebase_storage.FirebaseStorage.instance
         .ref()
         .child('NFTs')
         .child('$fileName')
-        .putFile(file);
+        .putFile(file, metadata);
   }
 
   Future<String> downloadURL(String fileName) async {

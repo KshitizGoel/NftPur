@@ -10,7 +10,7 @@ class NFTRepository {
 
   Future<dynamic> uploadNFTToDatabase(String fileName, XFile imageFile) async {
     return await _firebaseApi
-        .saveNftInDatabase(fileName, imageFile)
+        .uploadNftInDatabase(fileName, imageFile)
         .then((value) async {
       var downloadURL;
       await _firebaseApi.downloadURL(fileName).then((value) {
