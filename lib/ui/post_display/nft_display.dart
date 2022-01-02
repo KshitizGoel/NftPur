@@ -156,11 +156,7 @@ class _NftDisplayState extends State<NftDisplay> {
       alignment: Alignment.bottomRight,
       child: InkWell(
         onTap: () {
-          FlushbarHelper.createInformation(
-            message: 'Hi, We will proceed to complete your request!',
-            title: 'Success',
-            duration: Duration(seconds: 3),
-          )..show(context);
+
 
           Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentsPage(_nftDetails)));
 

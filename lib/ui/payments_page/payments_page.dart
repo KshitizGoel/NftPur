@@ -28,25 +28,11 @@ class _PaymentsPageState extends State<PaymentsPage> {
       ),
       body: ListView(
         children: [
-          SizedBox(
-            height: 20,
-          ),
+
           Container(
             height: 300,
-            child: Row(
-              children: [
-                Align(
-                    alignment: Alignment.topLeft,
-                    child: _customImageContainer()),
-                // Column(
-                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //   children: [
-                //     // _customContainerForText('${widget.nftDetails.nftName}'),
-                //     // _customContainerForText('${widget.nftDetails.nftPrice}'),
-                //   ],
-                // )
-              ],
-            ),
+            child: Center(child: _customImageContainer()),
+
           ),
           // _customContainerForText('${widget.nftDetails.nftDescription}'),
           SizedBox(height: 50),
@@ -83,8 +69,9 @@ class _PaymentsPageState extends State<PaymentsPage> {
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 50),
         decoration: BoxDecoration(
-            color: Colors.yellow.shade700.withOpacity(0.70),
-            borderRadius: BorderRadius.circular(50)),
+            color: Colors.white,
+            border: Border.all(color: Colors.yellow.shade800, width: 2),
+            borderRadius: BorderRadius.circular(10)),
         child: Center(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -95,16 +82,16 @@ class _PaymentsPageState extends State<PaymentsPage> {
                 Text(
                   'Ξ',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 18),
                 ),
                 Text(
                   'Proceed To Payment',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 15),
                 ),
               ],
             ),
