@@ -113,4 +113,27 @@ abstract class _BlockchainStore with Store {
       throw onError;
     });
   }
+
+  @action
+  Future<void> getDataFromStorage() async {
+    return await _blockchainRepository.getFilesFromDatabase().then((value) {
+      print('Getting the data from getDataFromStorage here!! \n$value');
+    }).catchError((onError) {
+      print('Getting the error here in getDataFromStorage Store level!');
+      throw onError;
+    });
+  }
+
+  @action
+  Future<void> mintTheToken(
+      EthereumAddress address, String imageAddress) async {
+    return await _blockchainRepository
+        .mintTheToken(address, imageAddress)
+        .then((value) {
+      print('Gettig the token here in Store level!! : \n$value');
+    }).catchError((onError) {
+      print('Getting the error here in the mintTheTOken Store level');
+      throw onError;
+    });
+  }
 }

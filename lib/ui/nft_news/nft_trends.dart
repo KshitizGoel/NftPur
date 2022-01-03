@@ -27,7 +27,7 @@ class _NFTTrendsState extends State<NFTTrends> {
         _customNftPost(Assets.nftTrending1, 'Mind Universe', '98', '250'),
         _customNftPost(Assets.nftTrending2, 'Cat Nip', '89', '430'),
         _customNftPost(Assets.nftTrending3, 'Nigerian Machine', '93', '110'),
-        _customNftPost(Assets.nftTrending4, 'Sailor Monkey', '76', '20'),
+        _customNftPost(Assets.nftTrending4, 'Sailor Monke', '76', '20'),
         Padding(
           padding: const EdgeInsets.only(top: 20.0, left: 15),
           child: _customText('Collections'),

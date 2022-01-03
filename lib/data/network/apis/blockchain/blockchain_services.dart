@@ -144,8 +144,10 @@ class BlockchainServices {
 
   Future<dynamic> submitQuery(String functionName, List<dynamic> args) async {
     try {
+      /// CHANGE THE PRIVATE KEY BEFORE PUSHING INTO GITHUB!!
+
       EthPrivateKey credentials = EthPrivateKey.fromHex(
-          '261fcd4fca4a8d62a73f93125310a0690fc4946951a48b04bba9bb59e07ba3aa');
+          'f15dff0435781a60a0ddf11dcd998278e635fe83d5bafc620d10ff2d16bf708f');
       DeployedContract contract = await loadWalletContract();
       final ethFunction = contract.function(functionName);
       Web3Client ethClient = Web3Client(
@@ -154,7 +156,9 @@ class BlockchainServices {
       final result = ethClient.sendTransaction(
           credentials,
           Transaction.Transaction.callContract(
-              contract: contract, function: ethFunction, parameters: args));
+              contract: contract, function: ethFunction, parameters: args),
+          chainId: null,
+          fetchChainIdFromNetworkId: true);
       return result;
     } catch (onError) {
       print('Error : submitQuery 1');
@@ -166,7 +170,7 @@ class BlockchainServices {
       EthereumAddress buyerAddress, int amt) async {
     var bigAmount = BigInt.from(amt);
     var response =
-        query('transferFrom', [ownerAddress, buyerAddress, bigAmount]);
+        submitQuery('transferFrom', [ownerAddress, buyerAddress, bigAmount]);
     print('Getting the response here !!!\n$response');
     return response;
   }
@@ -180,7 +184,7 @@ class BlockchainServices {
         EthereumAddress.fromHex('0x5B38Da6a701c568545dCfcB03FcB875f56beddC4');
     var bigAmount = BigInt.from(tokens);
     var response =
-        query('transfer', [adminAddress, delegateAddress, bigAmount]);
+        submitQuery('transfer', [adminAddress, delegateAddress, bigAmount]);
     print('Getting the response here !!!! \n$response');
     return response;
   }
@@ -195,6 +199,66 @@ class BlockchainServices {
       return response;
     } catch (e) {
       print('Getting the error here in transferInitialBalance!!!:');
+      throw e;
+    }
+  }
+
+  /// NFT CONTRACT FUNCTIONS ONLY!!!
+  ///
+
+  Future<dynamic> nftQuery(String functionName, List<dynamic> args) async {
+    try {
+      EthPrivateKey credentials = EthPrivateKey.fromHex(
+          'f15dff0435781a60a0ddf11dcd998278e635fe83d5bafc620d10ff2d16bf708f');
+      Web3Client ethClient = Web3Client(
+          'https://rinkeby.infura.io/v3/835ac87e30544599be38eed5a0a2a2c0',
+          httpClient);
+
+      final contract = await loadNFTContract();
+      final ethFunction = contract.function(functionName);
+
+      final result = ethClient.sendTransaction(
+          credentials,
+          Transaction.Transaction.callContract(
+              contract: contract, function: ethFunction, parameters: args));
+
+      return result;
+    } catch (onError) {
+      print('nftQuery : 1');
+      print(onError);
+
+      throw onError;
+    }
+  }
+
+  Future<DeployedContract> loadNFTContract() async {
+    try {
+      String abi = await rootBundle.loadString(Assets.nftSmartContractAddress);
+
+      ///TODO : This contract address will be obtained only upon the new deployment of the smart contract!!! So it may change!!
+      String contractAddress = "0xd9145CCE52D386f254917e481eB44e9943F39138";
+
+      final contract = DeployedContract(ContractAbi.fromJson(abi, 'newNFT'),
+          EthereumAddress.fromHex(contractAddress));
+      return contract;
+    } catch (onError) {
+      print('loadNFTContract : 1');
+      throw onError;
+    }
+  }
+
+  Future<dynamic> mintNFT(EthereumAddress address, String imageAddress) async {
+    try {
+      EthereumAddress hardAddress =
+          EthereumAddress.fromHex('0x5B38Da6a701c568545dCfcB03FcB875f56beddC4');
+      String uriData =
+          'https://console.firebase.google.com/u/0/project/nftpur/storage/nftpur.appspot.com/files/~2FNFT';
+
+      var response = nftQuery('mint', [hardAddress, BigInt.from(20), uriData]);
+      print(response);
+      return response;
+    } catch (e) {
+      print('mintNFT : 1');
       throw e;
     }
   }

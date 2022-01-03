@@ -1,8 +1,8 @@
-import 'dart:io';
-
+import 'package:boilerplate/stores/blockchain/blockchain_store.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import 'mint_nft.dart';
 
@@ -15,6 +15,16 @@ class PostYourNft extends StatefulWidget {
 
 class _PostYourNftState extends State<PostYourNft> {
   final ImagePicker _picker = ImagePicker();
+
+  late BlockchainStore _blockchainStore;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _blockchainStore = Provider.of<BlockchainStore>(context);
+    _blockchainStore.getDataFromStorage();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +41,7 @@ class _PostYourNftState extends State<PostYourNft> {
             child: Container(
               width: 195,
               decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.yellow.shade800,
-                    width: 2
-                  ),
+                  border: Border.all(color: Colors.yellow.shade800, width: 2),
                   borderRadius: BorderRadius.circular(10)),
               child: Padding(
                 padding: EdgeInsets.all(10),
@@ -78,7 +85,7 @@ class _PostYourNftState extends State<PostYourNft> {
   }
 
   Future<void> _pickImageAndNavigate() async {
-    var image = await _picker.pickImage(source: ImageSource.gallery) ;
+    var image = await _picker.pickImage(source: ImageSource.gallery);
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => MintNFT(image!)));
   }

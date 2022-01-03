@@ -1,4 +1,3 @@
-import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:boilerplate/constants/strings.dart';
 import 'package:boilerplate/models/nft/nft_details.dart';
 import 'package:boilerplate/ui/payments_page/payments_page.dart';
@@ -156,10 +155,8 @@ class _NftDisplayState extends State<NftDisplay> {
       alignment: Alignment.bottomRight,
       child: InkWell(
         onTap: () {
-
-
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentsPage(_nftDetails)));
-
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => PaymentsPage(_nftDetails)));
         },
         child: Padding(
           padding: const EdgeInsets.only(bottom: 10.0, left: 40),
@@ -167,7 +164,7 @@ class _NftDisplayState extends State<NftDisplay> {
             width: 170,
             decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: Colors.yellow.shade800 , width: 2),
+                border: Border.all(color: Colors.yellow.shade800, width: 2),
                 borderRadius: BorderRadius.circular(10)),
             child: Padding(
               padding: EdgeInsets.all(15),

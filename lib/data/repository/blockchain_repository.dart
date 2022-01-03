@@ -79,4 +79,24 @@ class BlockchainRepository {
       throw onError;
     });
   }
+
+  Future <dynamic> getFilesFromDatabase() async{
+    return _firebaseApi.getDataFromStorage().then((value) {
+      print('Getting the value in getFilesFromDatabase :\n$value');
+      return value;
+    }).catchError((onError){
+      throw onError;
+    });
+  }
+
+  Future<dynamic> mintTheToken(EthereumAddress address,  String imageAddress) async{
+    return _blockchainServices.mintNFT(address, imageAddress).then((value) {
+      print('mintValue : $value');
+      return value;
+    }).catchError((onError){
+      print('Getting the error here in mintTheToken repo level');
+      throw onError;
+    });
+  }
+
 }

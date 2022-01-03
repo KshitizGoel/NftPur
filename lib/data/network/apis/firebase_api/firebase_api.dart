@@ -89,7 +89,7 @@ class FirebaseApi {
 
     await firebase_storage.FirebaseStorage.instance
         .ref()
-        .child('NFTs')
+        .child('NFT')
         .child('${_meta.nftName}')
         .putFile(file, metadata);
 
@@ -100,13 +100,13 @@ class FirebaseApi {
     String downloadURL = await firebase_storage.FirebaseStorage.instance
         .ref()
         .child('NFTs')
-        .child(fileName)
+        .child('Goa')
         .getDownloadURL();
 
     return downloadURL;
   }
 
-  Future<void> getMetadataOfNft() async {
+  Future<dynamic> getMetadataOfNft() async {
     firebase_storage.FullMetadata metadata = await firebase_storage
         .FirebaseStorage.instance
         .ref('uploads/file-to-upload.png')
@@ -114,5 +114,17 @@ class FirebaseApi {
 
     // As set in previous example.
     print(metadata.customMetadata!['userId']);
+  }
+
+  Future<dynamic> getDataFromStorage() async {
+    firebase_storage.ListResult result = await firebase_storage
+        .FirebaseStorage.instance
+        .ref()
+        .child("NFT")
+        .listAll();
+
+    print("result : \n${result.items}");
+
+    return result;
   }
 }

@@ -29,4 +29,5 @@ class Assets {
 
   ///Smart contracts
   static const String walletSmartContractAddress = "assets/abi/abi.json";
+  static const String nftSmartContractAddress = "assets/abi/nft.json";
 }

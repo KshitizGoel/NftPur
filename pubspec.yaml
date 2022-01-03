@@ -84,6 +84,8 @@ dependencies:
   #Custom Number Picker for price selection
   numberpicker: ^2.1.1
 
+  #Automatic mailer
+  mailer: ^5.0.2
 
   # Firebase Dependencies
   firebase_core: ^1.10.6
