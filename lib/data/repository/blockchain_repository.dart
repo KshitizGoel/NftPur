@@ -2,6 +2,7 @@ import 'package:boilerplate/data/local/datasources/UserDataSource/user_datasourc
 import 'package:boilerplate/data/network/apis/blockchain/blockchain_services.dart';
 import 'package:boilerplate/data/network/apis/firebase_api/firebase_api.dart';
 import 'package:boilerplate/models/nft/nft_details.dart';
+import 'package:boilerplate/models/nft/nft_details_list.dart';
 import 'package:boilerplate/models/user/user.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:web3dart/credentials.dart';
@@ -80,7 +81,7 @@ class BlockchainRepository {
     });
   }
 
-  Future <dynamic> getFilesFromDatabase() async{
+  Future <List<NFTDetailsList>> getFilesFromDatabase() async{
     return _firebaseApi.getDataFromStorage().then((value) {
       print('Getting the value in getFilesFromDatabase :\n$value');
       return value;

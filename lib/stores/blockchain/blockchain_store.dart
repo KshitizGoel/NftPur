@@ -1,5 +1,6 @@
 import 'package:boilerplate/data/repository/blockchain_repository.dart';
 import 'package:boilerplate/models/nft/nft_details.dart';
+import 'package:boilerplate/models/nft/nft_details_list.dart';
 import 'package:boilerplate/models/user/user.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
@@ -36,6 +37,12 @@ abstract class _BlockchainStore with Store {
 
   @observable
   String balance = " ";
+
+  @observable
+  bool loading = true;
+
+  @observable
+  List<NFTDetailsList>? nftDetailsList;
 
   @action
   Future<void> generateANewWalletAddress(UserData userData) async {
@@ -117,7 +124,11 @@ abstract class _BlockchainStore with Store {
   @action
   Future<void> getDataFromStorage() async {
     return await _blockchainRepository.getFilesFromDatabase().then((value) {
-      print('Getting the data from getDataFromStorage here!! \n$value');
+      this.nftDetailsList = value;
+      print(
+          'Getting the data from getDataFromStorage here!! \n${nftDetailsList!.last.nftName}');
+
+      this.loading = false;
     }).catchError((onError) {
       print('Getting the error here in getDataFromStorage Store level!');
       throw onError;

@@ -124,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
             borderRadius: BorderRadius.circular(5),
             boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10)]),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 40.0, top: 10, bottom: 10),
@@ -141,10 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Center(
                 child: Text(
                   'Sign in with Google',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: 18),
+                  style: TextStyle(color: Colors.black, fontSize: 18),
                 ),
               ),
             )

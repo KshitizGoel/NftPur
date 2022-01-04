@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class PaymentsPage extends StatefulWidget {
-  NftDetails nftDetails;
+  NFTData nftDetails;
 
   PaymentsPage(this.nftDetails);
 

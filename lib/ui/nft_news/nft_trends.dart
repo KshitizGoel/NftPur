@@ -55,7 +55,7 @@ class _NFTTrendsState extends State<NFTTrends> {
       String popularityPercentage, String price) {
     return InkWell(
       onTap: () {
-        NftDetails _nftDetails = NftDetails(
+        NFTData _nftDetails = NFTData(
             nftName: nftName,
             imageAddress: imageAddress,
             nftDescription: 'Hi this is a random text about the above NFT!',

@@ -1,11 +1,25 @@
-class NftDetails {
+class NFTData {
   String nftName, imageAddress, nftDescription, nftPrice;
 
-  NftDetails(
+  NFTData(
       {required this.nftName,
       required this.imageAddress,
       required this.nftDescription,
       required this.nftPrice});
+
+  factory NFTData.fromMap(Map<String, dynamic> json) => NFTData(
+        nftName: json["nftName"],
+        imageAddress: json["imageAddress"],
+        nftDescription: json["nftDescription"],
+        nftPrice: json["nftPrice"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "nftName": nftName,
+        "imageAddress": imageAddress,
+        "nftDescription": nftDescription,
+        "nftPrice": nftPrice,
+      };
 }
 
 class NFTMetaData {
@@ -26,5 +40,5 @@ class NFTMetaData {
         "nftName": nftName,
         "nftDescription": nftDescription,
         "nftPrice": nftPrice,
-       };
+      };
 }

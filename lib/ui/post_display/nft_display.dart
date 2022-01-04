@@ -9,7 +9,7 @@ import 'details_page.dart';
 import 'full_size_display.dart';
 
 class NftDisplay extends StatefulWidget {
-  final NftDetails _nftDetails;
+  final NFTData _nftDetails;
   final bool isOwned;
 
   NftDisplay(this._nftDetails, this.isOwned);
@@ -19,7 +19,7 @@ class NftDisplay extends StatefulWidget {
 }
 
 class _NftDisplayState extends State<NftDisplay> {
-  final NftDetails _nftDetails;
+  final NFTData _nftDetails;
 
   _NftDisplayState(this._nftDetails);
 
@@ -78,20 +78,35 @@ class _NftDisplayState extends State<NftDisplay> {
   }
 
   Widget _displayNftImage(String imageAddress) {
-    return InkWell(
-      onTap: () =>
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return FullSizeDisplay(imageAddress);
-      })),
-      child: Container(
-        height: 200,
-        decoration: BoxDecoration(color: Colors.black),
-        child: Image.asset(
-          "$imageAddress",
-          height: double.infinity,
-        ),
-      ),
-    );
+    return imageAddress.substring(0, 6).contains('https')
+        ? InkWell(
+            onTap: () => Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) {
+              return FullSizeDisplay(imageAddress);
+            })),
+            child: Container(
+              height: 200,
+              decoration: BoxDecoration(color: Colors.black),
+              child: Image.network(
+                "$imageAddress",
+                height: double.infinity,
+              ),
+            ),
+          )
+        : InkWell(
+            onTap: () => Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) {
+              return FullSizeDisplay(imageAddress);
+            })),
+            child: Container(
+              height: 200,
+              decoration: BoxDecoration(color: Colors.black),
+              child: Image.asset(
+                "$imageAddress",
+                height: double.infinity,
+              ),
+            ),
+          );
   }
 
   Widget _customText(String text, double fontSize) {
@@ -155,8 +170,13 @@ class _NftDisplayState extends State<NftDisplay> {
       alignment: Alignment.bottomRight,
       child: InkWell(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => PaymentsPage(_nftDetails)));
+          title == 'VIEW'
+              ? Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) {
+                  return FullSizeDisplay(widget._nftDetails.imageAddress);
+                }))
+              : Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => PaymentsPage(_nftDetails)));
         },
         child: Padding(
           padding: const EdgeInsets.only(bottom: 10.0, left: 40),

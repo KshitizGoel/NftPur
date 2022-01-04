@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:boilerplate/constants/strings.dart';
 import 'package:boilerplate/models/nft/nft_details.dart';
+import 'package:boilerplate/models/nft/nft_details_list.dart';
 import 'package:boilerplate/models/user/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -116,15 +118,30 @@ class FirebaseApi {
     print(metadata.customMetadata!['userId']);
   }
 
-  Future<dynamic> getDataFromStorage() async {
+  Future<List<NFTDetailsList>> getDataFromStorage() async {
+    NFTDetailsList nftDetail =
+        NFTDetailsList(nftName: 'nftName', imageUrl: 'https://user-images.githubusercontent.com/67114557/148027982-55c0eae9-1740-486b-a943-c6e565a7be21.jpg');
+
+    List<NFTDetailsList> nftDetailsList = [nftDetail];
+
     firebase_storage.ListResult result = await firebase_storage
         .FirebaseStorage.instance
         .ref()
         .child("NFT")
         .listAll();
 
-    print("result : \n${result.items}");
+    for (int i = 0; i < result.items.length; i++) {
+      NFTDetailsList _nftDetail = NFTDetailsList(
+          nftName: result.items[i].name,
+          imageUrl: await firebase_storage.FirebaseStorage.instance
+              .ref()
+              .child('NFT')
+              .child('${result.items[i].name}')
+              .getDownloadURL());
 
-    return result;
+      nftDetailsList.add(_nftDetail);
+    }
+
+    return nftDetailsList;
   }
 }

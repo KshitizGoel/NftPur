@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
     responseList.forEach((post) {
       listItems.add(InkWell(
         onTap: () {
-          NftDetails _nftDetails = NftDetails(
+          NFTData _nftDetails = NFTData(
               nftName: post["name"],
               imageAddress: "assets/images/${post["image"]}",
               nftDescription:
@@ -179,7 +179,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     .push(MaterialPageRoute(builder: (context) => NftList())),
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.black,
+                    color: Colors.white,
+                    border: Border.all(color: Colors.black , width: 2),
                       borderRadius: BorderRadius.circular(5)),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -187,8 +188,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text(
                       'See More',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.orangeAccent,
+                        // fontWeight: FontWeight.bold,
+                        color: Colors.deepOrangeAccent,
                       ),
                     ),
                   ),
@@ -322,7 +323,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _customNFTPosts(String assetName, String nftName, String price) {
     return InkWell(
       onTap: () {
-        NftDetails _nftDetails = NftDetails(
+        NFTData _nftDetails = NFTData(
             nftName: nftName,
             imageAddress: assetName,
             nftDescription: 'Hi this is the random text about the NFT above !',
@@ -366,7 +367,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Text(
               'SHOW MORE',
               style: TextStyle(
-                fontWeight: FontWeight.bold,
+                // fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
             ),

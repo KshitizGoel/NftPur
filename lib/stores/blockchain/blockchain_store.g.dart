@@ -100,6 +100,36 @@ mixin _$BlockchainStore on _BlockchainStore, Store {
     });
   }
 
+  final _$loadingAtom = Atom(name: '_BlockchainStore.loading');
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
+  final _$nftDetailsListAtom = Atom(name: '_BlockchainStore.nftDetailsList');
+
+  @override
+  List<NFTDetailsList>? get nftDetailsList {
+    _$nftDetailsListAtom.reportRead();
+    return super.nftDetailsList;
+  }
+
+  @override
+  set nftDetailsList(List<NFTDetailsList>? value) {
+    _$nftDetailsListAtom.reportWrite(value, super.nftDetailsList, () {
+      super.nftDetailsList = value;
+    });
+  }
+
   final _$generateANewWalletAddressAsyncAction =
       AsyncAction('_BlockchainStore.generateANewWalletAddress');
 
@@ -150,6 +180,24 @@ mixin _$BlockchainStore on _BlockchainStore, Store {
         .run(() => super.uploadNFTToDatabase(nftMetaData, imageFile));
   }
 
+  final _$getDataFromStorageAsyncAction =
+      AsyncAction('_BlockchainStore.getDataFromStorage');
+
+  @override
+  Future<void> getDataFromStorage() {
+    return _$getDataFromStorageAsyncAction
+        .run(() => super.getDataFromStorage());
+  }
+
+  final _$mintTheTokenAsyncAction =
+      AsyncAction('_BlockchainStore.mintTheToken');
+
+  @override
+  Future<void> mintTheToken(EthereumAddress address, String imageAddress) {
+    return _$mintTheTokenAsyncAction
+        .run(() => super.mintTheToken(address, imageAddress));
+  }
+
   @override
   String toString() {
     return '''
@@ -158,7 +206,9 @@ hasWallet: ${hasWallet},
 successfulTransfer: ${successfulTransfer},
 success: ${success},
 downloadURL: ${downloadURL},
-balance: ${balance}
+balance: ${balance},
+loading: ${loading},
+nftDetailsList: ${nftDetailsList}
     ''';
   }
 }

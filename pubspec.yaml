@@ -95,6 +95,9 @@ dependencies:
   firebase_messaging: ^11.2.4
   firebase_storage: ^10.2.4
 
+  # Network Image Caching
+  cached_network_image: ^3.2.0
+
   #Blockchain dependencies
   web3dart: ^2.3.3
 #  flutter_web3: ^2.1.6
