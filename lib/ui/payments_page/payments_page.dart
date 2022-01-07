@@ -1,9 +1,10 @@
 import 'package:boilerplate/models/nft/nft_details.dart';
+import 'package:boilerplate/ui/payments_page/payment_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class PaymentsPage extends StatefulWidget {
-  NftDetails nftDetails;
+  NFTData nftDetails;
 
   PaymentsPage(this.nftDetails);
 
@@ -12,6 +13,8 @@ class PaymentsPage extends StatefulWidget {
 }
 
 class _PaymentsPageState extends State<PaymentsPage> {
+  String nftTokenID = "0x9f4fa174ff0688386f12bf6fe1f78e5802718db09f96e4b607383810bb7c480b";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,27 +31,11 @@ class _PaymentsPageState extends State<PaymentsPage> {
       ),
       body: ListView(
         children: [
-          SizedBox(
-            height: 20,
-          ),
           Container(
             height: 300,
-            child: Row(
-              children: [
-                Align(
-                    alignment: Alignment.topLeft,
-                    child: _customImageContainer()),
-                // Column(
-                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //   children: [
-                //     // _customContainerForText('${widget.nftDetails.nftName}'),
-                //     // _customContainerForText('${widget.nftDetails.nftPrice}'),
-                //   ],
-                // )
-              ],
-            ),
+            child: Center(child: _customImageContainer()),
           ),
-          // _customContainerForText('${widget.nftDetails.nftDescription}'),
+          _infoCard(),
           SizedBox(height: 50),
           _purchaseNft(),
         ],
@@ -77,14 +64,75 @@ class _PaymentsPageState extends State<PaymentsPage> {
     );
   }
 
+  Widget _infoCard() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 2)]),
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
+              child: Text(
+                '${widget.nftDetails.nftName}',
+                style: TextStyle(
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
+              child: Text(
+                '${widget.nftDetails.nftDescription}',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
+              child: Text(
+                'Ξ ${widget.nftDetails.nftPrice} /-',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
+              child: Text(
+                '$nftTokenID',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 13,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _purchaseNft() {
     return InkWell(
-      onTap: () => null,
+      onTap: () async => Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => PaymentSuccess(
+              'Your Transaction details will be sent on your Email address!'))),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 50),
         decoration: BoxDecoration(
-            color: Colors.yellow.shade700.withOpacity(0.70),
-            borderRadius: BorderRadius.circular(50)),
+            color: Colors.white,
+            border: Border.all(color: Colors.yellow.shade800, width: 2),
+            borderRadius: BorderRadius.circular(10)),
         child: Center(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -95,16 +143,16 @@ class _PaymentsPageState extends State<PaymentsPage> {
                 Text(
                   'Ξ',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 18),
                 ),
                 Text(
                   'Proceed To Payment',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 15),
                 ),
               ],
             ),

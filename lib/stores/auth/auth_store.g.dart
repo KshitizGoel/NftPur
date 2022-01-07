@@ -84,6 +84,21 @@ mixin _$AuthStore on _AuthStore, Store {
     });
   }
 
+  final _$dataSavedAtom = Atom(name: '_AuthStore.dataSaved');
+
+  @override
+  bool get dataSaved {
+    _$dataSavedAtom.reportRead();
+    return super.dataSaved;
+  }
+
+  @override
+  set dataSaved(bool value) {
+    _$dataSavedAtom.reportWrite(value, super.dataSaved, () {
+      super.dataSaved = value;
+    });
+  }
+
   final _$googleSignInAsyncAction = AsyncAction('_AuthStore.googleSignIn');
 
   @override
@@ -107,6 +122,13 @@ mixin _$AuthStore on _AuthStore, Store {
         .run(() => super.checkForTheAvailableWallet(userData));
   }
 
+  final _$storeUserDataAsyncAction = AsyncAction('_AuthStore.storeUserData');
+
+  @override
+  Future<void> storeUserData(UserData userData) {
+    return _$storeUserDataAsyncAction.run(() => super.storeUserData(userData));
+  }
+
   final _$_AuthStoreActionController = ActionController(name: '_AuthStore');
 
   @override
@@ -127,7 +149,8 @@ signedInUser: ${signedInUser},
 firebaseUser: ${firebaseUser},
 userDetails: ${userDetails},
 hasWallet: ${hasWallet},
-privateKey: ${privateKey}
+privateKey: ${privateKey},
+dataSaved: ${dataSaved}
     ''';
   }
 }

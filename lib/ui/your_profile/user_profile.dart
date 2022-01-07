@@ -1,4 +1,3 @@
-import 'package:boilerplate/constants/assets.dart';
 import 'package:boilerplate/models/nft/nft_details.dart';
 import 'package:boilerplate/models/user/user.dart';
 import 'package:boilerplate/stores/auth/auth_store.dart';
@@ -32,6 +31,7 @@ class _ProfileState extends State<Profile> {
     await _blockchainStore.approveAndAllow(
         EthereumAddress.fromHex('0x61a02185c526cb869ab57c4e4cfdc5941f8c3f3a'));
     await _checkWalletAvailability();
+    await _blockchainStore.getDataFromStorage();
   }
 
   Future<void> _checkWalletAvailability() async {
@@ -178,10 +178,11 @@ class _ProfileState extends State<Profile> {
         physics: ScrollPhysics(),
         crossAxisCount: 3,
         shrinkWrap: true,
-        children: List.generate(6, (index) {
-          NftDetails _nftDetails = NftDetails(
-              nftName: 'Gangsta Rodeo',
-              imageAddress: Assets.nftTrending3,
+        children:
+            List.generate(_blockchainStore.nftDetailsList!.length, (index) {
+          NFTData _nftDetails = NFTData(
+              nftName: _blockchainStore.nftDetailsList![index].nftName,
+              imageAddress: _blockchainStore.nftDetailsList![index].imageUrl,
               nftDescription:
                   'Hi this is the random text about the NFT above !',
               nftPrice: '256');
@@ -192,28 +193,34 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget _showNFTContent(NftDetails _nftDetails) {
-    return InkWell(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => NftDisplay(_nftDetails, false))),
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
-          ],
-          border: Border.all(
-            width: 2.0,
-          ),
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(5),
-          child: Image.asset(
-            _nftDetails.imageAddress,
-            fit: BoxFit.cover,
-          ),
-        ),
-      ),
-    );
+  Widget _showNFTContent(NFTData _nftDetails) {
+    return _nftDetails.imageAddress == "imageUrl"
+        ? SizedBox(
+            height: 0,
+          )
+        : InkWell(
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => NftDisplay(_nftDetails, false))),
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withAlpha(100), blurRadius: 10.0),
+                ],
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(
+                  width: 1.0,
+                ),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Image.network(
+                  _nftDetails.imageAddress,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          );
   }
 }

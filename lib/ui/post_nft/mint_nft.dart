@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:boilerplate/constants/strings.dart';
-import 'package:boilerplate/stores/post/nft_store.dart';
+import 'package:boilerplate/models/nft/nft_details.dart';
+import 'package:boilerplate/stores/blockchain/blockchain_store.dart';
 import 'package:boilerplate/ui/success_screen/success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,13 +30,13 @@ class _MintNFTState extends State<MintNFT> {
 
   _MintNFTState(this._mediaFile);
 
-  late NFTStore _nftStore;
+  late BlockchainStore _blockchainStore;
 
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    _nftStore = Provider.of<NFTStore>(context);
+    _blockchainStore = Provider.of<BlockchainStore>(context);
   }
 
   @override
@@ -134,8 +135,13 @@ class _MintNFTState extends State<MintNFT> {
 
   Widget _customButtonForVerification(String text, IconData icon) {
     return InkWell(
-      onTap: () {
-        _nftStore.uploadNFTToDatabase(_nameController.text, widget._mediaFile);
+      onTap: () async {
+        NFTMetaData nftMetaData = NFTMetaData(
+            nftName: _nameController.text,
+            nftDescription: _descriptionController.text,
+            nftPrice: _currentHorizontalIntValue.toString());
+
+        _blockchainStore.uploadNFTToDatabase(nftMetaData, widget._mediaFile);
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
                 builder: (context) =>
@@ -163,7 +169,6 @@ class _MintNFTState extends State<MintNFT> {
 
   Widget _customTextField(TextEditingController controller, String hintText) {
     return TextFormField(
-
         onChanged: (text) => controller.text = text,
         controller: controller,
         decoration: new InputDecoration(

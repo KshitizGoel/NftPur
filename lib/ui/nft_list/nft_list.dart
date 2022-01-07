@@ -24,7 +24,7 @@ class _NftListState extends State<NftList> {
     responseList.forEach((post) {
       listItems.add(InkWell(
         onTap: () {
-          NftDetails _nftDetails = NftDetails(
+          NFTData _nftDetails = NFTData(
               nftName: post["name"],
               imageAddress: "assets/images/${post["image"]}",
               nftDescription:

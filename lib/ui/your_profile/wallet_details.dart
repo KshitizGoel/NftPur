@@ -110,7 +110,7 @@ class _WalletDetailsState extends State<WalletDetails> {
 
                     /// TODO  : Create a custom Dialog wherein you give the details about the wallet balance in INR and ask for the choice once again
 
-                    onTap: () => null,
+                    onTap: () => _blockchainStore.mintTheToken(EthereumAddress.fromHex('0x5B38Da6a701c568545dCfcB03FcB875f56beddC4'), 'imageAddress'),
                     child:
                         _customButtonForTransactions('withdraw'.toUpperCase())),
               ],
