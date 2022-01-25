@@ -9,6 +9,7 @@ import 'package:boilerplate/stores/blockchain/blockchain_store.dart';
 import 'package:boilerplate/stores/language/language_store.dart';
 import 'package:boilerplate/stores/theme/theme_store.dart';
 import 'package:boilerplate/ui/login/login.dart';
+import 'package:boilerplate/ui/onboarding_screen/lets_get_started.dart';
 import 'package:boilerplate/utils/locale/app_localization.dart';
 import 'package:boilerplate/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
             ///TODO :  We may have to remove the Login feature and instead ask the user to integrate your wallet
             home: _authStore.signedInUser
                 ? NavigationMainScreen(0)
-                : LoginScreen(),
+                : LetsGetStarted(),
           );
         },
       ),

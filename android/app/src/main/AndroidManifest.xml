@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dapp.nftpur">
-
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+    <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS"/>
     <!-- The INTERNET permission is required for development. Specifically,
          flutter needs it to communicate with the running application
          to allow setting breakpoints, to provide hot reload, etc.
@@ -14,8 +16,8 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:icon="@mipmap/nftpur_sample_logo"
-        android:usesCleartextTraffic="true"
-        android:label="NFTPur">
+        android:label="NFTPur"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"
@@ -42,6 +44,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.truecaller.android.sdk.PartnerKey"
+            android:value="72:02:C0:90:8B:B2:3C:44:66:2E:91:5A:89:95:85:EF:CB:3D:38:03" />
+
     </application>
     <meta-data
         android:name="flutterEmbedding"

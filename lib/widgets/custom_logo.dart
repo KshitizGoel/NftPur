@@ -11,9 +11,10 @@ class CustomLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: width,
+        margin: EdgeInsets.all(5),
         decoration: BoxDecoration(color: Colors.black),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(2.0),
           child: AppIconWidget(image: 'assets/images/nftpur_sample_logo.jpg'),
         ));
   }

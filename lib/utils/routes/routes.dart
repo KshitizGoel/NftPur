@@ -1,7 +1,9 @@
 import 'package:boilerplate/ui/home/home.dart';
 import 'package:boilerplate/ui/login/login.dart';
 import 'package:boilerplate/ui/main_screen/main_screen.dart';
+import 'package:boilerplate/ui/mobile_auth/mobile_auth.dart';
 import 'package:boilerplate/ui/nft_list/nft_list.dart';
+import 'package:boilerplate/ui/onboarding_screen/lets_get_started.dart';
 import 'package:boilerplate/ui/splash/splash.dart';
 import 'package:boilerplate/ui/your_profile/add_your_wallet.dart';
 import 'package:boilerplate/ui/your_profile/wallet_details.dart';
@@ -21,6 +23,8 @@ class Routes {
   static const String walletDetails = '/walletDetails';
   static const String wallet = '/wallet';
   static const String nftList = '/nftList';
+  static const String mobileAuth = '/mobileAuth';
+  static const String letsGetStarted = '/letsGetStarted';
 
   static final routes = <String, WidgetBuilder>{
     splash: (BuildContext context) => SplashScreen(),
@@ -31,6 +35,8 @@ class Routes {
     walletDetails: (BuildContext context) => WalletDetails(),
     wallet: (BuildContext context) => Wallet(),
     nftList: (BuildContext context) => NftList(),
+    mobileAuth: (BuildContext context) => MobileAuth(),
     makeYourNFT: (BuildContext context) => NavigationMainScreen(1),
+    letsGetStarted: (BuildContext context) => LetsGetStarted(),
   };
 }
