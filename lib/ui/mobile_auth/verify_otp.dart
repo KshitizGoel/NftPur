@@ -1,32 +1,21 @@
 import 'dart:ui' as ui;
 
-import 'package:boilerplate/stores/auth/auth_store.dart';
 import 'package:boilerplate/utils/routes/routes.dart';
 import 'package:boilerplate/widgets/custom_buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class MobileAuth extends StatefulWidget {
+class VerifyOTP extends StatefulWidget {
+  const VerifyOTP({Key? key}) : super(key: key);
+
   @override
-  _MobileAuthState createState() => _MobileAuthState();
+  _VerifyOTPState createState() => _VerifyOTPState();
 }
 
-class _MobileAuthState extends State<MobileAuth> {
-  late AuthStore _authStore;
-
-  final String welcomeText = "Welcome to NFTpur!";
-  final String welcomeText2 = "Please complete your mobile number verification";
-  final String resendCode = "Resend code";
-
-  TextEditingController _mobileNumberController = TextEditingController();
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    _authStore = Provider.of<AuthStore>(context);
-    // _authStore.
-  }
+class _VerifyOTPState extends State<VerifyOTP> {
+  final String verificationText = 'Verification';
+  final String verificationText2 = 'Please enter the code we sent';
+  TextEditingController otpController = TextEditingController();
+  final String resendCode = "Didn't received yet? Resend";
 
   @override
   Widget build(BuildContext context) {
@@ -36,30 +25,30 @@ class _MobileAuthState extends State<MobileAuth> {
   }
 
   Widget _buildMainBody() {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: ListView(
+        children: [
           SizedBox(
-            height: 50,
+            height: 25,
           ),
           Align(alignment: Alignment.centerLeft, child: _customIconWidget()),
           SizedBox(height: 50.0),
-          _welcomeText(),
+          _verificationText(),
           _subInfoText(),
           SizedBox(height: 25.0),
-          _customTextField(
-              _mobileNumberController, Icons.phone_iphone, '+91', false),
-          SizedBox(height: 50.0),
-          _submitButton(),
-        ]),
+          _customTextField(otpController, Icons.code, 'Enter code', true),
+          SizedBox(height: 25.0),
+          _resendCode(),
+          _confirmButton()
+        ],
       ),
     );
   }
 
   Widget _customIconWidget() {
     return InkWell(
-      onTap: () => Navigator.of(context).pushNamed(Routes.login),
+      onTap: () => Navigator.of(context).pushNamed(Routes.mobileAuth),
       child: Container(
         decoration: BoxDecoration(
             color: Colors.grey.shade300,
@@ -76,15 +65,15 @@ class _MobileAuthState extends State<MobileAuth> {
     );
   }
 
-  Widget _welcomeText() {
+  Widget _verificationText() {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
         // margin: EdgeInsets.only(bottom: 20),
         child: Text(
-          welcomeText,
+          verificationText,
           style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black),
+              fontWeight: FontWeight.bold, fontSize: 25, color: Colors.black),
         ),
       ),
     );
@@ -96,24 +85,11 @@ class _MobileAuthState extends State<MobileAuth> {
       child: Container(
         margin: EdgeInsets.only(top: 10, bottom: 30),
         child: Text(
-          welcomeText2,
+          verificationText2,
           style: TextStyle(color: Colors.grey, fontSize: 15),
         ),
       ),
     );
-  }
-
-  Widget _submitButton() {
-    return Align(
-        alignment: Alignment.bottomCenter,
-        child: InkWell(
-          onTap: () => Navigator.of(context).pushNamed(Routes.verifyOTP),
-          child: CustomButton(
-            color: Colors.indigo.shade600,
-            buttonText: 'submit'.toUpperCase(),
-            horizontalMargin: 0,
-          ),
-        ));
   }
 
   Widget _customTextField(TextEditingController controller, IconData icon,
@@ -124,6 +100,8 @@ class _MobileAuthState extends State<MobileAuth> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextFormField(
+          maxLength: 6,
+
           controller: controller,
           textDirection: ui.TextDirection.ltr,
           keyboardType: TextInputType.number,
@@ -141,4 +119,33 @@ class _MobileAuthState extends State<MobileAuth> {
     );
   }
 
+  Widget _resendCode() {
+    return InkWell(
+      ///TODO : Resending the code again!
+      onTap: () => null,
+      child: Align(
+        alignment: Alignment.center,
+        child: Container(
+          margin: EdgeInsets.only(top: 10, bottom: 30),
+          child: Text(
+            resendCode,
+            style: TextStyle(color: Colors.black, fontSize: 15),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _confirmButton() {
+    return Align(
+        alignment: Alignment.bottomCenter,
+        child: InkWell(
+          onTap: () => Navigator.of(context).pushNamed(Routes.mainScreen),
+          child: CustomButton(
+            color: Colors.lightGreen.shade600,
+            buttonText: 'confirm'.toUpperCase(),
+            horizontalMargin: 0,
+          ),
+        ));
+  }
 }

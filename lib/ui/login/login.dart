@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 50,
             ),
             Align(alignment: Alignment.centerLeft, child: _customIconWidget()),
-            SizedBox(height: 50.0),
+            SizedBox(height: 75.0),
             _welcomeText(),
             _subInfoText(),
             SizedBox(height: 15.0),
@@ -137,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Align(
         alignment: Alignment.bottomCenter,
         child: InkWell(
-          onTap: () => Navigator.of(context).pushNamed(Routes.login),
+          onTap: () => Navigator.of(context).pushNamed(Routes.mobileAuth),
           child: CustomButton(
             color: Colors.indigo.shade600,
             buttonText: 'submit'.toUpperCase(),
@@ -207,38 +207,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
-// Widget _buildMobileLogin() {
-//   return InkWell(
-//     onTap: () async => Navigator.of(context).pushNamed(Routes.mobileAuth),
-//     child: Container(
-//       height: 60,
-//       decoration: BoxDecoration(
-//           color: Colors.white,
-//           borderRadius: BorderRadius.circular(5),
-//           boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10)]),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//         children: [
-//           Padding(
-//               padding: const EdgeInsets.only(left: 40.0, top: 10, bottom: 10),
-//               child: Icon(
-//                 Icons.mobile_friendly_outlined,
-//                 color: Colors.grey.shade800,
-//                 size: 25,
-//               )),
-//           Padding(
-//             padding: const EdgeInsets.only(right: 40.0),
-//             child: Center(
-//               child: Text(
-//                 'Continue with mobile phone',
-//                 style: TextStyle(color: Colors.black, fontSize: 16),
-//               ),
-//             ),
-//           )
-//         ],
-//       ),
-//     ),
-//   );
-// }
 }

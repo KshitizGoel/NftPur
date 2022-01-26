@@ -2,6 +2,7 @@ import 'package:boilerplate/ui/home/home.dart';
 import 'package:boilerplate/ui/login/login.dart';
 import 'package:boilerplate/ui/main_screen/main_screen.dart';
 import 'package:boilerplate/ui/mobile_auth/mobile_auth.dart';
+import 'package:boilerplate/ui/mobile_auth/verify_otp.dart';
 import 'package:boilerplate/ui/nft_list/nft_list.dart';
 import 'package:boilerplate/ui/onboarding_screen/lets_get_started.dart';
 import 'package:boilerplate/ui/splash/splash.dart';
@@ -25,6 +26,7 @@ class Routes {
   static const String nftList = '/nftList';
   static const String mobileAuth = '/mobileAuth';
   static const String letsGetStarted = '/letsGetStarted';
+  static const String verifyOTP = '/verifyOTP';
 
   static final routes = <String, WidgetBuilder>{
     splash: (BuildContext context) => SplashScreen(),
@@ -38,5 +40,6 @@ class Routes {
     mobileAuth: (BuildContext context) => MobileAuth(),
     makeYourNFT: (BuildContext context) => NavigationMainScreen(1),
     letsGetStarted: (BuildContext context) => LetsGetStarted(),
+    verifyOTP: (BuildContext context) => VerifyOTP(),
   };
 }

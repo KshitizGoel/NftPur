@@ -22,6 +22,8 @@ class _LetsGetStartedState extends State<LetsGetStarted> {
         backgroundColor: Colors.white,
         actions: [
           InkWell(
+            ///TODO: Will be navigating the user directly to the market place, but without any login!
+
             onTap: () => Navigator.of(context).pushNamed(Routes.mobileAuth),
             child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -32,7 +34,7 @@ class _LetsGetStartedState extends State<LetsGetStarted> {
                   padding: EdgeInsets.all(10),
                   child: Center(
                     child: Text(
-                      'Login'.toUpperCase(),
+                      'Skip >'.toUpperCase(),
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.grey.shade600),
@@ -54,38 +56,41 @@ class _LetsGetStartedState extends State<LetsGetStarted> {
         Container(
             // height: 450,
             child: Column(
-              children: [
-                _customCircularContainers(
-                    Colors.lightBlueAccent.shade100, Colors.blueAccent, 50),
-                SizedBox(height: 30,),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: _customCircularContainers(
-                          Colors.orangeAccent.shade100, Colors.deepOrange, 75),
-                    )),
-                SizedBox(height: 5,),
-
-                Align(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: _customCircularContainers(
-                          Colors.greenAccent.shade100, Colors.green, 110),
-                    )),
-
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: _customCircularContainers(
-                          Colors.indigoAccent.shade100, Colors.indigo, 150),
-                    )),
-
-              ],
-            )),
-        SizedBox(height: 40,),
+          children: [
+            _customCircularContainers(
+                Colors.lightBlueAccent.shade100, Colors.blueAccent, 50),
+            SizedBox(
+              height: 30,
+            ),
+            Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: _customCircularContainers(
+                      Colors.orangeAccent.shade100, Colors.deepOrange, 75),
+                )),
+            SizedBox(
+              height: 5,
+            ),
+            Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: _customCircularContainers(
+                      Colors.greenAccent.shade100, Colors.green, 110),
+                )),
+            Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: _customCircularContainers(
+                      Colors.indigoAccent.shade100, Colors.indigo, 150),
+                )),
+          ],
+        )),
+        SizedBox(
+          height: 40,
+        ),
         _customStartText(),
         _customStartText2(),
         Align(
@@ -93,10 +98,9 @@ class _LetsGetStartedState extends State<LetsGetStarted> {
             child: InkWell(
               onTap: () => Navigator.of(context).pushNamed(Routes.login),
               child: CustomButton(
-                color: Colors.black,
-                buttonText: 'Sign Up',
-                  horizontalMargin : 20
-              ),
+                  color: Colors.black,
+                  buttonText: 'Sign Up',
+                  horizontalMargin: 20),
             ))
       ],
     );
