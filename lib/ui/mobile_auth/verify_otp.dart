@@ -129,7 +129,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
           margin: EdgeInsets.only(top: 10, bottom: 30),
           child: Text(
             resendCode,
-            style: TextStyle(color: Colors.black, fontSize: 15),
+            style: TextStyle(color: Colors.lightBlue, fontSize: 15),
           ),
         ),
       ),

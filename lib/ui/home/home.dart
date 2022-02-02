@@ -12,14 +12,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web3dart/credentials.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class TrendingScreen extends StatefulWidget {
+  const TrendingScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _TrendingScreenState createState() => _TrendingScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _TrendingScreenState extends State<TrendingScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   ScrollController controller = ScrollController();

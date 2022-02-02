@@ -31,7 +31,7 @@ class Routes {
   static final routes = <String, WidgetBuilder>{
     splash: (BuildContext context) => SplashScreen(),
     login: (BuildContext context) => LoginScreen(),
-    home: (BuildContext context) => HomeScreen(),
+    home: (BuildContext context) => TrendingScreen(),
     mainScreen: (BuildContext context) => NavigationMainScreen(0),
     addYourWallet: (BuildContext context) => AddYourWallet(),
     walletDetails: (BuildContext context) => WalletDetails(),
