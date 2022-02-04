@@ -1,3 +1,6 @@
+import 'package:boilerplate/constants/assets.dart';
+import 'package:boilerplate/models/nft/nft_details.dart';
+import 'package:boilerplate/ui/post_display/nft_display.dart';
 import 'package:flutter/material.dart';
 
 class LandingScreen extends StatefulWidget {
@@ -14,7 +17,6 @@ class _LandingScreenState extends State<LandingScreen> {
       backgroundColor: Colors.grey.shade200,
       body: ListView(
         physics: const AlwaysScrollableScrollPhysics(), // new
-
         children: [
           SizedBox(
             height: 40,
@@ -125,53 +127,65 @@ class _LandingScreenState extends State<LandingScreen> {
   }
 
   Widget _nftWidget() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-            color: Colors.blueGrey.shade100, spreadRadius: 5, blurRadius: 10)
-      ], color: Colors.white, borderRadius: BorderRadius.circular(15)),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 175,
-              width: 220,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  gradient: LinearGradient(colors: [
-                    Colors.lightBlueAccent.shade200,
-                    Colors.blue.shade900
-                  ]),
-                  color: Colors.black),
-              child: Text(
-                /// TODO: ADD THE IMAGE SUPPORT HERE !!!!
-                '',
+    return InkWell(
+      onTap: () {
+        NFTData _nftDetails = NFTData(
+            nftName: 'nftName',
+            imageAddress: Assets.newNft1,
+            nftDescription: 'Hi this is the random text about the NFT above !',
+            nftPrice: 'price');
+
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => NftDisplay(_nftDetails, true)));
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+              color: Colors.blueGrey.shade100, spreadRadius: 5, blurRadius: 10)
+        ], color: Colors.white, borderRadius: BorderRadius.circular(15)),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 175,
+                width: 220,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    gradient: LinearGradient(colors: [
+                      Colors.lightBlueAccent.shade200,
+                      Colors.blue.shade900
+                    ]),
+                    color: Colors.black),
+                child: Text(
+                  /// TODO: ADD THE IMAGE SUPPORT HERE !!!!
+                  '',
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Text(
-                /// TODO: NFT Name
-                'Fakurian of Space',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.5),
+              Padding(
+                padding: const EdgeInsets.only(top: 15.0),
+                child: Text(
+                  /// TODO: NFT Name
+                  'Fakurian of Space',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.5),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 4.0),
-              child: Text(
-                /// TODO: NFT owner name
-                'Ryan Bergson',
-                style: TextStyle(color: Colors.grey),
+              Padding(
+                padding: const EdgeInsets.only(top: 5.0),
+                child: Text(
+                  /// TODO: NFT owner name
+                  'Ryan Bergson',
+                  style: TextStyle(color: Colors.grey),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _betWidget()
-          ],
+              SizedBox(
+                height: 15,
+              ),
+              _betWidget()
+            ],
+          ),
         ),
       ),
     );
@@ -214,16 +228,16 @@ class _LandingScreenState extends State<LandingScreen> {
           onTap: () => null,
           child: Container(
             decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.85),
+                color: Colors.blueGrey.shade900,
                 borderRadius: BorderRadius.circular(10)),
             child: Padding(
-              padding: EdgeInsets.all(13),
+              padding: EdgeInsets.all(13.5),
               child: Text(
                 'Place a bid',
                 style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
+                  fontSize: 13,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
@@ -256,34 +270,99 @@ class _LandingScreenState extends State<LandingScreen> {
   Widget _topSellerItems() {
     return Column(
       children: [
-        _sellerItems(),
-        _sellerItems(),
+        _sellerItems('Giana Philips', '\$57,890'),
+        _sellerItems('Philip Shapiro', '\$123,420'),
       ],
     );
   }
 
-  Widget _sellerItems() {
+  Widget _sellerItems(String name, String price) {
     return Container(
-      height: 100,
+      height: 90,
       margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10), color: Colors.white),
-      child: Row(
-        children: [
-          Container(
-            // height: 75,
-            decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                //  borderRadius: BorderRadius.circular(50),
-                shape: BoxShape.circle),
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(color: Colors.blueGrey.shade50, spreadRadius: 10, blurRadius: 10)
+      ], borderRadius: BorderRadius.circular(10), color: Colors.white),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0, left: 10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey.shade100,
+                              spreadRadius: 5,
+                              blurRadius: 10)
+                        ],
+                        shape: BoxShape.circle),
 
-            ///TODO: IMAGE OF THE NFT OWNER
-            child: Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: Text('Owner'),
+                    ///TODO: IMAGE OF THE NFT OWNER
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Image.asset(
+                        "assets/images/nft_owner_image.png",
+                        height: 20,
+                        width: 20,
+                      ),
+                    ),
+                  ),
+                ),
+                _nameAndProfileDetails(name, price),
+              ],
+            ),
+            _followButton(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _nameAndProfileDetails(String name, String price) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: Text(
+              '$name',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
+          Text(
+            '$price',
+            style: TextStyle(color: Colors.grey),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _followButton() {
+    return InkWell(
+      onTap: () => null,
+      child: Container(
+        margin: EdgeInsets.only(right: 20),
+        decoration: BoxDecoration(
+            color: Colors.grey.shade100,
+            borderRadius: BorderRadius.circular(10)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
+          child: Text(
+            'Follow',
+            style: TextStyle(
+                color: Colors.grey.shade700, fontWeight: FontWeight.bold),
+          ),
+        ),
       ),
     );
   }

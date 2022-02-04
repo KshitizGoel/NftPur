@@ -61,6 +61,16 @@ class _ProfileState extends State<Profile> {
           actions: [
             IconButton(
                 onPressed: () {
+                  // _authStore.logoutTheUser();
+                  Navigator.of(context)
+                      .pushNamed(Routes.postYourNft);
+                },
+                icon: Icon(
+                  Icons.post_add,
+                  color: Colors.black,
+                )),
+            IconButton(
+                onPressed: () {
                   _authStore.logoutTheUser();
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil(Routes.login, (route) => false);
@@ -68,7 +78,7 @@ class _ProfileState extends State<Profile> {
                 icon: Icon(
                   Icons.logout,
                   color: Colors.black,
-                ))
+                )),
           ],
         ),
         body: Observer(

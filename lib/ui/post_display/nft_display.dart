@@ -1,207 +1,187 @@
-import 'package:boilerplate/constants/strings.dart';
 import 'package:boilerplate/models/nft/nft_details.dart';
-import 'package:boilerplate/ui/payments_page/payments_page.dart';
-import 'package:boilerplate/widgets/custom_columns.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import 'details_page.dart';
-import 'full_size_display.dart';
 
 class NftDisplay extends StatefulWidget {
-  final NFTData _nftDetails;
-  final bool isOwned;
+  final NFTData _nftData;
+  final bool isAvailable;
 
-  NftDisplay(this._nftDetails, this.isOwned);
+  NftDisplay(this._nftData, this.isAvailable);
 
   @override
-  _NftDisplayState createState() => _NftDisplayState(_nftDetails);
+  _NftDisplayState createState() => _NftDisplayState();
 }
 
 class _NftDisplayState extends State<NftDisplay> {
-  final NFTData _nftDetails;
-
-  _NftDisplayState(this._nftDetails);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.yellow.shade700.withOpacity(0.60),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          color: Colors.black,
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: widget.isOwned
-          ? _customFloatingActionButton('BUY THIS NFT')
-          : _customFloatingActionButton('VIEW'),
-      body: ListView(
+      backgroundColor: Colors.grey.shade200,
+      body: Stack(
         children: [
-          _displayNftImage(widget._nftDetails.imageAddress),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          ListView(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0, left: 20),
-                child: _customText('${widget._nftDetails.nftName}', 25),
+              SizedBox(
+                height: 20,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0, right: 20),
-                child: _customTextForPrice('Ξ${_nftDetails.nftPrice}', 25),
+              _appBarTab(),
+              SizedBox(
+                height: 40,
               ),
+              _nftDisplayWidget(),
+              SizedBox(
+                height: 20,
+              ),
+              _ownerTab(),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 15, top: 20),
-            child: Text(
-                '${widget._nftDetails.nftDescription}' +
-                    Strings.constantNFTDescription,
-                style: GoogleFonts.roboto(
-                  textStyle:
-                      const TextStyle(fontSize: 17, color: Colors.black54),
-                )),
-          ),
-          SizedBox(
-            height: 50,
-          ),
-          _auctionWidget('${widget._nftDetails.nftPrice}', Strings.constantTime,
-              '${widget._nftDetails.nftName}', "0xag23mvd...")
+          _placeABidWidget(),
         ],
       ),
     );
   }
 
-  Widget _displayNftImage(String imageAddress) {
-    return imageAddress.substring(0, 6).contains('https')
-        ? InkWell(
-            onTap: () => Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) {
-              return FullSizeDisplay(imageAddress);
-            })),
-            child: Container(
-              height: 200,
-              decoration: BoxDecoration(color: Colors.black),
-              child: Image.network(
-                "$imageAddress",
-                height: double.infinity,
+  Widget _appBarTab() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          InkWell(
+              onTap: () => Navigator.of(context).pop(),
+              child: _customIconButton(Icon(Icons.arrow_back))),
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(8)),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+              child: Text(
+                'Available to bid',
+                style: TextStyle(
+                    color: Colors.green.shade600, fontWeight: FontWeight.bold),
               ),
             ),
-          )
-        : InkWell(
-            onTap: () => Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) {
-              return FullSizeDisplay(imageAddress);
-            })),
-            child: Container(
-              height: 200,
-              decoration: BoxDecoration(color: Colors.black),
-              child: Image.asset(
-                "$imageAddress",
-                height: double.infinity,
-              ),
-            ),
-          );
-  }
-
-  Widget _customText(String text, double fontSize) {
-    return Text('$text',
-        style: GoogleFonts.italiana(
-          textStyle: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              fontSize: fontSize),
-        ));
-  }
-
-  Widget _customTextForPrice(String text, double fontSize) {
-    return Text('$text',
-        style: GoogleFonts.roboto(
-          textStyle: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              fontSize: fontSize),
-        ));
-  }
-
-  Widget _auctionWidget(
-      String price, String time, String date, String tokenID) {
-    return InkWell(
-      onTap: () => Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => DetailsPage(tokenID))),
-      child: Container(
-          height: 140,
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
-              ]),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-            child: Column(
-              children: [
-                _customText('${Strings.auctionText}', 20),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    customColumn('Token ID', '$tokenID', 15),
-                    customColumn('Price', 'Ξ250', 22),
-                    customColumn('Starts From', '20', 22),
-                  ],
-                )
-              ],
-            ),
-          )),
+          ),
+          _customIconButton(Icon(Icons.workspaces_outline)),
+        ],
+      ),
     );
   }
 
-  Widget _customFloatingActionButton(String title) {
-    return Align(
-      alignment: Alignment.bottomRight,
-      child: InkWell(
-        onTap: () {
-          title == 'VIEW'
-              ? Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) {
-                  return FullSizeDisplay(widget._nftDetails.imageAddress);
-                }))
-              : Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => PaymentsPage(_nftDetails)));
-        },
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 10.0, left: 40),
-          child: Container(
-            width: 170,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.yellow.shade800, width: 2),
-                borderRadius: BorderRadius.circular(10)),
-            child: Padding(
-              padding: EdgeInsets.all(15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Icon(Icons.local_offer_outlined),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      title,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+  Widget _customIconButton(Icon icon) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(10)),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: icon,
+      ),
+    );
+  }
+
+  Widget _nftDisplayWidget() {
+    return Container(
+      height: 325,
+      margin: EdgeInsets.symmetric(horizontal: 20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+              color: Colors.blueGrey.shade200, blurRadius: 20, spreadRadius: 10)
+        ],
+        gradient: LinearGradient(
+            colors: [Colors.lightBlueAccent.shade200, Colors.blue.shade900]),
+      ),
+    );
+  }
+
+  Widget _ownerTab(){
+    return Container(
+
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0, left: 10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey.shade100,
+                              spreadRadius: 5,
+                              blurRadius: 10)
+                        ],
+                        shape: BoxShape.circle),
+
+                    ///TODO: IMAGE OF THE NFT OWNER
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Image.asset(
+                        "assets/images/nft_owner_image.png",
+                        height: 20,
+                        width: 20,
+                      ),
                     ),
                   ),
-                ],
-              ),
+                ),
+                _nameAndProfileDetails('Ryan Bergson', 'Creator'),
+              ],
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
+  Widget _nameAndProfileDetails(String name, String price) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: Text(
+              '$name',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+          ),
+          Text(
+            '$price',
+            style: TextStyle(color: Colors.grey),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+
+  Widget _placeABidWidget() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        width: 300,
+        height: 60,
+        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        decoration: BoxDecoration(
+            color: Colors.blueGrey.shade900,
+            borderRadius: BorderRadius.circular(15)),
+        child: Center(
+          child: Text(
+            'Place a bid',
+            style: TextStyle(
+                // fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontSize: 18),
           ),
         ),
       ),

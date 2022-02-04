@@ -1,11 +1,12 @@
-import 'package:boilerplate/ui/home/home.dart';
 import 'package:boilerplate/ui/login/login.dart';
 import 'package:boilerplate/ui/main_screen/main_screen.dart';
 import 'package:boilerplate/ui/mobile_auth/mobile_auth.dart';
 import 'package:boilerplate/ui/mobile_auth/verify_otp.dart';
 import 'package:boilerplate/ui/nft_list/nft_list.dart';
 import 'package:boilerplate/ui/onboarding_screen/lets_get_started.dart';
+import 'package:boilerplate/ui/post_nft/post_your_nft.dart';
 import 'package:boilerplate/ui/splash/splash.dart';
+import 'package:boilerplate/ui/trending/trending_home_page.dart';
 import 'package:boilerplate/ui/your_profile/add_your_wallet.dart';
 import 'package:boilerplate/ui/your_profile/wallet_details.dart';
 import 'package:boilerplate/ui/your_profile/wallet_intermediary_file.dart';
@@ -27,6 +28,7 @@ class Routes {
   static const String mobileAuth = '/mobileAuth';
   static const String letsGetStarted = '/letsGetStarted';
   static const String verifyOTP = '/verifyOTP';
+  static const String postYourNft = '/postYourNft';
 
   static final routes = <String, WidgetBuilder>{
     splash: (BuildContext context) => SplashScreen(),
@@ -41,5 +43,6 @@ class Routes {
     makeYourNFT: (BuildContext context) => NavigationMainScreen(1),
     letsGetStarted: (BuildContext context) => LetsGetStarted(),
     verifyOTP: (BuildContext context) => VerifyOTP(),
+    postYourNft: (BuildContext context) => PostYourNft(),
   };
 }

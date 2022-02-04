@@ -1,7 +1,7 @@
 import 'package:boilerplate/stores/auth/auth_store.dart';
-import 'package:boilerplate/ui/home/home.dart';
 import 'package:boilerplate/ui/landing_page/landing_page.dart';
 import 'package:boilerplate/ui/post_nft/post_your_nft.dart';
+import 'package:boilerplate/ui/trending/trending_home_page.dart';
 import 'package:boilerplate/ui/your_profile/user_profile.dart';
 import 'package:boilerplate/widgets/progress_indicator_widget.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +63,7 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
               ? _children[_currentIndex]
               : Center(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     customProgressIndicator(),
                     Padding(
@@ -76,25 +76,21 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
+        selectedItemColor: Colors.black,
         currentIndex: _currentIndex,
-        selectedIconTheme: IconThemeData(
-          color: Colors.black,
-          size: 30
-        ),
-      //  selectedLabelStyle: TextStyle(color: Colors.black),
+        selectedIconTheme: IconThemeData(color: Colors.black, size: 30),
         unselectedIconTheme: IconThemeData(color: Colors.grey.shade300),
-        elevation: 10,
+        elevation: 50,
         items: [
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home_outlined,
             ),
-            label: 'Dashboard',
-
+            label: 'Home',
           ),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Explore'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.add_circle_outline), label: 'Add'),
-          BottomNavigationBarItem(icon: Icon(Icons.fiber_new), label: 'New'),
+              icon: Icon(Icons.widgets_outlined), label: 'New'),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.account_balance_wallet_outlined,
@@ -105,42 +101,4 @@ class _NavigationMainScreenState extends State<NavigationMainScreen> {
       ),
     );
   }
-
-// Widget _customBottomNavigationBar() {
-//   return Padding(
-//     padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-//     child: Container(
-//       height: 80,
-//       decoration: BoxDecoration(
-//         border: Border.all(
-//             color: Colors.lightBlueAccent.shade100.withOpacity(0.45),
-//             width: 5),
-//         // color: Colors.white,
-//         color: Colors.black,
-//         boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 5)],
-//         borderRadius: BorderRadius.circular(15),
-//       ),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//         children: [
-//           _customIconButtons(0, Icon(Icons.home)),
-//           _customIconButtons(1, Icon(Icons.add_circle_outline)),
-//           _customIconButtons(2, Icon(Icons.fiber_new_sharp)),
-//           _customIconButtons(3, Icon(Icons.account_balance_wallet)),
-//         ],
-//       ),
-//     ),
-//   );
-// }
-//
-// Widget _customIconButtons(int i, Icon icon) {
-//   return IconButton(
-//     onPressed: () => onTappedBar(i),
-//     icon: icon,
-//     color: Colors.white,
-//     // focusColor: Colors.lightBlueAccent.shade100.withOpacity(0.45),
-//     // highlightColor: Colors.lightBlueAccent.shade100.withOpacity(0.45),
-//     // hoverColor: Colors.lightBlueAccent.shade100.withOpacity(0.45),
-//   );
-// }
 }
