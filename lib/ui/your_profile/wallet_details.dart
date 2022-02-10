@@ -165,6 +165,7 @@ class _WalletDetailsState extends State<WalletDetails> {
                   ),
                   onPressed: () => showDialog(
                     context: context,
+
                     builder: (_) => Container(
                       height: 50,
                       margin:
